@@ -100,30 +100,51 @@ class SpotMate {
       'x-csrf-token': this._token,
     };
   }
-}  
+}
 
 module.exports = function (app) {
-app.get('/download/spotify', async (req, res) => {
-       const { apikey } = req.query;
-            if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
-            const { url } = req.query;
-            if (!url) {
-                return res.json({ status: false, error: 'Url is required' });
-            }
-        try {
-            const spotMate = new SpotMate();
-            const trackInfo = await spotMate.info(url);
-            const convertResult = await spotMate.convert(url);      
-            res.status(200).json({
-                status: true,
-                result: {
-                url: convertResult.url, 
-                title: trackInfo.album.name
-                }
-            });
-            spotMate.clear();          
-        } catch (error) {
-            res.status(500).send(`Error: ${error.message}`);
+  app.get('/download/spotify', async (req, res) => {
+    const { apikey, url } = req.query;
+    
+    // Validasi API Key
+    if (!global.apikey.includes(apikey)) {
+      return res.json({ status: false, error: 'Apikey invalid' });
+    }
+    
+    // Validasi URL
+    if (!url) {
+      return res.json({ status: false, error: 'URL is required' });
+    }
+    
+    try {
+      const spotMate = new SpotMate();
+      
+      // Mendapatkan informasi track
+      const trackInfo = await spotMate.info(url);
+      
+      // Mengonversi track ke link download
+      const convertResult = await spotMate.convert(url);
+      
+      // Mengirim response dengan URL download dan nama track
+      res.status(200).json({
+        status: true,
+        result: {
+          url: convertResult.url,
+          title: trackInfo.album.name,
+          artist: trackInfo.artists.map(artist => artist.name).join(', '),
+          album: trackInfo.album.name,
+          release_date: trackInfo.album.release_date,
+          duration: trackInfo.duration_ms / 1000, // Durasi dalam detik
+          genre: trackInfo.genres ? trackInfo.genres.join(', ') : 'Unknown',
+          cover_image: trackInfo.album.images ? trackInfo.album.images[0].url : null,
         }
-});
-}
+      });
+      
+      // Membersihkan session setelah proses selesai
+      spotMate.clear();
+    } catch (error) {
+      // Mengirim error jika terjadi masalah dalam proses
+      res.status(500).json({ status: false, error: `Error: ${error.message}` });
+    }
+  });
+};

@@ -5,7 +5,7 @@ async function getUserIdByUsername(username) {
   try {
     const response = await fetch(`https://users.roblox.com/v1/usernames/users`, {
       method: 'POST',
-      headers: { 'User-Agent': 'PostmanRuntime/7.32.2' },
+      headers: { 'User-Agent': 'PostmanRuntime/7.32.2', 'Content-Type': 'application/json' },
       body: JSON.stringify({ usernames: [username] })
     });
 
@@ -29,14 +29,23 @@ async function robloxStalk(userId) {
   try {
     const headers = { 'User-Agent': 'PostmanRuntime/7.32.2' };
 
-    // Mengambil data dasar user dan data pertemanan/followers
-    const [userDetailsRes, friendsRes, followersRes, followingRes, inventoryRes, groupsRes] = await Promise.all([
+    // Ambil semua data sekaligus termasuk avatar
+    const [
+      userDetailsRes,
+      friendsRes,
+      followersRes,
+      followingRes,
+      inventoryRes,
+      groupsRes,
+      avatarRes
+    ] = await Promise.all([
       fetch(`https://users.roblox.com/v1/users/${userId}`, { headers }),
       fetch(`https://friends.roblox.com/v1/users/${userId}/friends/count`, { headers }),
       fetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`, { headers }),
       fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`, { headers }),
-      fetch(`https://inventory.roblox.com/v1/users/${userId}/assets/collectibles`, { headers }), // Data koleksi item
-      fetch(`https://groups.roblox.com/v1/users/${userId}/groups/roles`, { headers }) // Data grup yang diikuti
+      fetch(`https://inventory.roblox.com/v1/users/${userId}/assets/collectibles`, { headers }),
+      fetch(`https://groups.roblox.com/v1/users/${userId}/groups/roles`, { headers }),
+      fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`, { headers })
     ]);
 
     if (!userDetailsRes.ok) throw new Error(`Gagal ambil data user: ${userDetailsRes.status}`);
@@ -45,8 +54,10 @@ async function robloxStalk(userId) {
     const friendsCount = friendsRes.ok ? (await friendsRes.json()).count : 0;
     const followersCount = followersRes.ok ? (await followersRes.json()).count : 0;
     const followingCount = followingRes.ok ? (await followingRes.json()).count : 0;
-    const inventory = inventoryRes.ok ? (await inventoryRes.json()).data : []; // Menyimpan data item yang dimiliki
-    const groups = groupsRes.ok ? (await groupsRes.json()).data : []; // Menyimpan grup yang diikuti
+    const inventory = inventoryRes.ok ? (await inventoryRes.json()).data : [];
+    const groups = groupsRes.ok ? (await groupsRes.json()).data : [];
+
+    const avatarData = avatarRes.ok ? (await avatarRes.json()).data[0].imageUrl : null;
 
     return {
       status: true,
@@ -54,15 +65,15 @@ async function robloxStalk(userId) {
         userId: userDetails.id,
         username: userDetails.name,
         displayName: userDetails.displayName,
-        avatar: `https://www.roblox.com/headshot-thumbnail/image?userId=${userId}&width=420&height=420&format=png`,
+        avatar: avatarData || 'https://tr.rbxcdn.com/252512d014e5e848a1dc6e9c5e7d6fcd/420/420/AvatarHeadshot/Png',
         bio: userDetails.description || 'No bio available.',
         createdAt: userDetails.created,
         isBanned: userDetails.isBanned,
         friendsCount,
         followersCount,
         followingCount,
-        inventory, // Item koleksi
-        groups // Grup yang diikuti
+        inventory,
+        groups
       }
     };
   } catch (err) {
@@ -81,10 +92,7 @@ module.exports = function (app) {
     if (!username) return res.json({ status: false, error: 'Parameter username diperlukan' });
 
     try {
-      // Mencari userId berdasarkan username
       const userId = await getUserIdByUsername(username);
-      
-      // Mengambil data user berdasarkan userId
       const result = await robloxStalk(userId);
       res.status(result.status ? 200 : 500).json(result);
     } catch (error) {

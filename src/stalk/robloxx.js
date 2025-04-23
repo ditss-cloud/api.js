@@ -29,11 +29,14 @@ async function robloxStalk(userId) {
   try {
     const headers = { 'User-Agent': 'PostmanRuntime/7.32.2' };
 
-    const [userDetailsRes, friendsRes, followersRes, followingRes] = await Promise.all([
+    // Mengambil data dasar user dan data pertemanan/followers
+    const [userDetailsRes, friendsRes, followersRes, followingRes, inventoryRes, groupsRes] = await Promise.all([
       fetch(`https://users.roblox.com/v1/users/${userId}`, { headers }),
       fetch(`https://friends.roblox.com/v1/users/${userId}/friends/count`, { headers }),
       fetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`, { headers }),
-      fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`, { headers })
+      fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`, { headers }),
+      fetch(`https://inventory.roblox.com/v1/users/${userId}/assets/collectibles`, { headers }), // Data koleksi item
+      fetch(`https://groups.roblox.com/v1/users/${userId}/groups/roles`, { headers }) // Data grup yang diikuti
     ]);
 
     if (!userDetailsRes.ok) throw new Error(`Gagal ambil data user: ${userDetailsRes.status}`);
@@ -42,6 +45,8 @@ async function robloxStalk(userId) {
     const friendsCount = friendsRes.ok ? (await friendsRes.json()).count : 0;
     const followersCount = followersRes.ok ? (await followersRes.json()).count : 0;
     const followingCount = followingRes.ok ? (await followingRes.json()).count : 0;
+    const inventory = inventoryRes.ok ? (await inventoryRes.json()).data : []; // Menyimpan data item yang dimiliki
+    const groups = groupsRes.ok ? (await groupsRes.json()).data : []; // Menyimpan grup yang diikuti
 
     return {
       status: true,
@@ -55,7 +60,9 @@ async function robloxStalk(userId) {
         isBanned: userDetails.isBanned,
         friendsCount,
         followersCount,
-        followingCount
+        followingCount,
+        inventory, // Item koleksi
+        groups // Grup yang diikuti
       }
     };
   } catch (err) {

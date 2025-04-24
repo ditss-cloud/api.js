@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Testimoni Pelanggan - Ditss Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -11,16 +12,17 @@
       padding: 0;
     }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #eef3f8, #dce7f7);
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #dbeafe, #f0f4ff);
       padding: 40px 20px;
       color: #333;
     }
     h1 {
       text-align: center;
-      font-size: 2.2em;
+      font-size: 2.4em;
       margin-bottom: 40px;
-      color: #1e3a8a;
+      color: #1d4ed8;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
     }
     .testimoni-container {
       display: grid;
@@ -28,41 +30,88 @@
       gap: 25px;
       max-width: 1200px;
       margin: 0 auto;
+      perspective: 1000px;
     }
     .testimoni {
-      background: #fff;
+      background: #0f172a;
       border-radius: 16px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow:
+        0 0 15px rgba(99, 102, 241, 0.5),
+        0 0 30px rgba(139, 92, 246, 0.3);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
       overflow: hidden;
+      transform-style: preserve-3d;
+      cursor: pointer;
     }
     .testimoni:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+      transform: rotateY(10deg) translateY(-10px);
+      box-shadow:
+        0 0 25px rgba(99, 102, 241, 0.7),
+        0 0 50px rgba(139, 92, 246, 0.5);
     }
     .testimoni img {
       width: 100%;
       height: 200px;
       object-fit: cover;
+      cursor: zoom-in;
+      transition: transform 0.3s ease;
     }
     .testimoni-content {
       padding: 20px;
       text-align: center;
+      color: #e0f2fe;
     }
     .testimoni h3 {
       font-size: 1.2em;
       margin-bottom: 10px;
-      color: #0f172a;
+      color: #c7d2fe;
     }
     .harga {
-      color: #2563eb;
+      color: #60a5fa;
       font-weight: bold;
       font-size: 1em;
     }
     .tanggal {
       font-size: 0.9em;
-      color: #6b7280;
+      color: #94a3b8;
       margin-top: 6px;
+    }
+  .testimoni {
+  opacity: 0;
+  transform: rotateY(90deg);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.testimoni.active {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+    #zoomModal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.85);
+    }
+    #zoomModal img {
+      margin: 5% auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 12px;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 32px;
+      font-weight: bold;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -70,6 +119,12 @@
 
 <h1>Testimoni Pelanggan</h1>
 <div class="testimoni-container" id="testimoniContainer"></div>
+
+<!-- Modal Zoom -->
+<div id="zoomModal">
+  <span class="close" id="closeModal">&times;</span>
+  <img id="zoomImage" src="" alt="Zoomed Image">
+</div>
 
 <script>
   fetch('https://raw.githubusercontent.com/ditss-dev/Baileysss/main/data.json')
@@ -80,7 +135,7 @@
         const card = document.createElement("div");
         card.className = "testimoni";
         card.innerHTML = `
-          <img src="${item.gambar}" alt="${item.jenis}">
+          <img src="${item.gambar}" alt="${item.jenis}" class="zoomable-image">
           <div class="testimoni-content">
             <h3>${item.jenis}</h3>
             <div class="harga">${item.harga}</div>
@@ -89,5 +144,42 @@
         `;
         container.appendChild(card);
       });
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('active');
+    }
+  });
+}, {
+  threshold: 0.2 // elemen terlihat minimal 20%
+});
+
+document.querySelectorAll('.testimoni').forEach(card => {
+  observer.observe(card);
+});
+      const zoomableImages = document.querySelectorAll('.zoomable-image');
+      const modal = document.getElementById('zoomModal');
+      const zoomImage = document.getElementById('zoomImage');
+      const closeModal = document.getElementById('closeModal');
+
+      zoomableImages.forEach(image => {
+        image.addEventListener('click', () => {
+          zoomImage.src = image.src;
+          modal.style.display = "block";
+        });
+      });
+
+      closeModal.addEventListener('click', () => {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
     });
 </script>
+
+</body>
+</html>

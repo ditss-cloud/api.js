@@ -10,7 +10,7 @@ const upload = multer({ dest: 'temp/' });
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const OWNER = 'ditss-dev'; // ganti sesuai username GitHub kamu
-const REPO = 'namarepo';   // ganti sesuai nama repo
+const REPO = 'Baileysss';   // ganti sesuai nama repo
 const BRANCH = 'main';     // cabang default
 const FOLDER = 'img';      // folder target di repo
 

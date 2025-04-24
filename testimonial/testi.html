@@ -72,7 +72,7 @@
 <div class="testimoni-container" id="testimoniContainer"></div>
 
 <script>
-  fetch('data.json')
+  fetch('https://raw.githubusercontent.com/ditss-dev/Baileysss/main/data.json')
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById("testimoniContainer");
@@ -91,6 +91,3 @@
       });
     });
 </script>
-
-</body>
-</html>

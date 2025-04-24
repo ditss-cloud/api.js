@@ -8,7 +8,7 @@ require('dotenv').config();
 const router = express.Router();
 const upload = multer({ dest: 'temp/' });
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.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;
 const OWNER = 'ditss-dev'; // ganti sesuai username GitHub kamu
 const REPO = 'Baileysss';   // ganti sesuai nama repo
 const BRANCH = 'main';     // cabang default

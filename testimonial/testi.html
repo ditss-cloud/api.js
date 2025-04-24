@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Testimoni Pelanggan - Ditss Store</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #eef3f8, #dce7f7);
+      padding: 40px 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.2em;
+      margin-bottom: 40px;
+      color: #1e3a8a;
+    }
+    .testimoni-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .testimoni {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+    .testimoni:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+    }
+    .testimoni img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .testimoni-content {
+      padding: 20px;
+      text-align: center;
+    }
+    .testimoni h3 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+    .harga {
+      color: #2563eb;
+      font-weight: bold;
+      font-size: 1em;
+    }
+    .tanggal {
+      font-size: 0.9em;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Testimoni Pelanggan</h1>
+<div class="testimoni-container" id="testimoniContainer"></div>
+
+<script>
+  fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+      const container = document.getElementById("testimoniContainer");
+      data.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "testimoni";
+        card.innerHTML = `
+          <img src="${item.gambar}" alt="${item.jenis}">
+          <div class="testimoni-content">
+            <h3>${item.jenis}</h3>
+            <div class="harga">${item.harga}</div>
+            <div class="tanggal">Tanggal Beli: ${item.tanggal}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    });
+</script>
+
+</body>
+</html>

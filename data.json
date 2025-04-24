@@ -1,6 +1,6 @@
 [
   {
-    "gambar": "img/produk1.jpg",
+    "gambar": "https://raw.githubusercontent.com/ditss-dev/Baileysss/main/img/produk1.jpg",
     "jenis": "Pulsa Telkomsel",
     "harga": "Rp10.000",
     "tanggal": "2025-04-20"

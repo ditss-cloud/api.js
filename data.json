@@ -1,0 +1,20 @@
+[
+  {
+    "gambar": "img/produk1.jpg",
+    "jenis": "Pulsa Telkomsel",
+    "harga": "Rp10.000",
+    "tanggal": "2025-04-20"
+  },
+  {
+    "gambar": "img/produk2.jpg",
+    "jenis": "Kuota XL 3GB",
+    "harga": "Rp25.000",
+    "tanggal": "2025-04-18"
+  },
+  {
+    "gambar": "img/produk3.jpg",
+    "jenis": "Nokos Indosat",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  }
+]

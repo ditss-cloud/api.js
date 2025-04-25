@@ -15,45 +15,45 @@
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to right, #dbeafe, #f0f4ff);
+      background: linear-gradient(to right, #d1d8f0, #e9ecff);
       padding: 40px 20px;
       color: #333;
     }
     h1 {
       text-align: center;
-      font-size: 2.4em;
+      font-size: 2.8em;
       margin-bottom: 40px;
-      color: #1d4ed8;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+      color: #1e40af;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
     .testimoni-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
       max-width: 1200px;
       margin: 0 auto;
       perspective: 1000px;
     }
     .testimoni {
-      background: #0f172a;
-      border-radius: 16px;
+      background: #1e293b;
+      border-radius: 20px;
       box-shadow:
-        0 0 15px rgba(99, 102, 241, 0.5),
-        0 0 30px rgba(139, 92, 246, 0.3);
+        0 4px 15px rgba(0, 0, 0, 0.2),
+        0 8px 30px rgba(0, 0, 0, 0.1);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       overflow: hidden;
       transform-style: preserve-3d;
       cursor: pointer;
     }
     .testimoni:hover {
-      transform: rotateY(10deg) translateY(-10px);
+      transform: translateY(-10px);
       box-shadow:
-        0 0 25px rgba(99, 102, 241, 0.7),
-        0 0 50px rgba(139, 92, 246, 0.5);
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        0 12px 50px rgba(0, 0, 0, 0.2);
     }
     .testimoni img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
       cursor: zoom-in;
       transition: transform 0.3s ease;
@@ -61,17 +61,17 @@
     .testimoni-content {
       padding: 20px;
       text-align: center;
-      color: #e0f2fe;
+      color: #f1f5f9;
     }
     .testimoni h3 {
-      font-size: 1.2em;
+      font-size: 1.4em;
       margin-bottom: 10px;
-      color: #c7d2fe;
+      color: #93c5fd;
     }
     .harga {
-      color: #60a5fa;
+      color: #3b82f6;
       font-weight: bold;
-      font-size: 1em;
+      font-size: 1.1em;
     }
     .tanggal {
       font-size: 0.9em;
@@ -80,13 +80,12 @@
     }
     .testimoni {
       opacity: 0;
-      transform: rotateY(90deg);
+      transform: translateY(50px);
       transition: transform 0.6s ease, opacity 0.6s ease;
     }
-
     .testimoni.active {
       opacity: 1;
-      transform: rotateY(0deg);
+      transform: translateY(0);
     }
     #zoomModal {
       display: none;
@@ -115,6 +114,24 @@
       font-weight: bold;
       cursor: pointer;
     }
+    footer {
+      margin-top: 40px;
+      padding: 20px 0;
+      background-color: #1e293b;
+      color: #f1f5f9;
+      text-align: center;
+      font-size: 0.9em;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    footer a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -128,10 +145,21 @@
   <img id="zoomImage" src="" alt="Zoomed Image">
 </div>
 
+<footer>
+  Powered by <a href="https://github.com/ditss-dev" target="_blank">Ditss</a>
+</footer>
+
 <script>
+  // Fetch data from data.json
   fetch('./data.json') // Jalur relatif ke data.json
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then(data => {
+      console.log("Data fetched:", data); // Debugging log
       const container = document.getElementById("testimoniContainer");
       data.forEach(item => {
         const card = document.createElement("div");
@@ -147,9 +175,11 @@
         container.appendChild(card);
       });
 
+      // Add intersection observer for animation
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
+            console.log('Element visible:', entry.target); // Debugging log
             entry.target.classList.add('active');
           }
         });
@@ -161,6 +191,7 @@
         observer.observe(card);
       });
 
+      // Zoom modal functionality
       const zoomableImages = document.querySelectorAll('.zoomable-image');
       const modal = document.getElementById('zoomModal');
       const zoomImage = document.getElementById('zoomImage');
@@ -182,6 +213,9 @@
           modal.style.display = "none";
         }
       });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error); // Debugging log
     });
 </script>
 

@@ -23,8 +23,17 @@
     "icon": "fas fa-boxes",
     "api": [
       {
-        "name": "tools raw githube",
-        "path": "/products"
+        "name": "tools raw github",
+        "path": "/tools/tools.html"
+      }
+    ]
+  },{
+    "category": "api's",
+    "icon": "fas fa-code",
+    "api": [
+      {
+        "name": "akses api free",
+        "path": "/api/ditss.html"
       }
     ]
   },{

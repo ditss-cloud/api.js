@@ -23,7 +23,7 @@
     "icon": "fas fa-boxes",
     "api": [
       {
-        "name": "tools raw github",
+        "name": "get tools",
         "path": "/tools/tools.html"
       }
     ]
@@ -34,6 +34,15 @@
       {
         "name": "akses api free",
         "path": "/api/ditss.html"
+      }
+    ]
+  },{
+    "category": "playlist",
+    "icon": "fas fa-music",
+    "api": [
+      {
+        "name": "playlist gratis!!",
+        "path": "/testimonial/testi.html"
       }
     ]
   },{

@@ -626,33 +626,7 @@
 
         .api-card {
             padding: 20px;
-        }
-
-        
-        .dropdown-content {
-  transition: max-height 0.3s ease, opacity 0.2s ease;
-  overflow: hidden;
-}
-
-.dropdown-content.collapsed {
-  max-height: 0;
-  opacity: 0;
-}
-
-.dropdown-content.expanded {
-  max-height: 500px;
-  opacity: 1;
-}
-
-.chevron {
-  transition: transform 0.3s ease;
-}
-
-.chevron.rotated {
-  transform: rotate(180deg);
-}
-
-        
+        }        
     }
 
     @media (max-width: 576px) {
@@ -727,17 +701,6 @@
             </div>
         </div>
     </div>
-<!-- batas -->
-    <div id="sidebar" class="sidebar w-64 space-y-6 py-6 px-4 fixed inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 z-30 overflow-y-auto">
-  <a class="flex items-center space-x-3 px-2 py-3">
-    <img id="logo" src="" alt="Logo" class="h-9 w-9 rounded-lg object-cover shadow-md border border-gray-200" />
-    <span id="webtitle" class="text-xl font-semibold tracking-tight text-gray-800"></span>
-  </a>
-
-  <nav class="space-y-1 transition-all duration-300" id="menu">
-    <!-- Menu items will be injected here -->
-  </nav>
-</div>
 
 <button id="menu-btn" class="text-xl focus:outline-none md:hidden text-gray-600 hover:text-blue-500 transition-colors">
   <i class="fas fa-bars"></i>
@@ -1002,15 +965,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             modalRefs.content.innerHTML = '';
             modalRefs.content.appendChild(errorDiv);
             modalRefs.content.classList.remove('d-none');
-        }
-//mmkk
-        function toggleDropdown(dropdownId, chevronId) {
-  const dropdown = document.getElementById(dropdownId);
-  const chevron = document.getElementById(chevronId);
-
-  dropdown.classList.toggle('collapsed');
-  dropdown.classList.toggle('expanded');
-  chevron.classList.toggle('rotated');
         }
         // Syntax highlighting for JSON responses
         function syntaxHighlight(element) {

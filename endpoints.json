@@ -14,7 +14,7 @@
       },
       {
         "name": "panel pterodactyl",
-        "path": "/panel.html"
+        "path": "/hosting/pterodactyl.html"
       }
     ]
   },

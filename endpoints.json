@@ -27,5 +27,14 @@
         "path": "/products"
       }
     ]
+  },{
+    "category": "testimoni",
+    "icon": "fas fa-comment-dots",
+    "api": [
+      {
+        "name": "testimoni pelanggan.",
+        "path": "/testimonial/testi.html"
+      }
+    ]
   }
 ]

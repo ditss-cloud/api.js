@@ -1,19 +1,49 @@
 [
   {
     "gambar": "https://raw.githubusercontent.com/ditss-dev/Baileysss/main/img/produk1.jpg",
-    "jenis": "Pulsa Telkomsel",
+    "jenis": "jembut",
     "harga": "Rp10.000",
     "tanggal": "2025-04-20"
   },
   {
-    "gambar": "img/produk2.jpg",
-    "jenis": "Kuota XL 3GB",
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
     "harga": "Rp25.000",
     "tanggal": "2025-04-18"
   },
   {
-    "gambar": "img/produk3.jpg",
-    "jenis": "Nokos Indosat",
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  },  {
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  },  {
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  },  {
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  } , {
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  } , {
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  } , {
+    "gambar": "https://ditss.cloud/img/a.jpg",
+    "jenis": "testi",
     "harga": "Rp7.500",
     "tanggal": "2025-04-16"
   }

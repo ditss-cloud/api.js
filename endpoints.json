@@ -5,20 +5,8 @@
     "api": [
       {
         "name": "vps hosting",
-        "path": "/vps.html",
-        "method": "GET",
-        "description": "Retrieve a list of all users in the system.",
-        "parameters": [],
-        "response": {
-          "format": "JSON",
-          "example": {
-            "status": "success",
-            "data": [
-              { "id": 1, "name": "John Doe", "email": "john@example.com" },
-              { "id": 2, "name": "Jane Doe", "email": "jane@example.com" }
-            ]
-          }
-        }
+        "path": "/vps.html"
+
       },
       {
         "name": "panel pterodactyl",

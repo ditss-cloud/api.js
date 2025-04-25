@@ -6,45 +6,45 @@
     "tanggal": "2025-04-20"
   },
   {
-    "gambar": "https://ditss.cloud/img/a.jpg",
+    "gambar": "https://ditss.cloud/img/h.jpg",
     "jenis": "testi",
     "harga": "Rp25.000",
     "tanggal": "2025-04-18"
   },
   {
-    "gambar": "https://ditss.cloud/img/a.jpg",
+    "gambar": "https://ditss.cloud/img/g.jpg",
     "jenis": "testi",
     "harga": "Rp7.500",
     "tanggal": "2025-04-16"
   },  {
-    "gambar": "https://ditss.cloud/img/a.jpg",
+    "gambar": "https://ditss.cloud/img/f.jpg",
     "jenis": "testi",
     "harga": "Rp7.500",
     "tanggal": "2025-04-16"
   },  {
-    "gambar": "https://ditss.cloud/img/a.jpg",
+    "gambar": "https://ditss.cloud/img/e.jpg",
     "jenis": "testi",
     "harga": "Rp7.500",
     "tanggal": "2025-04-16"
   },  {
-    "gambar": "https://ditss.cloud/img/a.jpg",
+    "gambar": "https://ditss.cloud/img/d.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  } , {
+    "gambar": "https://ditss.cloud/img/c.jpg",
+    "jenis": "testi",
+    "harga": "Rp7.500",
+    "tanggal": "2025-04-16"
+  } , {
+    "gambar": "https://ditss.cloud/img/b.jpg",
     "jenis": "testi",
     "harga": "Rp7.500",
     "tanggal": "2025-04-16"
   } , {
     "gambar": "https://ditss.cloud/img/a.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
-  } , {
-    "gambar": "https://ditss.cloud/img/a.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
-  } , {
-    "gambar": "https://ditss.cloud/img/a.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
+    "jenis": "panel pterodactyl",
+    "harga": "Rp12.500",
+    "tanggal": "-"
   }
 ]

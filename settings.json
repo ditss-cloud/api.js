@@ -2,7 +2,7 @@
   "name": "DitssAPI",
   "description": "Jelajahi dokumentasi API kami yang lengkap untuk mengintegrasikan fitur canggih ke dalam Bot WhatsApp Anda.",
   "header": {
-    "status": "v1.0.0"
+    "status": "active"
   },
   "apiSettings": {
     "creator": "ditss", 

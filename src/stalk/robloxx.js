@@ -88,15 +88,40 @@ async function robloxStalk(userId) {
 module.exports = function (app) {
   app.get('/stalk/roblox', async (req, res) => {
     const { apikey, username } = req.query;
-    if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
-    if (!username) return res.json({ status: false, error: 'Parameter username diperlukan' });
+
+    // Debug log untuk memastikan parameter diterima
+    console.log('Query Parameters:', req.query);
+
+    // Validasi API Key
+    if (!global.apikey || !global.apikey.includes(apikey)) {
+      return res.json({ status: false, error: 'Apikey invalid' });
+    }
+
+    // Validasi parameter username
+    if (!username || username.trim() === '') {
+      return res.json({
+        status: false,
+        creator: 'ditss',
+        error: 'Parameter username diperlukan'
+      });
+    }
 
     try {
+      // Panggil fungsi untuk mendapatkan userId berdasarkan username
       const userId = await getUserIdByUsername(username);
+
+      // Stalk informasi user berdasarkan userId
       const result = await robloxStalk(userId);
+
+      // Kirimkan hasil berhasil atau gagal
       res.status(result.status ? 200 : 500).json(result);
     } catch (error) {
-      res.status(500).json({ status: false, error: `Error: ${error.message}` });
+      // Tangani error dan kirimkan respons
+      res.status(500).json({
+        status: false,
+        creator: 'ditss',
+        error: `Error: ${error.message}`
+      });
     }
   });
 };

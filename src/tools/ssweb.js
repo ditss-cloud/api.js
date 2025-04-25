@@ -1,4 +1,4 @@
-const axios = require('axios'); // Gunakan axios untuk request HTTP
+const axios = require('axios'); 
 
 module.exports = function(app) {
     app.get('/tools/ssweb', async (req, res) => {
@@ -19,13 +19,17 @@ module.exports = function(app) {
             const encodedUrl = encodeURIComponent(url);
 
             // Request ke API Pikwy
+            console.log(`Requesting to API: https://api.pikwy.com/?tkn=125&d=3000&u=${encodedUrl}&fs=0&w=1280&h=1200&s=100&z=100&f=$jpg&rt=jweb`);
+
             const response = await axios.get(`https://api.pikwy.com/?tkn=125&d=3000&u=${encodedUrl}&fs=0&w=1280&h=1200&s=100&z=100&f=$jpg&rt=jweb`);
-            
-            // Menyaring hasil dari response untuk mendapatkan gambar URL
+
+            console.log("API Response: ", response.data);
+
+            // Mengecek jika iurl ada di dalam response
             const result = response.data.iurl;
 
             if (!result) {
-                return res.json({ status: false, error: 'Unable to retrieve screenshot.' });
+                return res.json({ status: false, error: 'Unable to retrieve screenshot. Response does not contain iurl.' });
             }
 
             // Mengirimkan response dengan URL gambar

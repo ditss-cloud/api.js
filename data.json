@@ -1,49 +1,73 @@
 [
-  {
-    "gambar": "https://raw.githubusercontent.com/ditss-dev/Baileysss/main/img/produk1.jpg",
-    "jenis": "jembut",
+    {
+    "gambar": "https://ditss.cloud/img/m.jpg",
+    "jenis": "nokos indo",
+    "harga": "Rp3.000",
+    "tanggal": ""
+  },
+    {
+    "gambar": "https://ditss.cloud/img/n.jpg",
+    "jenis": "nokos Thailand",
     "harga": "Rp10.000",
-    "tanggal": "2025-04-20"
+    "tanggal": ""
+  },
+    {
+    "gambar": "https://ditss.cloud/img/k.jpg",
+    "jenis": "nokos Philipina",
+    "harga": "Rp4.000",
+    "tanggal": ""
+  },
+    {
+    "gambar": "https://ditss.cloud/img/j.jpg",
+    "jenis": "nokos indo",
+    "harga": "Rp3.000",
+    "tanggal": ""
+  },
+  {
+    "gambar": "https://ditss.cloud/img/i.jpg",
+    "jenis": "nokos indo",
+    "harga": "Rp3.000",
+    "tanggal": ""
   },
   {
     "gambar": "https://ditss.cloud/img/h.jpg",
-    "jenis": "testi",
-    "harga": "Rp25.000",
-    "tanggal": "2025-04-18"
+    "jenis": "panel pterodactyl unli",
+    "harga": "Rp13.000",
+    "tanggal": ""
   },
   {
     "gambar": "https://ditss.cloud/img/g.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
+    "jenis": "panel pterodactyl 8gb",
+    "harga": "Rp9.000",
+    "tanggal": ""
   },  {
     "gambar": "https://ditss.cloud/img/f.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
+    "jenis": "panel pterodactyl unli",
+    "harga": "Rp13.000",
+    "tanggal": ""
   },  {
     "gambar": "https://ditss.cloud/img/e.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
+    "jenis": "panel pterodactyl 7gb",
+    "harga": "Rp8.000",
+    "tanggal": ""
   },  {
     "gambar": "https://ditss.cloud/img/d.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
+    "jenis": "panel pterodactyl 3gb",
+    "harga": "Rp4.000",
+    "tanggal": ""
   } , {
     "gambar": "https://ditss.cloud/img/c.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
+    "jenis": "panel pterodactyl",
+    "harga": "Rp5.000",
+    "tanggal": ""
   } , {
     "gambar": "https://ditss.cloud/img/a.jpg",
-    "jenis": "testi",
-    "harga": "Rp7.500",
-    "tanggal": "2025-04-16"
+    "jenis": "nokos russia",
+    "harga": "Rp12.000",
+    "tanggal": ""
   } , {
     "gambar": "https://ditss.cloud/img/b.jpg",
-    "jenis": "panel pterodactyl",
+    "jenis": "panel pterodactyl unli",
     "harga": "Rp12.500",
     "tanggal": "2025-06-maret"
   }

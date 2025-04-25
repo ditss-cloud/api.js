@@ -12,7 +12,6 @@
       "dest": "/index.js"
     }
   ],
-  "cleanUrls": true,
   "env": {
     "NODE_ENV": "production"
   }

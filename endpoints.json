@@ -4,6 +4,10 @@
     "icon": "fas fa-store",
     "api": [
       {
+        "name": "home product",
+        "path": "/produks.html"
+      },
+      {
         "name": "vps hosting",
         "path": "/vps.html"
 
@@ -15,11 +19,11 @@
     ]
   },
   {
-    "category": "Product Management",
+    "category": "Tools",
     "icon": "fas fa-boxes",
     "api": [
       {
-        "name": "Get All Products",
+        "name": "tools raw githube",
         "path": "/products"
       }
     ]

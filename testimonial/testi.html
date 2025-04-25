@@ -150,8 +150,8 @@
 </footer>
 
 <script>
-  // Fetch data from data.json
-  fetch('./data.json') // Jalur relatif ke data.json
+  
+  fetch('https://raw.githubusercontent.com/ditss-dev/Baileysss/main/data.json') // URL mentah GitHub
     .then(response => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

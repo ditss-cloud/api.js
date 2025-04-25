@@ -10,21 +10,7 @@
       },
       {
         "name": "panel pterodactyl",
-        "path": "/panel.html",
-        "method": "POST",
-        "description": "Create a new user in the system.",
-        "parameters": [
-          { "name": "name", "type": "string", "required": true },
-          { "name": "email", "type": "string", "required": true }
-        ],
-        "response": {
-          "format": "JSON",
-          "example": {
-            "status": "success",
-            "message": "User created successfully",
-            "data": { "id": 3, "name": "Alice", "email": "alice@example.com" }
-          }
-        }
+        "path": "/panel.html"
       }
     ]
   },
@@ -34,20 +20,7 @@
     "api": [
       {
         "name": "Get All Products",
-        "path": "/products",
-        "method": "GET",
-        "description": "Retrieve a list of all products available.",
-        "parameters": [],
-        "response": {
-          "format": "JSON",
-          "example": {
-            "status": "success",
-            "data": [
-              { "id": 1, "name": "Laptop", "price": 999.99 },
-              { "id": 2, "name": "Smartphone", "price": 699.99 }
-            ]
-          }
-        }
+        "path": "/products"
       }
     ]
   }

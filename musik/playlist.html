@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Spotify Style Player</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" type="image/svg+xml">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+    body {
+      background: #0e0e0e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+  .playerr {
+  background: rgba(17, 17, 17, 0.4); /* transparan hitam */
+  backdrop-filter: blur(10px); /* efek blur */
+  -webkit-backdrop-filter: blur(10px); /* support Safari */
+  border-radius: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 20px #0f0;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1); /* biar elegan */
+}
+ .player {
+  background: rgba(0, 0, 0, 0.2); /* transparan */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari */
+  border-radius: 20px;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 20px #0f0;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+}
+    .cover {
+      width: 100%;
+      border-radius: 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 15px #0f0;
+    }
+    .title {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .artist {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      color: #aaa;
+    }
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    button {
+      background: #0f0;
+      color: black;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 5px #0f0;
+      transition: 0.2s;
+      font-size: 1.5rem;
+    }
+    button:hover {
+      background: black;
+      color: #0f0;
+      border: 1px solid #0f0;
+    }
+    .extra-controls {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-around;
+      gap: 10px;
+    }
+    .extra-controls button {
+      background: #00ff88;
+      color: black;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 5px #00ff88;
+      transition: all 0.3s ease;
+    }
+    .extra-controls button:hover {
+      background: #00cc6a;
+    }
+    .playlist {
+      margin-top: 20px;
+      text-align: left;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+    .playlist-item {
+      padding: 8px;
+      border-bottom: 1px solid #444;
+      cursor: pointer;
+    }
+    .playlist-item:hover {
+      background: #0f0;
+      color: black;
+    }
+
+    /* Efek Hujan */
+    .rain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .raindrop {
+      position: absolute;
+      width: 2px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.3);
+      animation: fall 1s linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100px); }
+      100% { transform: translateY(100vh); }
+    }
+
+  .playing {
+  animation: pulse 1s infinite;
+  box-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+  .playing {
+  animation: pulse-rotate 1.5s infinite linear;
+  box-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+}
+
+@keyframes pulse-rotate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(90deg);
+  }
+  50% {
+    transform: scale(1.15) rotate(180deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(270deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+     .status-barrrrrr {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 14px;
+  z-index: 9999;
+  display: flex;
+  gap: 15px;
+  font-family: 'Arial', sans-serif;
+}
+.status-bar {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 15px;
+  font-size: 14px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: glowStatus 3s ease-in-out infinite;
+  text-align: right;
+}
+
+@keyframes glowStatus {
+  0%, 100% {
+    box-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+  }
+  50% {
+    box-shadow: 0 0 15px #f0f, 0 0 25px #f0f;
+  }
+}
+
+#greeting {
+  color: #ff0;
+  font-weight: 600;
+}
+
+#clock {
+  color: #0ff;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+#battery {
+  color: #0f0;
+  font-weight: bold;
+}
+
+
+    /* Efek Salju */
+    .snowflake {
+      position: absolute;
+      top: -10px;
+      color: #fff;
+      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      animation: fallSnow linear infinite;
+    }
+
+    @keyframes fallSnow {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="status-bar">
+  <span id="greeting">.</span>
+  <span id="clock">00:00</span>
+  <span id="battery">Battery: --%</span>
+</div>
+
+  <!-- Efek Hujan -->
+  <div class="rain" id="rain"></div>
+
+  <!-- Efek Salju -->
+  <div id="snow"></div>
+
+  <div class="player">
+    <img id="cover" class="cover" src="" alt="cover" />
+    <div class="title" id="title">Judul</div>
+    <div class="artist" id="artist">Artis</div>
+    
+    <audio id="audio" controls style="width: 100%; margin-top: 10px;"></audio>
+    <div class="controls">
+      <button id="prev" onclick="prevSong()"><i class="fas fa-backward"></i></button>
+      <button id="play" onclick="togglePlayPause()"><i class="fas fa-play"></i></button>
+      <button id="next" onclick="nextSong()"><i class="fas fa-forward"></i></button>
+    </div>
+    <div class="extra-controls">
+      <button onclick="toggleShuffle()">Acak</button>
+      <button onclick="togglePlaylist()">list</button>
+    </div>
+    <div class="playlist" id="playlist"></div>
+  </div>
+  <script>
+    const audio = document.getElementById("audio");
+    const title = document.getElementById("title");
+    const artist = document.getElementById("artist");
+    const cover = document.getElementById("cover");
+    const playlistEl = document.getElementById("playlist");
+    const playButton = document.getElementById("play");
+
+    let playlist = [];
+    let current = 0;
+    let isShuffle = false;
+
+    async function fetchData() {
+      const res = await fetch('https://raw.githubusercontent.com/ditss-dev/database/main/musikk.json');
+      const data = await res.text();
+      playlist = eval(data);
+      loadSong(current);
+      renderPlaylist();
+    }
+    function loadSong(index) {
+      const song = playlist[index];
+      title.textContent = song.title;
+      artist.textContent = song.artist;
+      audio.src = song.src;
+      cover.src = song.cover;
+      audio.play();
+      playButton.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+    function renderPlaylist() {
+      playlistEl.innerHTML = "";
+      playlist.forEach((song, i) => {
+        const div = document.createElement("div");
+        div.className = "playlist-item";
+        div.textContent = `${song.title} - ${song.artist}`;
+        div.onclick = () => {
+          current = i;
+          loadSong(current);
+        };
+        playlistEl.appendChild(div);
+      });
+    }
+
+    function toggleShuffle() {
+      isShuffle = !isShuffle;
+      alert(isShuffle ? "Mode Acak Aktif" : "Mode Acak Nonaktif");
+    }
+
+    function togglePlaylist() {
+      playlistEl.style.display = playlistEl.style.display === "block" ? "none" : "block";
+    }
+
+  function togglePlayPause() {
+  if (audio.paused) {
+    audio.play();
+    playButton.innerHTML = '<i class="fas fa-pause"></i>';
+    playButton.classList.add("playing");
+  } else {
+    audio.pause();
+    playButton.innerHTML = '<i class="fas fa-play"></i>';
+    playButton.classList.remove("playing");
+  }
+}
+
+function loadSong(index) {
+  const song = playlist[index];
+  title.textContent = song.title;
+  artist.textContent = song.artist;
+  audio.src = song.src;
+  cover.src = song.cover;
+  audio.play();
+  playButton.innerHTML = '<i class="fas fa-pause"></i>';
+  playButton.classList.add("playing");
+}
+    function nextSong() {
+      if (isShuffle) {
+        current = Math.floor(Math.random() * playlist.length);
+      } else {
+        current = (current + 1) % playlist.length;
+      }
+      loadSong(current);
+    }
+
+    function prevSong() {
+      current = (current - 1 + playlist.length) % playlist.length;
+      loadSong(current);
+    }
+
+    audio.onended = nextSong;
+
+    fetchData();
+
+    // Buat efek hujan
+    const rainContainer = document.getElementById('rain');
+    for (let i = 0; i < 100; i++) {
+      const drop = document.createElement('div');
+      drop.classList.add('raindrop');
+      drop.style.left = `${Math.random() * 100}%`;
+      drop.style.animationDuration = `${0.5 + Math.random()}s`;
+      drop.style.opacity = Math.random();
+      rainContainer.appendChild(drop);
+    }
+
+    // Buat efek salju
+    const snowContainer = document.getElementById('snow');
+    for (let i = 0; i < 50; i++) {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.innerHTML = '❄';
+      snowflake.style.left = `${Math.random() * 100}vw`;
+      snowflake.style.fontSize = `${12 + Math.random() * 12}px`;
+      snowflake.style.animationDuration = `${5 + Math.random() * 5}s`;
+      snowflake.style.animationDelay = `${Math.random() * 5}s`;
+      snowContainer.appendChild(snowflake);
+    }
+  </script>
+<script>
+function updateClock() {
+  const now = new Date();
+  const h = now.getHours();
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  document.getElementById('clock').textContent = `${String(h).padStart(2, '0')}:${m}:${s}`;
+
+  let greeting = '';
+  if (h >= 0 && h < 12) {
+    greeting = 'Selamat pagi';
+  } else if (h >= 12 && h < 15) {
+    greeting = 'Selamat siang';
+  } else if (h >= 15 && h < 18) {
+    greeting = 'selamat sore';
+  } else {
+    greeting = 'selamat malam';
+  }
+
+  document.getElementById('greeting').textContent = greeting;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+navigator.getBattery().then(battery => {
+  function updateBatteryStatus() {
+    const level = Math.round(battery.level * 100);
+    document.getElementById('battery').textContent = `Battery: ${level}%`;
+  }
+  updateBatteryStatus();
+  battery.addEventListener('levelchange', updateBatteryStatus);
+});
+</script>
+
+</body>
+</html>

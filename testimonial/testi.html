@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Testimoni Pelanggan - Ditss Store</title>
+  <!-- Tambahkan ikon tab -->
+  <link rel="icon" type="image/png" href="icon.png">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
@@ -76,16 +78,16 @@
       color: #94a3b8;
       margin-top: 6px;
     }
-  .testimoni {
-  opacity: 0;
-  transform: rotateY(90deg);
-  transition: transform 0.6s ease, opacity 0.6s ease;
-}
+    .testimoni {
+      opacity: 0;
+      transform: rotateY(90deg);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
 
-.testimoni.active {
-  opacity: 1;
-  transform: rotateY(0deg);
-}
+    .testimoni.active {
+      opacity: 1;
+      transform: rotateY(0deg);
+    }
     #zoomModal {
       display: none;
       position: fixed;
@@ -127,7 +129,7 @@
 </div>
 
 <script>
-  fetch('https://raw.githubusercontent.com/ditss-dev/Baileysss/main/data.json')
+  fetch('./data.json') // Jalur relatif ke data.json
     .then(response => response.json())
     .then(data => {
       const container = document.getElementById("testimoniContainer");
@@ -144,19 +146,21 @@
         `;
         container.appendChild(card);
       });
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-    }
-  });
-}, {
-  threshold: 0.2 // elemen terlihat minimal 20%
-});
 
-document.querySelectorAll('.testimoni').forEach(card => {
-  observer.observe(card);
-});
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, {
+        threshold: 0.2 // elemen terlihat minimal 20%
+      });
+
+      document.querySelectorAll('.testimoni').forEach(card => {
+        observer.observe(card);
+      });
+
       const zoomableImages = document.querySelectorAll('.zoomable-image');
       const modal = document.getElementById('zoomModal');
       const zoomImage = document.getElementById('zoomImage');

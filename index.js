@@ -3,15 +3,13 @@ const chalk = require('chalk');
 const fs = require('fs');
 const cors = require('cors');
 const path = require('path');
-
-require("./function.js");
+require('./function.js');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-app.enable("trust proxy");
-app.set("json spaces", 2);
-
+app.enable('trust proxy');
+app.set('json spaces', 2);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
@@ -25,24 +23,22 @@ try {
   console.error(chalk.red(`Error loading settings.json: ${err.message}`));
   process.exit(1);
 }
-
 global.apikey = settings.apiSettings.apikey || null;
 global.totalreq = 0;
 
-// === Middleware log + format JSON ===
+// === Middleware log + JSON formatter ===
 app.use((req, res, next) => {
-  console.log(chalk.bgHex('#FFFF99').hex('#333').bold(` Request Route: ${req.path} `));
-  global.totalreq += 1;
+  console.log(chalk.bgHex('#FFFF99').hex('#333').bold(` Request: ${req.method} ${req.path} `));
+  global.totalreq++;
 
   const originalJson = res.json;
   res.json = function (data) {
     if (data && typeof data === 'object') {
-      const responseData = {
+      return originalJson.call(this, {
         status: data.status,
-        creator: settings.apiSettings.creator || "Created Using Skyzo",
-        ...data
-      };
-      return originalJson.call(this, responseData);
+        creator: settings.apiSettings.creator || 'Created Using Skyzo',
+        ...data,
+      });
     }
     return originalJson.call(this, data);
   };
@@ -50,71 +46,78 @@ app.use((req, res, next) => {
   next();
 });
 
-// === Serve static files ===
-app.use('/', express.static(path.join(__dirname, '/')));
+// === Serve static directories ===
+app.use('/', express.static(__dirname));
 app.use('/', express.static(path.join(__dirname, 'api-page')));
 app.use('/src', express.static(path.join(__dirname, 'src')));
 
-// === Auto serve all HTML folders (dashboard, admin, etc) ===
+// === Auto serve folders with index.html ===
 const foldersToServe = fs.readdirSync(__dirname).filter(f => {
-  const fullPath = path.join(__dirname, f);
-  return fs.statSync(fullPath).isDirectory()
+  const full = path.join(__dirname, f);
+  return fs.statSync(full).isDirectory()
     && !['node_modules', 'api-page', 'src'].includes(f)
-    && fs.existsSync(path.join(fullPath, 'index.html'));
+    && fs.existsSync(path.join(full, 'index.html'));
 });
-
 foldersToServe.forEach(folder => {
   app.use(`/${folder}`, express.static(path.join(__dirname, folder), { index: 'index.html' }));
-  console.log(chalk.green(`Static HTML folder mounted: /${folder}`));
+  console.log(chalk.green(`Mounted: /${folder}`));
 });
 
-// === Auto handle /folder/page → api-page/folder/page.html ===
+// === Clean URL handler: /folder/page → api-page/folder/page.html
 app.get('/:folder/:page', (req, res, next) => {
-  const { folder, page } = req.params;
-  const filePath = path.join(__dirname, 'api-page', folder, `${page}.html`);
-  if (fs.existsSync(filePath)) {
-    return res.sendFile(filePath);
-  }
+  const filePath = path.join(__dirname, 'api-page', req.params.folder, `${req.params.page}.html`);
+  if (fs.existsSync(filePath)) return res.sendFile(filePath);
   next();
 });
 
-// === Home ===
+// === Clean URL handler: /page → api-page/page.html
+app.get('/:page', (req, res, next) => {
+  const filePath = path.join(__dirname, 'api-page', `${req.params.page}.html`);
+  if (fs.existsSync(filePath)) return res.sendFile(filePath);
+  next();
+});
+
+// === Nested clean URL: /a/b/c → api-page/a/b/c.html
+app.get('*', (req, res, next) => {
+  const tryPath = path.join(__dirname, 'api-page', `${req.path}.html`);
+  if (fs.existsSync(tryPath)) return res.sendFile(tryPath);
+  next();
+});
+
+// === Homepage ===
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'api-page', 'index.html'));
 });
 
 // === Load dynamic API routes ===
 let totalRoutes = 0;
-const apiFolder = path.join(__dirname, './src');
-fs.readdirSync(apiFolder).forEach((subfolder) => {
-  const subfolderPath = path.join(apiFolder, subfolder);
-  if (fs.statSync(subfolderPath).isDirectory()) {
-    fs.readdirSync(subfolderPath).forEach((file) => {
-      const filePath = path.join(subfolderPath, file);
-      if (path.extname(file) === '.js') {
-        require(filePath)(app);
+const apiFolder = path.join(__dirname, 'src');
+fs.readdirSync(apiFolder).forEach(sub => {
+  const subPath = path.join(apiFolder, sub);
+  if (fs.statSync(subPath).isDirectory()) {
+    fs.readdirSync(subPath).forEach(file => {
+      if (file.endsWith('.js')) {
+        require(path.join(subPath, file))(app);
         totalRoutes++;
-        console.log(chalk.bgHex('#FFFF99').hex('#333').bold(` Loaded Route: ${path.basename(file)} `));
+        console.log(chalk.cyan(`Loaded API: ${sub}/${file}`));
       }
     });
   }
 });
 
-console.log(chalk.bgHex('#90EE90').hex('#333').bold(' Load Complete! ✓ '));
-console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Total Routes Loaded: ${totalRoutes} `));
-
-// === 404 / 500 handler ===
+// === Error handlers ===
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'api-page', '404.html'));
 });
-
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).sendFile(path.join(__dirname, 'api-page', '500.html'));
 });
 
+// === Start server ===
 app.listen(PORT, () => {
-  console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Server is running on port ${PORT} `));
+  console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Server running on port ${PORT} `));
+  console.log(chalk.bgHex('#90EE90').hex('#333').bold(` Total API Routes: ${totalRoutes} `));
 });
 
 module.exports = app;

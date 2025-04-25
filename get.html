@@ -153,6 +153,26 @@
     .battery-low {
       color: #dc2626;
     }
+
+    .social-icon {
+      transition: 0.3s;
+      position: relative;
+    }
+    .social-icon:before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: calc(100% + 10px);
+      height: calc(100% + 10px);
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .social-icon:hover:before {
+      opacity: 1;
+    }
     
     .icon-container {
       display: flex;
@@ -275,6 +295,17 @@
     </div>
   </div>
 
+  
+      <!-- Sosial Media -->
+    <div class="flex justify-center mt-12 space-x-6 fade-up fade-delay-9">
+      <a href="https://youtube.com/@paaditt" target="_blank" class="social-icon"><img src="https://img.icons8.com/ios-filled/100/00ffff/youtube-play.png"/></a>
+      <a href="https://www.instagram.com/dits.v2" target="_blank" class="social-icon"><img src="https://img.icons8.com/ios-filled/100/00ffff/instagram-new.png"/></a>
+      <a href="https://www.tiktok.com/@paadit" target="_blank" class="social-icon"><img src="https://img.icons8.com/ios-filled/100/00ffff/tiktok--v1.png"/></a>
+      <a href="https://github.com/ditss-dev" target="_blank" class="social-icon"><img src="https://img.icons8.com/ios-filled/100/00ffff/github.png"/></a>
+      <a href="https://wa.me/6281513607731" target="_blank" class="social-icon"><img src="https://img.icons8.com/ios-filled/100/00ffff/whatsapp.png"/></a>
+    </div>
+
+  
   <!-- Footer -->
   <footer class="bg-white text-sm text-center py-3 text-gray-500 border-t border-gray-200">
     <p id="footer-text"></p>

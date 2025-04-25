@@ -63,23 +63,23 @@ foldersToServe.forEach(folder => {
   console.log(chalk.green(`Mounted: /${folder}`));
 });
 
-// === Clean URL handler: /folder/page → api-page/folder/page.html
+// === Clean URL handler: /folder/page → api-page/folder/page.html ===
 app.get('/:folder/:page', (req, res, next) => {
   const filePath = path.join(__dirname, 'api-page', req.params.folder, `${req.params.page}.html`);
   if (fs.existsSync(filePath)) return res.sendFile(filePath);
   next();
 });
 
-// === Clean URL handler: /page → api-page/page.html
+// === Clean URL handler: /page → api-page/page.html ===
 app.get('/:page', (req, res, next) => {
   const filePath = path.join(__dirname, 'api-page', `${req.params.page}.html`);
   if (fs.existsSync(filePath)) return res.sendFile(filePath);
   next();
 });
 
-// === Nested clean URL: /a/b/c → api-page/a/b/c.html
+// === Catch-all: /a/b/c → api-page/a/b/c.html ===
 app.get('*', (req, res, next) => {
-  const tryPath = path.join(__dirname, 'api-page', `${req.path}.html`);
+  const tryPath = path.join(__dirname, 'api-page', req.path + '.html');
   if (fs.existsSync(tryPath)) return res.sendFile(tryPath);
   next();
 });

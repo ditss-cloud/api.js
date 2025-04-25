@@ -24,6 +24,10 @@
       "url": "https://wa.me/6281513607731",
       "name": "Contact Developer",
       "icon": "code"
+    },{
+  "url": "#get",
+  "name": "get apikey",
+  "icon": "arrow-down"
     }
   ],
   "categories": [

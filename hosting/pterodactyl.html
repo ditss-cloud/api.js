@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harga Panel Pterodactyl</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0c0f2c;
+      font-family: Arial, sans-serif;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .judul {
+      text-align: center;
+      font-size: 2em;
+      font-weight: bold;
+      color: #00eaff;
+      animation: goyang 1.5s infinite;
+      margin: 40px 0 20px;
+    }
+
+    @keyframes goyang {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-3px); }
+    }
+
+    .typing-text span {
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing-loop 6s steps(30, end) infinite alternate, colorShift 4s linear infinite;
+      border-right: 2px solid #00eaff;
+    }
+
+    @keyframes typing-loop {
+      0% { max-width: 0; }
+      100% { max-width: 100%; }
+    }
+
+    @keyframes colorShift {
+      0% { color: #00eaff; }
+      25% { color: #00bcd4; }
+      50% { color: #0099cc; }
+      75% { color: #006699; }
+      100% { color: #00eaff; }
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: rgba(0, 187, 255, 0.1);
+      border: 2px solid #00eaff;
+      border-radius: 12px;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card h2 {
+      margin: 10px 0;
+      font-size: 1.4em;
+    }
+
+    .card p {
+      margin: 5px 0 15px;
+      font-size: 1.1em;
+    }
+
+    .card a {
+      display: inline-block;
+      background-color: #00bcd4;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+      font-size: 0.9em;
+      margin-top: 20px;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #00eaff;
+      color: black;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      display: none;
+      font-weight: bold;
+      z-index: 1000;
+    }
+
+    #musicControl {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #00eaff;
+      border: none;
+      color: #000;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="musicControl">Pause Music</button>
+  <button id="backToTop">↑ Back to Top</button>
+
+  <div class="max-w-4xl mx-auto py-12 px-6">
+    <h1 class="judul typing-text">
+      <span>List Daftar harga panel pterodactyl</span>
+    </h1>
+    <p class="text-center text-gray-400 text-lg" style="text-align: center; color: #ccc;">
+      harga super murah server private
+    </p>
+    <div class="border-t border-cyan-400 my-6 w-24 mx-auto" style="border-top: 1px solid #00eaff; width: 100px; margin: 10px auto;"></div>
+  </div>
+
+  <div class="container" id="panel-container"></div>
+
+  <footer>
+    © 2025 Ditss Store <br>
+    <a href="index.html" style="color:#00eaff;">Balik ke Awal</a><br>
+    <small>Powered by Ditss</small>
+  </footer>
+
+  <canvas id="weather"></canvas>
+  <audio id="bgMusic" src="https://files.catbox.moe/aoaagd.mp3" autoplay loop></audio>
+
+  <script>
+    const panelList = [
+      { ram: '1GB', harga: 2000 },
+      { ram: '2GB', harga: 3000 },
+      { ram: '3GB', harga: 4000 },
+      { ram: '4GB', harga: 5000 },
+      { ram: '6GB', harga: 6000 },
+      { ram: '8GB', harga: 7000 },
+      { ram: '9GB', harga: 9000 },
+      { ram: '10GB', harga: 10000 },
+      { ram: 'Unlimited', harga: 13000 }
+    ];
+
+    const container = document.getElementById('panel-container');
+
+    panelList.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <h2>${p.ram} RAM</h2>
+        <p>Rp ${p.harga.toLocaleString()}</p>
+        <a href="https://wa.me/447920601019?text=Halo%20bang%2C%20saya%20mau%20beli%20panel%20${encodeURIComponent(p.ram)}" target="_blank">Beli di sini</a>
+      `;
+      container.appendChild(card);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.card').forEach(card => {
+      observer.observe(card);
+    });
+
+    // Back to top
+    const backToTop = document.getElementById('backToTop');
+    window.onscroll = () => {
+      backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+    };
+    backToTop.onclick = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Music control
+    const music = document.getElementById('bgMusic');
+    const controlBtn = document.getElementById('musicControl');
+    controlBtn.onclick = () => {
+      if (music.paused) {
+        music.play();
+        controlBtn.textContent = 'Pause Music';
+      } else {
+        music.pause();
+        controlBtn.textContent = 'Play Music';
+      }
+    };
+  </script>
+
+  <script>
+    const canvas = document.getElementById("weather");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const flakes = [], drops = [], lightning = [];
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createFlake() {
+      return {
+        x: Math.random() * canvas.width,
+        y: -10,
+        size: random(1, 4),
+        speed: random(0.5, 1.5)
+      };
+    }
+
+    function createDrop() {
+      return {
+        x: Math.random() * canvas.width,
+        y: -20,
+        length: random(10, 20),
+        speed: random(4, 6)
+      };
+    }
+
+    function createLightning() {
+      return {
+        x: Math.random() * canvas.width,
+        y: 0,
+        width: random(2, 4),
+        alpha: 1
+      };
+    }
+
+    for (let i = 0; i < 100; i++) flakes.push(createFlake());
+    for (let i = 0; i < 60; i++) drops.push(createDrop());
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Salju
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      flakes.forEach(flake => {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+        ctx.fill();
+        flake.y += flake.speed;
+        if (flake.y > canvas.height) {
+          flake.x = Math.random() * canvas.width;
+          flake.y = -10;
+        }
+      });
+
+      // Hujan
+      ctx.strokeStyle = "rgba(0,188,212,0.6)";
+      ctx.lineWidth = 1;
+      drops.forEach(drop => {
+        ctx.beginPath();
+        ctx.moveTo(drop.x, drop.y);
+        ctx.lineTo(drop.x, drop.y + drop.length);
+        ctx.stroke();
+        drop.y += drop.speed;
+        if (drop.y > canvas.height) {
+          drop.x = Math.random() * canvas.width;
+          drop.y = -20;
+        }
+      });
+
+      // Petir
+      if (Math.random() < 0.01) lightning.push(createLightning());
+
+      lightning.forEach((bolt, i) => {
+        ctx.strokeStyle = `rgba(255,255,255,${bolt.alpha})`;
+        ctx.lineWidth = bolt.width;
+        ctx.beginPath();
+        ctx.moveTo(bolt.x, bolt.y);
+        ctx.lineTo(bolt.x, canvas.height);
+        ctx.stroke();
+        bolt.alpha -= 0.05;
+        if (bolt.alpha <= 0) lightning.splice(i, 1);
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>
+    

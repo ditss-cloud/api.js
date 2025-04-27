@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Susun Kata</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    html, body {
+      height: 100%; margin: 0; padding: 0;
+      background: linear-gradient(120deg, #2193b0 0%, #6dd5ed 100%);
+      min-height: 100vh;
+    }
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(255,255,255,0.96);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+      max-width: 390px;
+      width: 98vw;
+      padding: 36px 26px 30px 26px;
+      margin: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    h1 {
+      color: #1976d2;
+      margin-bottom: 4px;
+      letter-spacing: 2px;
+      font-size: 1.6em;
+      font-weight: 800;
+    }
+    #progress {
+      color: #1393b0;
+      font-weight: 600;
+      background: #f0f7fa;
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 1em;
+      margin-bottom: 16px;
+    }
+    #tipe {
+      font-size: 1em;
+      font-weight: 600;
+      color: #1976d2;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    #soal {
+      font-size: 1.35em;
+      margin: 16px 0 22px 0;
+      color: #222;
+      min-height: 44px;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      word-spacing: 0.4em;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    #input-jawaban {
+      width: 100%;
+      padding: 13px 13px;
+      font-size: 1.05em;
+      border: 2px solid #b7e0ef;
+      border-radius: 8px;
+      outline: none;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+      background: #f7fdff;
+      box-sizing: border-box;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: .09em;
+    }
+    #input-jawaban:focus {
+      border-color: #1976d2;
+      background: #e6f7fb;
+    }
+    #submit, #next, #restart-btn {
+      width: 100%;
+      padding: 13px 0;
+      margin: 14px 0 0 0;
+      font-size: 1.1em;
+      font-weight: 600;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #1976d2 60%, #6dd5ed 100%);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(25, 118, 210, 0.11);
+      transition: background 0.22s, transform 0.13s;
+      display: block;
+    }
+    #submit:disabled {
+      background: #b1bfd6;
+      color: #eaeaea;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    #next {
+      background: linear-gradient(90deg, #43cea2 60%, #185a9d 100%);
+      display: none;
+    }
+    #restart-btn {
+      background: linear-gradient(90deg, #f7971e 60%, #ffd200 100%);
+      color: #333;
+      margin-top: 28px;
+      font-size: 1em;
+    }
+    #feedback {
+      min-height: 34px;
+      margin-top: 12px;
+      font-size: 1.09em;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      opacity: 0;
+      transition: opacity 0.26s, color 0.22s;
+    }
+    #feedback.show {
+      opacity: 1;
+      animation: pop 0.4s;
+    }
+    @keyframes pop {
+      0% { transform: scale(1.2);}
+      100% { transform: scale(1);}
+    }
+    #score {
+      font-size: 1.2em;
+      margin: 18px 0 6px 0;
+      color: #185a9d;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .hide { display: none; }
+
+    /* Sidebar & Hamburger */
+    .sidebar-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.66);
+      z-index: 99;
+      display: none;
+      transition: background 0.3s;
+      pointer-events: none;
+    }
+    .sidebar-backdrop.open {
+      display: block;
+      pointer-events: all;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 260px;
+      background: #ffffff;
+      box-shadow: 2px 0 16px 0 rgba(30,60,120,0.18);
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.27s cubic-bezier(.4,1.4,.6,1);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 22px 12px 22px;
+      border-bottom: 1px solid #e3e8ef;
+      background: #f3f9fd;
+    }
+    .sidebar-title {
+      font-size: 1.15em;
+      font-weight: bold;
+      color: #1976d2;
+      letter-spacing: 1px;
+    }
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #1976d2;
+      padding: 0;
+    }
+    .sidebar-logo-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 28px 0 18px 0;
+      background: #fff;
+    }
+    .sidebar-logo-link {
+      display: inline-block;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(25, 118, 210, 0.12);
+      background: #f5fafd;
+      padding: 0;
+      transition: box-shadow 0.18s, transform 0.15s;
+      border: 5px solid #f0f7fa;
+    }
+    .sidebar-logo-link:hover, .sidebar-logo-link:focus {
+      box-shadow: 0 4px 24px rgba(25, 118, 210, 0.25);
+      transform: scale(1.07);
+      outline: none;
+    }
+    .sidebar-logo-img {
+      width: 84px;
+      height: 84px;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      background: #fff;
+    }
+    .sidebar-content {
+      padding: 18px 22px;
+      font-size: 1.04em;
+      color: #21314a;
+      flex: 1;
+    }
+    .sidebar-content ul {
+      padding-left: 0;
+      margin: 10px 0 0 0;
+      list-style: none;
+    }
+    .sidebar-content ul li {
+      margin: 0 0 15px 0;
+    }
+    .sidebar-content ul a {
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.08em;
+      display: flex; align-items: center;
+      background: rgba(240,247,250,0.98);
+      border-radius: 8px;
+      padding: 10px 18px;
+      margin-bottom: 6px;
+      transition: color 0.19s, background 0.19s, box-shadow 0.21s;
+      box-shadow: 0 2px 6px rgba(25, 118, 210, 0.09);
+      border: 1px solid #e3e8ef;
+    }
+    .sidebar-content ul a:hover,
+    .sidebar-content ul a:focus {
+      background: #e7f2fc;
+      color: #43cea2;
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.13);
+      outline: none;
+    }
+    .sidebar-content ul .icon {
+      margin-right: 10px;
+      font-size: 1.15em;
+    }
+    @media(max-width: 520px) {
+      .container { padding: 24px 6vw 22px 6vw; }
+      h1 { font-size: 1.23em;}
+      .sidebar { width: 80vw; max-width: 310px;}
+    }
+    .menu-btn {
+      position: absolute;
+      left: 18px; top: 18px;
+      background: none;
+      border: none;
+      font-size: 1.45em;
+      cursor: pointer;
+      z-index: 110;
+      color: #1976d2;
+      transition: color 0.3s;
+    }
+    .menu-btn:focus { outline: none; }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-title">Game Menu</span>
+      <button class="sidebar-close" id="sidebar-close-btn" aria-label="Tutup menu">&times;</button>
+    </div>
+    <div class="sidebar-logo-wrap">
+      <a href="index.html" class="sidebar-logo-link" title="Ke halaman utama">
+        <img src="icon.png" alt="Logo" class="sidebar-logo-img" />
+      </a>
+    </div>
+    <div class="sidebar-content">
+      <ul>
+        <li>
+          <a href="asah-otak-sidebar-logo.html">
+            <span class="icon">🧠</span> Asah Otak
+          </a>
+        </li>
+        <li>
+          <a href="tebak-kata.html">
+            <span class="icon">🔤</span> Tebak Kata
+          </a>
+        </li>
+        <li>
+          <a href="tebak-gambar.html">
+            <span class="icon">🖼️</span> Tebak Gambar
+          </a>
+        </li>
+        <li>
+          <a href="cak-lontong.html">
+            <span class="icon">😂</span> Cak Lontong
+          </a>
+        </li>
+        <li>
+          <a href="siapakah-aku.html">
+            <span class="icon">❓</span> Siapakah Aku
+          </a>
+        </li>
+        <li>
+          <a href="susun-kata.html">
+            <span class="icon">🔡</span> Susun Kata
+          </a>
+        </li>
+        <li>
+          <a href="games/quiz-matematika.html">
+            <span class="icon">➗</span> Quiz Matematika
+          </a>
+        </li>
+      </ul>
+      <br>
+      <small>Source: <a href="https://github.com/ditss-dev/database" target="_blank" style="color:#1976d2;">GitHub</a></small>
+    </div>
+  </aside>
+  <div class="container">
+    <button class="menu-btn" id="menu-btn" aria-label="Buka menu">&#9776;</button>
+    <h1>Susun Kata</h1>
+    <div id="game">
+      <div id="progress"></div>
+      <div id="tipe"></div>
+      <div id="soal"></div>
+      <input type="text" id="input-jawaban" placeholder="Tulis jawabanmu di sini" autocomplete="off"/>
+      <button id="submit">Jawab</button>
+      <div id="feedback"></div>
+      <button id="next">Pertanyaan Selanjutnya</button>
+    </div>
+    <div id="result" class="hide">
+      <h2 style="color:#1976d2;font-size:1.3em;margin:12px 0 3px 0;">Selesai!</h2>
+      <div id="score"></div>
+      <button id="restart-btn" onclick="location.reload()">Main Lagi</button>
+    </div>
+  </div>
+  <script>
+    // SIDEBAR LOGIC
+    const sidebar = document.getElementById('sidebar');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+    const menuBtn = document.getElementById('menu-btn');
+    const closeBtn = document.getElementById('sidebar-close-btn');
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebarBackdrop.classList.add('open');
+    }
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebarBackdrop.classList.remove('open');
+    }
+    menuBtn.onclick = openSidebar;
+    closeBtn.onclick = closeSidebar;
+    sidebarBackdrop.onclick = closeSidebar;
+    document.addEventListener('keydown', function(e){
+      if (e.key === "Escape") closeSidebar();
+    });
+
+    // GAME LOGIC
+    const URL_SOAL = "https://raw.githubusercontent.com/ditss-dev/database/main/game/susunkata.json";
+    let soal = [];
+    let idx = 0;
+    let benar = 0;
+
+    function shuffle(arr) {
+      for (let i = arr.length-1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+    }
+
+    const progress = document.getElementById('progress');
+    const tipeDiv = document.getElementById('tipe');
+    const soalDiv = document.getElementById('soal');
+    const input = document.getElementById('input-jawaban');
+    const submit = document.getElementById('submit');
+    const feedback = document.getElementById('feedback');
+    const next = document.getElementById('next');
+    const result = document.getElementById('result');
+    const game = document.getElementById('game');
+    const score = document.getElementById('score');
+
+    function tampilkanSoal() {
+      if (idx >= soal.length) {
+        game.classList.add('hide');
+        result.classList.remove('hide');
+        score.textContent = `Nilai kamu: ${benar} dari ${soal.length}`;
+        return;
+      }
+      progress.textContent = `Soal ${idx+1} / ${soal.length}`;
+      tipeDiv.textContent = soal[idx].tipe ? `Kategori: ${soal[idx].tipe}` : '';
+      soalDiv.textContent = soal[idx].soal;
+      input.value = '';
+      input.disabled = false;
+      submit.disabled = false;
+      submit.style.display = 'block';
+      feedback.textContent = '';
+      feedback.classList.remove('show');
+      next.style.display = 'none';
+      input.focus();
+    }
+
+    function cekJawaban() {
+      let jwbn = input.value.trim();
+      submit.disabled = true;
+      input.disabled = true;
+      let benarJwb = soal[idx].jawaban.trim();
+      if (!jwbn) {
+        feedback.textContent = `Jawaban kosong! Jawaban yang benar: ${benarJwb}`;
+        feedback.style.color = '#ff9800';
+      } else if (jwbn.toUpperCase() === benarJwb.toUpperCase()) {
+        feedback.textContent = 'Benar!';
+        feedback.style.color = '#43a047';
+        benar++;
+      } else {
+        feedback.textContent = `Salah! Jawaban yang benar: ${benarJwb}`;
+        feedback.style.color = '#e53935';
+      }
+      feedback.classList.add('show');
+      next.style.display = 'block';
+    }
+
+    submit.onclick = cekJawaban;
+    input.addEventListener("keyup", function(e) {
+      if (e.key === "Enter" && !submit.disabled) cekJawaban();
+    });
+    next.onclick = function() {
+      idx++;
+      tampilkanSoal();
+    };
+
+    async function mulai() {
+      try {
+        let res = await fetch(URL_SOAL);
+        if (!res.ok) throw new Error("Gagal memuat soal.");
+        soal = await res.json();
+        shuffle(soal);
+        idx = 0; benar = 0;
+        tampilkanSoal();
+        submit.disabled = false;
+      } catch (e) {
+        game.innerHTML = `<p style="color:red;">Gagal memuat soal. Silakan cek koneksi internet atau sumber soal.<br><small>${e.message}</small></p>`;
+      }
+    }
+    mulai();
+  </script>
+</body>
+</html>

@@ -210,12 +210,14 @@
       display: block;
       background: #fff;
     }
-    .sidebar-content {
-      padding: 18px 22px;
-      font-size: 1.04em;
-      color: #21314a;
-      flex: 1;
-    }
+.sidebar-content {
+  padding: 18px 22px;
+  font-size: 1.04em;
+  color: #21314a;
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 180px); /* Nilai 180px bisa diubah sesuai tinggi header+logo */
+}
     .sidebar-content ul {
       padding-left: 0;
       margin: 10px 0 0 0;
@@ -269,7 +271,7 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
+    <!-- Sidebar -->
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -278,34 +280,69 @@
     </div>
     <div class="sidebar-logo-wrap">
       <a href="index.html" class="sidebar-logo-link" title="Ke halaman utama">
-        <img src="icon.png" alt="Logo" class="sidebar-logo-img" />
+        <img src="https://ditss.cloudicon.png" alt="Logo" class="sidebar-logo-img" />
       </a>
     </div>
     <div class="sidebar-content">
       <ul>
         <li>
-          <a href="asah-otak-sidebar-logo.html">
+          <a href="games/asah-otak.html">
             <span class="icon">🧠</span> Asah Otak
           </a>
         </li>
         <li>
-          <a href="tebak-kata.html">
+          <a href="games/tebak-kata.html">
             <span class="icon">🔤</span> Tebak Kata
           </a>
         </li>
         <li>
-          <a href="tebak-gambar.html">
+          <a href="games/tebak-gambar.html">
             <span class="icon">🖼️</span> Tebak Gambar
           </a>
         </li>
         <li>
-          <a href="cak-lontong.html">
+          <a href="games/cak-lontong.html">
             <span class="icon">😂</span> Cak Lontong
           </a>
         </li>
         <li>
-          <a href="siapakah-aku.html">
+          <a href="games/siapakah-aku.html">
             <span class="icon">❓</span> Siapakah Aku
+          </a>
+        </li>
+        <li>
+          <a href="games/susun-kata.html">
+            <span class="icon">🔡</span> Susun Kata
+          </a>
+        </li>
+        <li>
+          <a href="games/tebak-tebakan.html">
+            <span class="icon">🗯️</span> Tebak-Tebakan
+          </a>
+        </li>
+        <li>
+          <a href="games/tebak-anime.html">
+            <span class="icon">🎌</span> Tebak Anime
+          </a>
+        </li>
+        <li>
+          <a href="games/tebak-bendera.html">
+            <span class="icon">🏳️</span> Tebak Bendera
+          </a>
+        </li>
+        <li>
+          <a href="games/tebak-kalimat.html">
+            <span class="icon">✍️</span> Tebak Kalimat
+          </a>
+        </li>
+        <li>
+          <a href="games/tekateki.html">
+            <span class="icon">🧩</span> Teka-Teki
+          </a>
+        </li>
+        <li>
+          <a href="games/tebak-lagu.html">
+            <span class="icon">🎵</span> Tebak Lagu
           </a>
         </li>
         <li>

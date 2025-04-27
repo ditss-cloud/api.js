@@ -224,12 +224,14 @@
       display: block;
       background: #fff;
     }
-    .sidebar-content {
-      padding: 18px 22px;
-      font-size: 1.04em;
-      color: #21314a;
-      flex: 1;
-    }
+.sidebar-content {
+  padding: 18px 22px;
+  font-size: 1.04em;
+  color: #21314a;
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 180px); /* Nilai 180px bisa diubah sesuai tinggi header+logo */
+}
     .sidebar-content ul {
       padding-left: 0;
       margin: 10px 0 0 0;

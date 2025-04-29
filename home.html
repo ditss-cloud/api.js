@@ -8,16 +8,8 @@
   <link rel="icon" type="image/png" href="DitssGanteng.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
-      color: #1e293b;
-      min-height: 100vh;
-      margin: 0;
-    }
+    body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%); color: #1e293b; min-height: 100vh; margin: 0;}
     .profile-shadow {
       box-shadow: 0 10px 32px 0 rgba(44, 62, 80, 0.16),
                   0 2px 4px 0 rgba(44, 62, 80, 0.10);
@@ -68,10 +60,44 @@
     }
     .transition { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
     .sidebar {
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity .3s;
+      z-index: 50;
     }
-    .hide-scrollbar::-webkit-scrollbar { display: none; }
-    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .sidebar--show {
+      transform: translateX(0%);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .sidebar--hide {
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .sidebar-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.32);
+      z-index: 49;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .sidebar-overlay--show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (min-width: 768px) {
+      .sidebar {
+        position: relative !important;
+        transform: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 260px;
+      }
+      .sidebar-overlay { display: none !important; }
+    }
     @media (max-width: 768px) {
       .profile-blob {
         width: 140px;
@@ -83,7 +109,6 @@
   </style>
 </head>
 <body class="relative overflow-x-hidden">
-  <!-- Decorative Blob -->
   <div class="profile-blob"></div>
   <!-- Loading Screen -->
   <div id="loading-screen" class="fixed inset-0 flex items-center justify-center z-50 bg-white">
@@ -93,7 +118,6 @@
       <p class="text-sm text-gray-500">sabar bang</p>
     </div>
   </div>
-
   <!-- Profile Card (Landing) -->
   <div class="min-h-screen flex items-center justify-center px-2 py-8 relative z-10">
     <div id="profile-card" class="relative w-full max-w-md md:max-w-lg rounded-3xl profile-shadow bg-white/90 blur-bg p-6 md:p-8 pt-10 flex flex-col items-center text-center">
@@ -134,69 +158,72 @@
       </button>
     </div>
   </div>
-
-  <!-- Slide Sidebar Menu (hidden by default, show on btn click) -->
-  <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 transform -translate-x-full md:relative md:block md:translate-x-0 transition hide-scrollbar overflow-y-auto" style="display: none;">
+  <!-- Sidebar Overlay (mobile only) -->
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <!-- Sidebar: hidden by default on mobile, slide in on menu open -->
+  <div id="sidebar"
+    class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-xl sidebar--hide hide-scrollbar overflow-y-auto">
     <div class="flex flex-col h-full py-6 px-4">
       <div class="flex items-center space-x-3 px-2 mb-8">
         <img id="sidebar-logo" src="" alt="Logo" class="h-9 w-9 rounded-lg object-cover shadow-md border border-gray-200" />
         <span id="sidebar-title" class="text-xl font-semibold tracking-tight text-gray-800"></span>
       </div>
-      <nav class="space-y-1 transition-all duration-300" id="menu">
-        <!-- Menu will be injected here -->
-      </nav>
+      <nav class="space-y-1 transition-all duration-300" id="menu"></nav>
       <div class="mt-auto text-xs text-gray-500 pt-8 border-t border-gray-200">
         <span id="sidebar-footer"></span>
       </div>
     </div>
   </div>
-
   <script>
     // Loading screen
     window.addEventListener("load", function () {
       setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 900);
     });
 
-    // Sidebar logic: Hide by default on all screen, show only on menu click (except md up)
+    // Sidebar logic
     const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
     const openMenuBtn = document.getElementById('open-menu-btn');
 
     function showSidebar() {
-      sidebar.style.display = "block";
-      setTimeout(() => sidebar.classList.remove('-translate-x-full'), 10);
+      sidebar.classList.remove('sidebar--hide');
+      sidebar.classList.add('sidebar--show');
+      sidebarOverlay.classList.add('sidebar-overlay--show');
     }
     function hideSidebar() {
-      sidebar.classList.add('-translate-x-full');
-      setTimeout(() => { if(window.innerWidth < 768) sidebar.style.display = "none"; }, 350);
+      sidebar.classList.remove('sidebar--show');
+      sidebar.classList.add('sidebar--hide');
+      sidebarOverlay.classList.remove('sidebar-overlay--show');
     }
-
-    // Open menu
     if(openMenuBtn) {
       openMenuBtn.addEventListener('click', function(e) {
         showSidebar();
         e.stopPropagation();
       });
     }
-    // Hide sidebar on click outside
+    sidebarOverlay.addEventListener('click', hideSidebar);
     document.addEventListener('click', function(event) {
-      if (
-        sidebar.style.display !== "none" &&
-        !sidebar.contains(event.target) &&
-        !event.target.closest('#open-menu-btn') &&
-        sidebar.classList.contains('-translate-x-full') === false &&
-        window.innerWidth < 768
-      ) {
-        hideSidebar();
+      if(window.innerWidth < 768){
+        if (
+          sidebar.classList.contains('sidebar--show') &&
+          !sidebar.contains(event.target) &&
+          !event.target.closest('#open-menu-btn') &&
+          !sidebarOverlay.contains(event.target)
+        ) {
+          hideSidebar();
+        }
       }
     });
-    // Responsive: show sidebar if md up, hide if below md
     function sidebarResponsive() {
       if(window.innerWidth >= 768) {
+        sidebar.classList.remove('sidebar--hide','sidebar--show');
+        sidebarOverlay.classList.remove('sidebar-overlay--show');
         sidebar.style.display = "block";
-        sidebar.classList.remove('-translate-x-full');
       } else {
-        sidebar.classList.add('-translate-x-full');
-        sidebar.style.display = "none";
+        sidebar.classList.add('sidebar--hide');
+        sidebar.classList.remove('sidebar--show');
+        sidebarOverlay.classList.remove('sidebar-overlay--show');
+        sidebar.style.display = "block";
       }
     }
     window.addEventListener('resize', sidebarResponsive);
@@ -221,10 +248,8 @@
         }
       });
     }
-
     // Social icon: glowing effect on tap/click and open via intent for WhatsApp, Telegram, Instagram
     document.addEventListener('DOMContentLoaded', function() {
-      // Social icon touch/click glow
       document.querySelectorAll('.icon-social').forEach(function(el) {
         el.addEventListener('mousedown', function() {
           el.classList.add('active');
@@ -241,13 +266,11 @@
         el.addEventListener('touchend', function() {
           setTimeout(()=>el.classList.remove('active'), 300);
         });
-
         // Open intent link if WhatsApp/Telegram/Instagram
         el.addEventListener('click', function(e) {
           const type = el.getAttribute('data-sosmed');
           let href = el.getAttribute('href');
           if(type === 'whatsapp') {
-            // WhatsApp intent (open app if possible)
             if(/android|iphone|ipad/i.test(navigator.userAgent)){
               if(href.includes('wa.me')) {
                 href = href.replace(/^https?:\/\//, 'whatsapp://');
@@ -259,7 +282,6 @@
             e.preventDefault();
           }
           if(type === 'telegram') {
-            // Telegram intent
             if(/android|iphone|ipad/i.test(navigator.userAgent)){
               href = href.replace(/^https?:\/\//, 'tg://');
             }
@@ -267,7 +289,6 @@
             e.preventDefault();
           }
           if(type === 'instagram') {
-            // Instagram intent
             if(/android|iphone|ipad/i.test(navigator.userAgent)){
               href = href.replace(/^https?:\/\//, 'instagram://');
             }
@@ -277,7 +298,6 @@
         });
       });
     });
-
     // Load settings and content
     async function loadSettings() {
       try {
@@ -293,7 +313,6 @@
         document.getElementById("profile-pic").src = set.image;
         document.getElementById("contact-link").href = set.contact;
         document.getElementById("whatsapp-link").href = set.links;
-
         // Tambahkan Instagram dan Telegram jika ada di settings
         if (set.instagram) {
           let ig = document.getElementById("instagram-link");
@@ -305,12 +324,10 @@
           tg.href = set.telegram;
           tg.classList.remove("hidden");
         }
-
         // Sidebar (menu)
         document.getElementById("sidebar-logo").src = set.image;
         document.getElementById("sidebar-title").textContent = set.apititle;
         document.getElementById("sidebar-footer").textContent = `© ${new Date().getFullYear()} ${set.creator}`;
-
         // Build menu
         const menu = document.getElementById("menu");
         let menuHTML = `
@@ -341,7 +358,6 @@
             </div>`;
         });
         menu.innerHTML = menuHTML;
-
         // Battery status
         if ('getBattery' in navigator) {
           navigator.getBattery().then(battery => {
@@ -374,7 +390,6 @@
         } else {
           document.getElementById('battery-status').textContent = 'Not available';
         }
-
         // IP address
         fetch('https://api.ipify.org?format=json')
           .then(response => response.json())
@@ -384,7 +399,6 @@
           .catch(() => {
             document.getElementById('ip-address').textContent = 'Unable to fetch IP';
           });
-
       } catch (error) {
         console.error('Error loading settings:', error);
         document.getElementById("pagetitle").textContent = "Profile";
@@ -393,8 +407,6 @@
         document.getElementById("footer-text").textContent = `© ${new Date().getFullYear()} Profile`;
       }
     }
-
-    // Initialize the page
     loadSettings();
   </script>
 </body>

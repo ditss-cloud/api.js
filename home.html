@@ -59,21 +59,30 @@
       outline-offset: 2px;
     }
     .transition { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-    .sidebar {
+
+    /* SIDEBAR HIDDEN BY DEFAULT (MOBILE) */
+    #sidebar {
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity .3s;
       z-index: 50;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 260px;
+      background: #fff;
+      box-shadow: 0 10px 32px 0 rgba(44, 62, 80, 0.16),0 2px 4px 0 rgba(44, 62, 80, 0.10);
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+      display: block;
     }
-    .sidebar--show {
+    #sidebar.sidebar--show {
       transform: translateX(0%);
       opacity: 1;
       pointer-events: auto;
     }
-    .sidebar--hide {
-      transform: translateX(-100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-    .sidebar-overlay {
+    /* Overlay for mobile sidebar */
+    #sidebar-overlay {
       position: fixed;
       inset: 0;
       background: rgba(30, 41, 59, 0.32);
@@ -81,22 +90,24 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s;
+      display: block;
     }
-    .sidebar-overlay--show {
+    #sidebar-overlay.sidebar-overlay--show {
       opacity: 1;
       pointer-events: auto;
     }
     @media (min-width: 768px) {
-      .sidebar {
+      #sidebar {
         position: relative !important;
         transform: none !important;
         opacity: 1 !important;
         pointer-events: auto !important;
         left: 0 !important;
         top: 0 !important;
-        width: 260px;
+        height: 100vh;
+        display: block !important;
       }
-      .sidebar-overlay { display: none !important; }
+      #sidebar-overlay { display: none !important; }
     }
     @media (max-width: 768px) {
       .profile-blob {
@@ -158,11 +169,11 @@
       </button>
     </div>
   </div>
-  <!-- Sidebar Overlay (mobile only) -->
-  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <!-- Sidebar Overlay (mobile only, hidden by default) -->
+  <div id="sidebar-overlay" class=""></div>
   <!-- Sidebar: hidden by default on mobile, slide in on menu open -->
   <div id="sidebar"
-    class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-xl sidebar--hide hide-scrollbar overflow-y-auto">
+    class="hide-scrollbar overflow-y-auto">
     <div class="flex flex-col h-full py-6 px-4">
       <div class="flex items-center space-x-3 px-2 mb-8">
         <img id="sidebar-logo" src="" alt="Logo" class="h-9 w-9 rounded-lg object-cover shadow-md border border-gray-200" />
@@ -186,13 +197,11 @@
     const openMenuBtn = document.getElementById('open-menu-btn');
 
     function showSidebar() {
-      sidebar.classList.remove('sidebar--hide');
       sidebar.classList.add('sidebar--show');
       sidebarOverlay.classList.add('sidebar-overlay--show');
     }
     function hideSidebar() {
       sidebar.classList.remove('sidebar--show');
-      sidebar.classList.add('sidebar--hide');
       sidebarOverlay.classList.remove('sidebar-overlay--show');
     }
     if(openMenuBtn) {
@@ -216,14 +225,13 @@
     });
     function sidebarResponsive() {
       if(window.innerWidth >= 768) {
-        sidebar.classList.remove('sidebar--hide','sidebar--show');
-        sidebarOverlay.classList.remove('sidebar-overlay--show');
-        sidebar.style.display = "block";
-      } else {
-        sidebar.classList.add('sidebar--hide');
         sidebar.classList.remove('sidebar--show');
+        sidebar.classList.remove('sidebar--hide');
         sidebarOverlay.classList.remove('sidebar-overlay--show');
-        sidebar.style.display = "block";
+      } else {
+        sidebar.classList.remove('sidebar--show');
+        sidebar.classList.remove('sidebar--hide');
+        sidebarOverlay.classList.remove('sidebar-overlay--show');
       }
     }
     window.addEventListener('resize', sidebarResponsive);

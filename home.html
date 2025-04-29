@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="pagetitle"></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/png" href="DitssGanteng.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+      color: #1e293b;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .profile-shadow {
+      box-shadow: 0 10px 32px 0 rgba(44, 62, 80, 0.16),
+                  0 2px 4px 0 rgba(44, 62, 80, 0.10);
+    }
+    .profile-blob {
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 240px;
+      height: 240px;
+      background: linear-gradient(135deg, #6366f1 0%, #60a5fa 100%);
+      opacity: 0.2;
+      border-radius: 50% 45% 70% 40% / 50% 60% 40% 55%;
+      z-index: 0;
+      filter: blur(8px);
+      pointer-events: none;
+    }
+    .blur-bg {
+      backdrop-filter: blur(8px);
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+    .icon-social:hover {
+      transform: scale(1.15) rotate(-6deg);
+      filter: brightness(1.2);
+    }
+    .transition { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+    .sidebar {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    /* Responsive fix for the profile card */
+    @media (max-width: 768px) {
+      .profile-blob {
+        width: 140px;
+        height: 140px;
+        top: -30px;
+        right: -30px;
+      }
+    }
+  </style>
+</head>
+<body class="relative overflow-x-hidden">
+  <!-- Decorative Blob -->
+  <div class="profile-blob"></div>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="fixed inset-0 flex items-center justify-center z-50 bg-white">
+    <div class="text-center space-y-4">
+      <div class="spinner rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-500 mx-auto animate-spin"></div>
+      <p class="text-lg font-medium text-gray-700">memuat informasi keren 😎</p>
+      <p class="text-sm text-gray-500">sabar bang</p>
+    </div>
+  </div>
+
+  <!-- Profile Card (Landing) -->
+  <div class="min-h-screen flex items-center justify-center px-2 py-8 relative z-10">
+    <div id="profile-card" class="relative w-full max-w-md md:max-w-lg rounded-3xl profile-shadow bg-white/90 blur-bg p-6 md:p-8 pt-10 flex flex-col items-center text-center">
+      <img id="profile-pic" src="" alt="Profile" class="w-24 h-24 md:w-28 md:h-28 rounded-full border-4 border-blue-200 object-cover shadow-lg mb-4 transition" />
+      <h1 id="webtitle" class="text-2xl md:text-3xl font-bold mb-1 text-gray-800"></h1>
+      <h2 id="pagetitle-text" class="text-sm md:text-base font-medium text-gray-500 mb-2"></h2>
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-4">
+        <span id="status-badge" class="flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 mr-2 mb-1">
+          <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+          Aktif
+        </span>
+        <span id="ip-address" class="flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-600 mb-1">
+          <i class="fa-solid fa-server mr-1"></i>
+          Fetching IP...
+        </span>
+        <span id="battery-status" class="flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-50 text-yellow-700 mb-1">
+          <i class="fas fa-battery-three-quarters mr-1"></i>
+          Fetching...
+        </span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center space-x-3 mt-2 mb-6">
+        <a id="contact-link" href="#" target="_blank" class="icon-social transition bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 shadow-md mb-2" title="Contact">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a id="whatsapp-link" href="#" target="_blank" class="icon-social transition bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-md mb-2" title="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
+      <div class="text-xs text-gray-400 mt-4" id="footer-text"></div>
+      <button id="open-menu-btn" class="mt-6 px-5 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow transition md:hidden">
+        <i class="fas fa-bars mr-2"></i> Menu
+      </button>
+    </div>
+  </div>
+
+  <!-- Slide Sidebar Menu (hidden by default, show on btn click) -->
+  <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 transform -translate-x-full md:translate-x-0 md:relative md:block transition hide-scrollbar overflow-y-auto">
+    <div class="flex flex-col h-full py-6 px-4">
+      <div class="flex items-center space-x-3 px-2 mb-8">
+        <img id="sidebar-logo" src="" alt="Logo" class="h-9 w-9 rounded-lg object-cover shadow-md border border-gray-200" />
+        <span id="sidebar-title" class="text-xl font-semibold tracking-tight text-gray-800"></span>
+      </div>
+      <nav class="space-y-1 transition-all duration-300" id="menu">
+        <!-- Menu will be injected here -->
+      </nav>
+      <div class="mt-auto text-xs text-gray-500 pt-8 border-t border-gray-200">
+        <span id="sidebar-footer"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Loading screen
+    window.addEventListener("load", function () {
+      setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 900);
+    });
+
+    // Sidebar toggle (mobile)
+    const sidebar = document.getElementById('sidebar');
+    const openMenuBtn = document.getElementById('open-menu-btn');
+    if(openMenuBtn) {
+      openMenuBtn.addEventListener('click', function(e) {
+        sidebar.classList.toggle('-translate-x-full');
+        e.stopPropagation();
+      });
+    }
+    document.addEventListener('click', function(event) {
+      if (!sidebar.contains(event.target) && !event.target.closest('#open-menu-btn') && sidebar.classList.contains('-translate-x-full') === false && window.innerWidth < 768) {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+
+    // Dropdown toggle (for sidebar menu)
+    function toggleDropdown(dropdownId, chevronId) {
+      const dropdown = document.getElementById(dropdownId);
+      const chevron = document.getElementById(chevronId);
+      dropdown.classList.toggle('collapsed');
+      dropdown.classList.toggle('expanded');
+      chevron.classList.toggle('rotated');
+      document.querySelectorAll('.dropdown-content').forEach(el => {
+        if (el.id !== dropdownId && el.classList.contains('expanded')) {
+          el.classList.remove('expanded');
+          el.classList.add('collapsed');
+        }
+      });
+      document.querySelectorAll('.chevron').forEach(el => {
+        if (el.id !== chevronId && el.classList.contains('rotated')) {
+          el.classList.remove('rotated');
+        }
+      });
+    }
+
+    // Load settings and content
+    async function loadSettings() {
+      try {
+        const [settings, set] = await Promise.all([
+          fetch("/endpoints.json").then(res => res.json()),
+          fetch("/settings2.json").then(res => res.json())
+        ]);
+        // Profile Card
+        document.getElementById("pagetitle").textContent = set.pagetitle;
+        document.getElementById("pagetitle-text").textContent = set.pagetitle;
+        document.getElementById("footer-text").textContent = `© ${new Date().getFullYear()} ${set.creator}. All rights reserved.`;
+        document.getElementById("webtitle").textContent = set.apititle;
+        document.getElementById("profile-pic").src = set.image;
+        document.getElementById("contact-link").href = set.contact;
+        document.getElementById("whatsapp-link").href = set.links;
+
+        // Sidebar (menu)
+        document.getElementById("sidebar-logo").src = set.image;
+        document.getElementById("sidebar-title").textContent = set.apititle;
+        document.getElementById("sidebar-footer").textContent = `© ${new Date().getFullYear()} ${set.creator}`;
+
+        // Build menu
+        const menu = document.getElementById("menu");
+        let menuHTML = `
+          <a class="menu-item flex items-center space-x-3 py-3 px-4 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600" href="${window.location.origin}/">
+            <i class="fas fa-tachometer-alt w-5 text-center"></i>
+            <span>Dashboard</span>
+          </a>`;
+        settings.forEach((item, index) => {
+          menuHTML += `
+            <div class="space-y-1">
+              <button class="menu-item flex items-center justify-between w-full py-3 px-4 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600" 
+                      onclick="toggleDropdown('dropdown-${index}', 'chevron-${index}')">
+                <div class="flex items-center space-x-3">
+                  <i class='${item.icon} w-5 text-center'></i>
+                  <span>${item.category}</span>
+                </div>
+                <i id="chevron-${index}" class="chevron fas fa-chevron-down text-sm"></i>
+              </button>
+              <div id="dropdown-${index}" class="dropdown-content collapsed ml-8 pl-2 border-l-2 border-gray-200">
+                ${item.api.slice().sort((a, b) => a.name.localeCompare(b.name))
+                  .map(api => `
+                    <a class="menu-item flex items-center space-x-2 py-2 px-3 rounded-lg text-gray-600 hover:bg-blue-50 hover:text-blue-600 text-sm" 
+                       href="${window.location.origin}${api.path}">
+                      <i class="fa-regular fa-circle text-[8px] text-blue-400"></i>
+                      <span>${api.name}</span>
+                    </a>`).join('')}
+              </div>
+            </div>`;
+        });
+        menu.innerHTML = menuHTML;
+
+        // Battery status
+        if ('getBattery' in navigator) {
+          navigator.getBattery().then(battery => {
+            function updateBattery() {
+              const batteryEl = document.getElementById('battery-status');
+              const level = Math.round(battery.level * 100);
+              let icon, colorClass;
+              if (level > 80) {
+                icon = 'fa-battery-full';
+                colorClass = 'text-green-500';
+              } else if (level > 50) {
+                icon = 'fa-battery-three-quarters';
+                colorClass = 'text-yellow-500';
+              } else if (level > 20) {
+                icon = 'fa-battery-half';
+                colorClass = 'text-yellow-700';
+              } else {
+                icon = 'fa-battery-quarter';
+                colorClass = 'text-red-600';
+              }
+              batteryEl.innerHTML = `
+                <i class="fas ${icon} mr-1 ${colorClass}"></i>
+                ${level}% ${battery.charging ? '(Charging)' : ''}
+              `;
+            }
+            updateBattery();
+            battery.addEventListener('levelchange', updateBattery);
+            battery.addEventListener('chargingchange', updateBattery);
+          });
+        } else {
+          document.getElementById('battery-status').textContent = 'Not available';
+        }
+
+        // IP address
+        fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById('ip-address').innerHTML = `<i class="fa-solid fa-server mr-1"></i>${data.ip}`;
+          })
+          .catch(() => {
+            document.getElementById('ip-address').textContent = 'Unable to fetch IP';
+          });
+
+      } catch (error) {
+        console.error('Error loading settings:', error);
+        document.getElementById("pagetitle").textContent = "API Dashboard";
+        document.getElementById("webtitle").textContent = "API Dashboard";
+        document.getElementById("pagetitle-text").textContent = "API Dashboard";
+        document.getElementById("footer-text").textContent = `© ${new Date().getFullYear()} API Dashboard`;
+      }
+    }
+
+    // Initialize the page
+    loadSettings();
+  </script>
+</body>
+</html>

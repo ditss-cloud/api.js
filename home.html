@@ -39,9 +39,32 @@
       backdrop-filter: blur(8px);
       background-color: rgba(255, 255, 255, 0.6);
     }
-    .icon-social:hover {
-      transform: scale(1.15) rotate(-6deg);
-      filter: brightness(1.2);
+    .icon-social {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 8px 0 rgba(44,62,80,0.09);
+    }
+    .icon-social.active, .icon-social:active {
+      filter: brightness(1.3) drop-shadow(0 0 10px #60a5fa);
+      outline: 2px solid #60a5fa;
+      outline-offset: 2px;
+    }
+    .icon-social[data-sosmed="whatsapp"].active,
+    .icon-social[data-sosmed="whatsapp"]:active {
+      filter: brightness(1.3) drop-shadow(0 0 10px #22c55e);
+      outline: 2px solid #22c55e;
+      outline-offset: 2px;
+    }
+    .icon-social[data-sosmed="instagram"].active,
+    .icon-social[data-sosmed="instagram"]:active {
+      filter: brightness(1.3) drop-shadow(0 0 10px #e1306c);
+      outline: 2px solid #e1306c;
+      outline-offset: 2px;
+    }
+    .icon-social[data-sosmed="telegram"].active,
+    .icon-social[data-sosmed="telegram"]:active {
+      filter: brightness(1.3) drop-shadow(0 0 10px #229ED9);
+      outline: 2px solid #229ED9;
+      outline-offset: 2px;
     }
     .transition { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
     .sidebar {
@@ -49,7 +72,6 @@
     }
     .hide-scrollbar::-webkit-scrollbar { display: none; }
     .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    /* Responsive fix for the profile card */
     @media (max-width: 768px) {
       .profile-blob {
         width: 140px;
@@ -93,11 +115,17 @@
         </span>
       </div>
       <div class="flex flex-wrap items-center justify-center space-x-3 mt-2 mb-6">
-        <a id="contact-link" href="#" target="_blank" class="icon-social transition bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 shadow-md mb-2" title="Contact">
+        <a id="contact-link" data-sosmed="email" href="#" target="_blank" class="icon-social transition bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3 shadow-md mb-2" title="Email">
           <i class="fas fa-envelope"></i>
         </a>
-        <a id="whatsapp-link" href="#" target="_blank" class="icon-social transition bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-md mb-2" title="WhatsApp">
+        <a id="whatsapp-link" data-sosmed="whatsapp" href="#" target="_blank" class="icon-social transition bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-md mb-2" title="WhatsApp">
           <i class="fab fa-whatsapp"></i>
+        </a>
+        <a id="instagram-link" data-sosmed="instagram" href="#" target="_blank" class="icon-social transition bg-gradient-to-br from-pink-500 to-yellow-500 hover:from-pink-600 hover:to-yellow-600 text-white rounded-full p-3 shadow-md mb-2 hidden" title="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a id="telegram-link" data-sosmed="telegram" href="#" target="_blank" class="icon-social transition bg-blue-400 hover:bg-blue-500 text-white rounded-full p-3 shadow-md mb-2 hidden" title="Telegram">
+          <i class="fab fa-telegram-plane"></i>
         </a>
       </div>
       <div class="text-xs text-gray-400 mt-4" id="footer-text"></div>
@@ -108,7 +136,7 @@
   </div>
 
   <!-- Slide Sidebar Menu (hidden by default, show on btn click) -->
-  <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 transform -translate-x-full md:translate-x-0 md:relative md:block transition hide-scrollbar overflow-y-auto">
+  <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white shadow-xl z-50 transform -translate-x-full md:relative md:block md:translate-x-0 transition hide-scrollbar overflow-y-auto" style="display: none;">
     <div class="flex flex-col h-full py-6 px-4">
       <div class="flex items-center space-x-3 px-2 mb-8">
         <img id="sidebar-logo" src="" alt="Logo" class="h-9 w-9 rounded-lg object-cover shadow-md border border-gray-200" />
@@ -129,20 +157,50 @@
       setTimeout(() => document.getElementById("loading-screen").classList.add("hidden"), 900);
     });
 
-    // Sidebar toggle (mobile)
+    // Sidebar logic: Hide by default on all screen, show only on menu click (except md up)
     const sidebar = document.getElementById('sidebar');
     const openMenuBtn = document.getElementById('open-menu-btn');
+
+    function showSidebar() {
+      sidebar.style.display = "block";
+      setTimeout(() => sidebar.classList.remove('-translate-x-full'), 10);
+    }
+    function hideSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      setTimeout(() => { if(window.innerWidth < 768) sidebar.style.display = "none"; }, 350);
+    }
+
+    // Open menu
     if(openMenuBtn) {
       openMenuBtn.addEventListener('click', function(e) {
-        sidebar.classList.toggle('-translate-x-full');
+        showSidebar();
         e.stopPropagation();
       });
     }
+    // Hide sidebar on click outside
     document.addEventListener('click', function(event) {
-      if (!sidebar.contains(event.target) && !event.target.closest('#open-menu-btn') && sidebar.classList.contains('-translate-x-full') === false && window.innerWidth < 768) {
-        sidebar.classList.add('-translate-x-full');
+      if (
+        sidebar.style.display !== "none" &&
+        !sidebar.contains(event.target) &&
+        !event.target.closest('#open-menu-btn') &&
+        sidebar.classList.contains('-translate-x-full') === false &&
+        window.innerWidth < 768
+      ) {
+        hideSidebar();
       }
     });
+    // Responsive: show sidebar if md up, hide if below md
+    function sidebarResponsive() {
+      if(window.innerWidth >= 768) {
+        sidebar.style.display = "block";
+        sidebar.classList.remove('-translate-x-full');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        sidebar.style.display = "none";
+      }
+    }
+    window.addEventListener('resize', sidebarResponsive);
+    window.addEventListener('DOMContentLoaded', sidebarResponsive);
 
     // Dropdown toggle (for sidebar menu)
     function toggleDropdown(dropdownId, chevronId) {
@@ -164,6 +222,62 @@
       });
     }
 
+    // Social icon: glowing effect on tap/click and open via intent for WhatsApp, Telegram, Instagram
+    document.addEventListener('DOMContentLoaded', function() {
+      // Social icon touch/click glow
+      document.querySelectorAll('.icon-social').forEach(function(el) {
+        el.addEventListener('mousedown', function() {
+          el.classList.add('active');
+        });
+        el.addEventListener('touchstart', function() {
+          el.classList.add('active');
+        });
+        el.addEventListener('mouseup', function() {
+          setTimeout(()=>el.classList.remove('active'), 200);
+        });
+        el.addEventListener('mouseleave', function() {
+          el.classList.remove('active');
+        });
+        el.addEventListener('touchend', function() {
+          setTimeout(()=>el.classList.remove('active'), 300);
+        });
+
+        // Open intent link if WhatsApp/Telegram/Instagram
+        el.addEventListener('click', function(e) {
+          const type = el.getAttribute('data-sosmed');
+          let href = el.getAttribute('href');
+          if(type === 'whatsapp') {
+            // WhatsApp intent (open app if possible)
+            if(/android|iphone|ipad/i.test(navigator.userAgent)){
+              if(href.includes('wa.me')) {
+                href = href.replace(/^https?:\/\//, 'whatsapp://');
+              } else {
+                href = 'whatsapp://send?text=Hallo&phone=' + encodeURIComponent(href.replace(/.*?(\d{8,})/, '$1'));
+              }
+            }
+            window.open(href, '_blank');
+            e.preventDefault();
+          }
+          if(type === 'telegram') {
+            // Telegram intent
+            if(/android|iphone|ipad/i.test(navigator.userAgent)){
+              href = href.replace(/^https?:\/\//, 'tg://');
+            }
+            window.open(href, '_blank');
+            e.preventDefault();
+          }
+          if(type === 'instagram') {
+            // Instagram intent
+            if(/android|iphone|ipad/i.test(navigator.userAgent)){
+              href = href.replace(/^https?:\/\//, 'instagram://');
+            }
+            window.open(href, '_blank');
+            e.preventDefault();
+          }
+        });
+      });
+    });
+
     // Load settings and content
     async function loadSettings() {
       try {
@@ -179,6 +293,18 @@
         document.getElementById("profile-pic").src = set.image;
         document.getElementById("contact-link").href = set.contact;
         document.getElementById("whatsapp-link").href = set.links;
+
+        // Tambahkan Instagram dan Telegram jika ada di settings
+        if (set.instagram) {
+          let ig = document.getElementById("instagram-link");
+          ig.href = set.instagram;
+          ig.classList.remove("hidden");
+        }
+        if (set.telegram) {
+          let tg = document.getElementById("telegram-link");
+          tg.href = set.telegram;
+          tg.classList.remove("hidden");
+        }
 
         // Sidebar (menu)
         document.getElementById("sidebar-logo").src = set.image;
@@ -261,10 +387,10 @@
 
       } catch (error) {
         console.error('Error loading settings:', error);
-        document.getElementById("pagetitle").textContent = "API Dashboard";
-        document.getElementById("webtitle").textContent = "API Dashboard";
-        document.getElementById("pagetitle-text").textContent = "API Dashboard";
-        document.getElementById("footer-text").textContent = `© ${new Date().getFullYear()} API Dashboard`;
+        document.getElementById("pagetitle").textContent = "Profile";
+        document.getElementById("webtitle").textContent = "Profile";
+        document.getElementById("pagetitle-text").textContent = "Profile";
+        document.getElementById("footer-text").textContent = `© ${new Date().getFullYear()} Profile`;
       }
     }
 

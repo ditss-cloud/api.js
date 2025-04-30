@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simplebot Database</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(to right, #f0f4ff, #e4e9ff);
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 32px;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-width: 520px;
+      width: 100%;
+      color: #1f2937;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.9s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;      
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      background: linear-gradient(to right, #7c3aed, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      padding: 12px 14px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    }
+
+    button {
+      padding: 12px;
+      font-size: 16px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #4338ca;
+    }
+
+    .alert {
+      color: #065f46;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .search-box .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 14px;
+      transform: translateY(-50%);
+      color: #9ca3af;
+      font-size: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 12px 12px 12px 42px;
+      font-size: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      transition: border-color 0.3s ease;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #1f2937;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background-color: #f9fafb;
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 35px;
+      text-align: center;
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .footer a {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>akses database</h1>
+
+    <form action="/add" method="POST">
+      <input type="text" name="number" placeholder="Masukkan nomor" required />
+      <button type="submit">Tambah Nomor</button>
+    </form>
+    
+    <div class="search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="searchInput" placeholder="Cari nomor..." onkeyup="filterTable()" />
+    </div>
+
+    <table id="numberTable">
+      <tr>
+        <th>Nomor</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>6285624297893</td>
+        <td>active</td>
+      </tr>
+      <tr>
+        <td>6283823097751</td>
+        <td>blacklist</td>
+      </tr>
+    </table>
+
+    <div class="footer">
+      <a href="https://wa.me/6281513607731" target="_blank">Contact si ganteng</a>
+    </div>
+  </div>
+
+  <script>
+    function filterTable() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const table = document.getElementById("numberTable");
+      const tr = table.getElementsByTagName("tr");
+
+      for (let i = 1; i < tr.length; i++) {
+        const td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          const txtValue = td.textContent || td.innerText;
+          tr[i].style.display = txtValue.toLowerCase().includes(filter) ? "" : "none";
+        }
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const alertEl = document.querySelector(".alert");
+      if (alertEl) {
+        setTimeout(() => {
+          alertEl.style.transition = "opacity 0.5s ease-out";
+          alertEl.style.opacity = "0";
+          setTimeout(() => alertEl.remove(), 500);
+        }, 7000);
+      }
+    });
+  </script>
+</body>
+</html>

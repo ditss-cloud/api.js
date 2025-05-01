@@ -6,7 +6,7 @@ module.exports = function(app) {
         const { apikey, query } = req.query;
 
         // Validasi API Key
-        if (!global.apikey.includes(apikey)) {
+        if (!global.apikey || !global.apikey.includes(apikey)) {
             return res.json({ status: false, error: 'Apikey invalid' });
         }
 
@@ -17,11 +17,19 @@ module.exports = function(app) {
 
         try {
             const searchURL = `https://grupwa.com/?s=${encodeURIComponent(query)}`;
-            const { data } = await axios.get(searchURL);
+            
+            // Gunakan User-Agent untuk menghindari pemblokiran oleh situs target
+            const { data } = await axios.get(searchURL, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                }
+            });
+
             const $ = cheerio.load(data);
             const hasil = [];
 
-            $('.list-group .list-group-item').each((i, el) => {
+            // Perbarui selector sesuai dengan struktur HTML terbaru
+            $('.list-group-item').each((i, el) => {
                 const nama = $(el).find('h4').text().trim();
                 const link = $(el).find('a').attr('href');
                 if (nama && link && link.includes('chat.whatsapp.com')) {
@@ -29,10 +37,12 @@ module.exports = function(app) {
                 }
             });
 
+            // Jika tidak ada hasil
             if (hasil.length === 0) {
-                return res.json({ status: false, error: 'Grup tidak ditemukan' });
+                return res.json({ status: false, error: 'Grup tidak ditemukan, atau struktur HTML situs berubah.' });
             }
 
+            // Respon berhasil
             res.status(200).json({
                 status: true,
                 query,
@@ -41,7 +51,12 @@ module.exports = function(app) {
 
         } catch (error) {
             console.error('Error fetching group:', error.message);
-            res.status(500).json({ status: false, error: `Error: ${error.message}` });
+
+            // Tangani error dengan lebih informatif
+            res.status(500).json({ 
+                status: false, 
+                error: `Terjadi kesalahan saat mengambil data grup. Detail: ${error.message}` 
+            });
         }
     });
 };

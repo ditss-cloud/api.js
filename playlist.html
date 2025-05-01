@@ -300,7 +300,7 @@
     let isShuffle = false;
 
     async function fetchData() {
-      const res = await fetch('https://raw.githubusercontent.com/ditss-dev/database/main/musikk.json');
+      const res = await fetch('https://raw.githubusercontent.com/ditss-dev/Baileysss/main/musikk.json');
       const data = await res.text();
       playlist = eval(data);
       loadSong(current);

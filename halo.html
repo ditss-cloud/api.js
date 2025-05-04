@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ditss Ganteng</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .sidebar-modern {
+      background: #171c28;
+      border-right: 1.5px solid #222d3a;
+      color: #e0e6ed;
+    }
+    .sidebar-modern .menu-item {
+      @apply flex items-center gap-3 py-2 px-4 rounded transition-all duration-150;
+    }
+    .sidebar-modern .menu-item:hover,
+    .sidebar-modern .menu-item.active {
+      background: #21293a;
+      color: #38bdf8;
+    }
+    .sidebar-modern .chevron { transition: transform 0.3s; }
+    .sidebar-modern .chevron.rotated { transform: rotate(180deg); }
+    .dropdown-content { transition: max-height 0.3s, opacity 0.2s; overflow: hidden; }
+    .dropdown-content.collapsed { max-height: 0; opacity: 0; }
+    .dropdown-content.expanded { max-height: 400px; opacity: 1; }
+    .modern-card {
+      background: #232a3b;
+      border-radius: 1rem;
+      box-shadow: 0 8px 24px 0 rgba(30,41,59,0.13);
+      border: 1.5px solid #293042;
+      transition: transform 0.18s cubic-bezier(.4,2.4,.5,.99), box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .modern-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 16px 32px 0 rgba(52,152,253,0.13);
+      border-color: #38bdf8;
+    }
+    /* Glossy effect */
+    .glossy-effect::before {
+      content: "";
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 120%;
+      height: 120%;
+      background: linear-gradient(120deg, rgba(255,255,255,0) 60%, rgba(255,255,255,0.32) 80%, rgba(255,255,255,0) 100%);
+      transform: skew(-15deg);
+      pointer-events: none;
+      animation: glossy-move 2.5s linear infinite;
+    }
+    @keyframes glossy-move {
+      0% { top: -60%; left: -60%; }
+      60% { top: 120%; left: 120%; }
+      100% { top: 120%; left: 120%; }
+    }
+    .modern-avatar {
+      box-shadow: 0 0 0 3px #38bdf8;
+    }
+    .fade-up { opacity: 0; animation: fadeUp 1s ease forwards; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .fade-delay-1 { animation-delay: 0.25s;}
+    .fade-delay-2 { animation-delay: 0.45s;}
+    .fade-delay-3 { animation-delay: 0.65s;}
+    /* Header auto-hide support */
+    .-translate-y-full { transform: translateY(-100%);}
+  </style>
+</head>
+<body class="bg-[#161922] text-[#e0e6ed] min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar-modern w-64 fixed inset-y-0 left-0 z-30 flex flex-col py-8 px-4 gap-4 transform -translate-x-full md:translate-x-0 md:relative transition-all duration-300">
+    <div class="flex items-center gap-3 mb-8 px-2">
+      <img src="https://img.icons8.com/ios-filled/100/00ffff/source-code.png" class="w-11 h-11 rounded-xl object-cover modern-avatar" alt="Logo"/>
+      <div>
+        <div class="font-bold text-lg tracking-wide text-cyan-400">Ditss Ganteng</div>
+        <div class="text-xs text-[#6b7280]">Developer</div>
+      </div>
+    </div>
+    <!-- Menu paling atas -->
+    <nav class="flex flex-col gap-1 text-base font-semibold">
+      <a class="menu-item active" href="/"><i class="fas fa-home"></i> Beranda</a>
+      <a class="menu-item" href="/api-page/index2.html"><i class="fas fa-plug"></i> API's</a>
+      <a class="menu-item" href="download.html"><i class="fas fa-robot"></i> Download Bot</a>
+      <a class="menu-item" href="contact.html"><i class="fas fa-envelope"></i> My Contact</a>
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-produk', 'chevron-produk')">
+        <span class="flex items-center gap-2"><i class="fas fa-box"></i> Produk</span>
+        <i id="chevron-produk" class="chevron fas fa-chevron-down"></i>
+      </button>
+      <div id="dropdown-produk" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
+        <a class="menu-item text-sm" href="#"><i class="fas fa-mobile-alt"></i> Aplikasi Mobile</a>
+        <a class="menu-item text-sm" href="#"><i class="fas fa-globe"></i> Website</a>
+        <a class="menu-item text-sm" href="#"><i class="fas fa-robot"></i> Bot WhatsApp</a>
+      </div>
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-game', 'chevron-game')">
+        <span class="flex items-center gap-2"><i class="fas fa-gamepad"></i> Game</span>
+        <i id="chevron-game" class="chevron fas fa-chevron-down"></i>
+      </button>
+      <div id="dropdown-game" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
+        <a class="menu-item text-sm" href="#"><i class="fas fa-chess"></i> Mini Game</a>
+        <a class="menu-item text-sm" href="#"><i class="fas fa-puzzle-piece"></i> Puzzle</a>
+        <a class="menu-item text-sm" href="#"><i class="fas fa-football-ball"></i> Sports</a>
+      </div>
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-socmed', 'chevron-socmed')">
+        <span class="flex items-center gap-2"><i class="fas fa-link"></i> Social</span>
+        <i id="chevron-socmed" class="chevron fas fa-chevron-down"></i>
+      </button>
+      <div id="dropdown-socmed" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
+        <a class="menu-item text-sm" href="https://www.instagram.com/dits.v2?igsh=NmE3Mmt0MWRmc2Uz" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+        <a class="menu-item text-sm" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+        <a class="menu-item text-sm" href="https://x.com/AsumaMulti?t=UjHLiAxVzd3pbHdMaUPa1g&s=09" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+        <a class="menu-item text-sm" href="https://www.tiktok.com/@paadit?_t=ZS-8w4yErGlgf9&_r=1" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+        <a class="menu-item text-sm" href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a class="menu-item text-sm" href="https://youtube.com/@paaditt?si=WH8rU3myBcRBXrcx" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a class="menu-item text-sm" href="https://github.com/ditss-dev" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 min-h-screen flex flex-col md:ml-64 transition-all duration-300">
+    <!-- Header -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-[#181f2a] border-b border-[#232a3b] shadow-sm transition-all duration-300">
+      <div class="flex items-center justify-between px-6 py-5">
+        <button id="menu-btn" class="text-2xl md:hidden text-cyan-400 px-2 focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="text-2xl font-bold tracking-wide text-cyan-400 text-center flex-1 fade-up fade-delay-1">
+          Hi, I'm Ditss
+        </div>
+        <div class="w-8"></div>
+      </div>
+    </header>
+    <!-- Content -->
+    <main class="flex-1 overflow-y-auto px-6 py-20">
+      <p class="text-center text-[#a7b1c2] text-lg mb-4 fade-up fade-delay-2">Developer & Creator of Asuma Multi Device</p>
+      <div class="flex justify-center mb-10 fade-up fade-delay-2">
+        <div class="w-24 border-t-2 border-cyan-400"></div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 fade-up fade-delay-3">
+        <!-- Card 1 -->
+        <div class="modern-card glossy-effect p-7 flex flex-col items-center text-center">
+          <img src="https://img.icons8.com/ios-filled/100/00ffff/source-code.png" class="w-14 h-14 mb-4 modern-avatar" />
+          <h2 class="text-xl font-bold mb-2 text-cyan-300">Bot WhatsApp</h2>
+          <p class="text-sm text-[#a7b1c2] mb-4">Asuma MD dengan fitur AI, game, store, edukasi, dll.</p>
+          <a href="download.html" class="text-white bg-cyan-500 hover:bg-cyan-600 px-5 py-2 rounded font-semibold shadow mt-auto transition">Download Link</a>
+        </div>
+        <!-- Card 2 -->
+        <div class="modern-card glossy-effect p-7 flex flex-col items-center text-center">
+          <img src="https://img.icons8.com/ios-filled/100/00ffff/api.png" class="w-14 h-14 mb-4 modern-avatar"/>
+          <h2 class="text-xl font-bold mb-2 text-cyan-300">API's</h2>
+          <p class="text-sm text-[#a7b1c2] mb-4">Akses API publik Ditss: download, edukasi, AI, info nomor, dan banyak lagi.</p>
+          <a href="/api-page/index2.html" class="text-white bg-cyan-500 hover:bg-cyan-600 px-5 py-2 rounded font-semibold shadow mt-auto transition">Kunjungi API</a>
+        </div>
+        <!-- Card 3 -->
+        <div class="modern-card glossy-effect p-7 flex flex-col items-center text-center">
+          <img src="https://img.icons8.com/ios-filled/100/00ffff/idea.png" class="w-14 h-14 mb-4 modern-avatar"/>
+          <h2 class="text-xl font-bold mb-2 text-cyan-300">Portofolio Lainnya</h2>
+          <p class="text-sm text-[#a7b1c2] mb-4">Cek hasil karya, tools, dan project menarik dari Ditss.</p>
+          <a href="#" class="text-white bg-cyan-500 hover:bg-cyan-600 px-5 py-2 rounded font-semibold shadow mt-auto transition">Lihat Semua</a>
+        </div>
+      </div>
+      <p class="text-center text-xs text-[#7b8596] mt-12">© 2025 Ditss - All Rights Reserved</p>
+    </main>
+  </div>
+
+  <script>
+    // Sidebar mobile toggle
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menu-btn');
+    menuBtn.addEventListener('click', (event) => {
+      sidebar.classList.toggle('-translate-x-full');
+      event.stopPropagation();
+    });
+    document.addEventListener('click', (event) => {
+      if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && !sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.add('-translate-x-full');
+      }
+    });
+    // Dropdown menu
+    function toggleDropdown(dropdownId, chevronId) {
+      const dropdown = document.getElementById(dropdownId);
+      const chevron = document.getElementById(chevronId);
+      dropdown.classList.toggle('collapsed');
+      dropdown.classList.toggle('expanded');
+      chevron.classList.toggle('rotated');
+      document.querySelectorAll('.dropdown-content').forEach(el => {
+        if (el.id !== dropdownId && el.classList.contains('expanded')) {
+          el.classList.remove('expanded');
+          el.classList.add('collapsed');
+        }
+      });
+      document.querySelectorAll('.chevron').forEach(el => {
+        if (el.id !== chevronId && el.classList.contains('rotated')) {
+          el.classList.remove('rotated');
+        }
+      });
+    }
+    // Header auto-hide on scroll
+    let prevScrollPos = window.scrollY;
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', function() {
+      const currentScrollPos = window.scrollY;
+      if (currentScrollPos > prevScrollPos && currentScrollPos > 60) {
+        header.classList.add('-translate-y-full');
+      } else {
+        header.classList.remove('-translate-y-full');
+      }
+      prevScrollPos = currentScrollPos;
+    });
+    // Fade-up anim
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('animate-visible');
+      });
+    });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+</body>
+            </html>

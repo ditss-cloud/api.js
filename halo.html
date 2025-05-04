@@ -72,6 +72,8 @@
     .fade-delay-3 { animation-delay: 0.65s;}
     /* Header auto-hide support */
     .-translate-y-full { transform: translateY(-100%);}
+    /* Hide header in mobile when sidebar open */
+    .header-hidden { display: none !important; }
   </style>
 </head>
 <body class="bg-[#161922] text-[#e0e6ed] min-h-screen flex">
@@ -176,13 +178,21 @@
     // Sidebar mobile toggle
     const sidebar = document.getElementById('sidebar');
     const menuBtn = document.getElementById('menu-btn');
+    const header = document.getElementById('main-header');
     menuBtn.addEventListener('click', (event) => {
       sidebar.classList.toggle('-translate-x-full');
+      // Sembunyikan header saat sidebar terbuka di mobile
+      if (sidebar.classList.contains('-translate-x-full')) {
+        header.classList.remove('header-hidden');
+      } else {
+        header.classList.add('header-hidden');
+      }
       event.stopPropagation();
     });
     document.addEventListener('click', (event) => {
       if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && !sidebar.classList.contains('-translate-x-full')) {
         sidebar.classList.add('-translate-x-full');
+        header.classList.remove('header-hidden'); // Tampilkan lagi header
       }
     });
     // Dropdown menu
@@ -206,7 +216,6 @@
     }
     // Header auto-hide on scroll
     let prevScrollPos = window.scrollY;
-    const header = document.getElementById('main-header');
     window.addEventListener('scroll', function() {
       const currentScrollPos = window.scrollY;
       if (currentScrollPos > prevScrollPos && currentScrollPos > 60) {
@@ -225,4 +234,4 @@
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
 </body>
-            </html>
+</html>

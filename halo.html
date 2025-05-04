@@ -16,6 +16,7 @@
     }
     .sidebar-modern .menu-item {
       @apply flex items-center gap-3 py-2 px-4 rounded transition-all duration-150;
+      margin-bottom: 2px;
     }
     .sidebar-modern .menu-item:hover,
     .sidebar-modern .menu-item.active {
@@ -35,6 +36,7 @@
       transition: transform 0.18s cubic-bezier(.4,2.4,.5,.99), box-shadow 0.2s;
       position: relative;
       overflow: hidden;
+      margin-bottom: 12px;
     }
     .modern-card:hover {
       transform: translateY(-4px) scale(1.02);
@@ -74,6 +76,40 @@
     .-translate-y-full { transform: translateY(-100%);}
     /* Hide header in mobile when sidebar open */
     .header-hidden { display: none !important; }
+    /* Responsive header font */
+    @media (max-width: 640px) {
+      #main-header .text-2xl {
+        font-size: 1.1rem !important;
+      }
+    }
+    /* Sidebar padding mobile */
+    @media (max-width: 768px) {
+      .sidebar-modern {
+        padding-left: 0.65rem;
+        padding-right: 0.65rem;
+      }
+    }
+    /* Better contrast for small text */
+    .text-xs, .text-sm, .text-[#6b7280], .text-[#a7b1c2], .text-[#7b8596] {
+      color: #cdd5e1 !important;
+    }
+    /* Section custom */
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #38bdf8;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .section-card {
+      background: #202535;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #e0e6ed;
+      box-shadow: 0 2px 10px #21293a44;
+    }
   </style>
 </head>
 <body class="bg-[#161922] text-[#e0e6ed] min-h-screen flex">
@@ -81,9 +117,11 @@
   <!-- Sidebar -->
   <aside id="sidebar" class="sidebar-modern w-64 fixed inset-y-0 left-0 z-30 flex flex-col py-8 px-4 gap-4 transform -translate-x-full md:translate-x-0 md:relative transition-all duration-300">
     <div class="flex items-center gap-3 mb-8 px-2">
-      <img src="https://raw.githubusercontent.com/ditss-dev/Baileysss/main/api-page/IMG-20250312-WA0056.png" class="w-11 h-11 rounded-xl object-cover modern-avatar" alt="Logo"/>
+      <img src="https://img.icons8.com/ios-filled/100/00ffff/source-code.png" class="w-11 h-11 rounded-xl object-cover modern-avatar" alt="Logo"/>
       <div>
-        <div class="font-bold text-lg tracking-wide text-cyan-400">Ditss Ganteng</div>
+        <div class="font-bold text-lg tracking-wide text-cyan-400">
+          <span id="typing-ditss"></span>
+        </div>
         <div class="text-xs text-[#6b7280]">Developer</div>
       </div>
     </div>
@@ -93,36 +131,36 @@
       <a class="menu-item" href="/api-page/index2.html"><i class="fas fa-plug"></i> API's</a>
       <a class="menu-item" href="download.html"><i class="fas fa-robot"></i> Download Bot</a>
       <a class="menu-item" href="contact.html"><i class="fas fa-envelope"></i> My Contact</a>
-      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-produk', 'chevron-produk')">
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-produk', 'chevron-produk');">
         <span class="flex items-center gap-2"><i class="fas fa-box"></i> Produk</span>
         <i id="chevron-produk" class="chevron fas fa-chevron-down"></i>
       </button>
       <div id="dropdown-produk" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
-        <a class="menu-item text-sm" href="#"><i class="fas fa-mobile-alt"></i> Aplikasi Mobile</a>
-        <a class="menu-item text-sm" href="#"><i class="fas fa-globe"></i> Website</a>
-        <a class="menu-item text-sm" href="#"><i class="fas fa-robot"></i> Bot WhatsApp</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-mobile-alt"></i> Aplikasi Mobile</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-globe"></i> Website</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-robot"></i> Bot WhatsApp</a>
       </div>
-      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-game', 'chevron-game')">
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-game', 'chevron-game');">
         <span class="flex items-center gap-2"><i class="fas fa-gamepad"></i> Game</span>
         <i id="chevron-game" class="chevron fas fa-chevron-down"></i>
       </button>
       <div id="dropdown-game" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
-        <a class="menu-item text-sm" href="#"><i class="fas fa-chess"></i> Mini Game</a>
-        <a class="menu-item text-sm" href="#"><i class="fas fa-puzzle-piece"></i> Puzzle</a>
-        <a class="menu-item text-sm" href="#"><i class="fas fa-football-ball"></i> Sports</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-chess"></i> Mini Game</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-puzzle-piece"></i> Puzzle</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-football-ball"></i> Sports</a>
       </div>
-      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-socmed', 'chevron-socmed')">
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-socmed', 'chevron-socmed');">
         <span class="flex items-center gap-2"><i class="fas fa-link"></i> Social</span>
         <i id="chevron-socmed" class="chevron fas fa-chevron-down"></i>
       </button>
       <div id="dropdown-socmed" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
-        <a class="menu-item text-sm" href="https://www.instagram.com/dits.v2?igsh=NmE3Mmt0MWRmc2Uz" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        <a class="menu-item text-sm" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
-        <a class="menu-item text-sm" href="https://x.com/AsumaMulti?t=UjHLiAxVzd3pbHdMaUPa1g&s=09" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-        <a class="menu-item text-sm" href="https://www.tiktok.com/@paadit?_t=ZS-8w4yErGlgf9&_r=1" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-        <a class="menu-item text-sm" href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-        <a class="menu-item text-sm" href="https://youtube.com/@paaditt?si=WH8rU3myBcRBXrcx" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-        <a class="menu-item text-sm" href="https://github.com/ditss-dev" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a class="menu-item text-sm" href="https://www.instagram.com/dits.v2?igsh=NmE3Mmt0MWRmc2Uz" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-instagram"></i> Instagram</a>
+        <a class="menu-item text-sm" href="https://facebook.com/" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-facebook"></i> Facebook</a>
+        <a class="menu-item text-sm" href="https://x.com/AsumaMulti?t=UjHLiAxVzd3pbHdMaUPa1g&s=09" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-twitter"></i> Twitter</a>
+        <a class="menu-item text-sm" href="https://www.tiktok.com/@paadit?_t=ZS-8w4yErGlgf9&_r=1" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-tiktok"></i> TikTok</a>
+        <a class="menu-item text-sm" href="https://linkedin.com/" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a class="menu-item text-sm" href="https://youtube.com/@paaditt?si=WH8rU3myBcRBXrcx" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-youtube"></i> YouTube</a>
+        <a class="menu-item text-sm" href="https://github.com/ditss-dev" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-github"></i> GitHub</a>
       </div>
     </nav>
   </aside>
@@ -132,7 +170,7 @@
     <!-- Header -->
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-[#181f2a] border-b border-[#232a3b] shadow-sm transition-all duration-300">
       <div class="flex items-center justify-between px-6 py-5">
-        <button id="menu-btn" class="text-2xl md:hidden text-cyan-400 px-2 focus:outline-none">
+        <button id="menu-btn" aria-label="Buka menu samping" class="text-2xl md:hidden text-cyan-400 px-2 focus:outline-none">
           <i class="fas fa-bars"></i>
         </button>
         <div class="text-2xl font-bold tracking-wide text-cyan-400 text-center flex-1 fade-up fade-delay-1">
@@ -142,11 +180,31 @@
       </div>
     </header>
     <!-- Content -->
-    <main class="flex-1 overflow-y-auto px-6 py-20">
+    <main class="flex-1 overflow-y-auto px-4 sm:px-6 py-24">
       <p class="text-center text-[#a7b1c2] text-lg mb-4 fade-up fade-delay-2">Developer & Creator of Asuma Multi Device</p>
       <div class="flex justify-center mb-10 fade-up fade-delay-2">
         <div class="w-24 border-t-2 border-cyan-400"></div>
       </div>
+      <!-- Tentang Section -->
+      <section class="w-full max-w-2xl mx-auto mb-10 fade-up fade-delay-2 section-card">
+        <div class="section-title">Tentang Ditss</div>
+        <div class="text-base text-[#a7b1c2] text-center">
+          Hai! Saya Ditss, seorang developer yang suka membuat bot WhatsApp, API publik, serta web & aplikasi mobile. Saya suka belajar teknologi baru, membagikan tool gratis, dan membantu komunitas developer Indonesia.<br><br>
+          Saya juga menyediakan produk lengkap seperti <b>panel pterodactyl, hosting, kuota, nokos, top up game, kebutuhan sosmed,</b> serta <b>jasa fix error script, boy!</b>
+        </div>
+      </section>
+      <!-- Keunggulan Section -->
+      <section class="w-full max-w-2xl mx-auto mb-12 fade-up fade-delay-3 section-card">
+        <div class="section-title">Keunggulan</div>
+        <ul class="flex flex-wrap justify-center gap-3 pt-2">
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Coding Cepat</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Design UI Modern</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">API Gratis</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Bot AI & Game</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Fast Response</li>
+        </ul>
+      </section>
+      <!-- Card Section -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 fade-up fade-delay-3">
         <!-- Card 1 -->
         <div class="modern-card glossy-effect p-7 flex flex-col items-center text-center">
@@ -170,7 +228,7 @@
           <a href="#" class="text-white bg-cyan-500 hover:bg-cyan-600 px-5 py-2 rounded font-semibold shadow mt-auto transition">Lihat Semua</a>
         </div>
       </div>
-      <p class="text-center text-xs text-[#7b8596] mt-12">© 2025 Ditss - All Rights Reserved</p>
+      <p class="text-center text-xs text-[#7b8596] mt-12 mb-3">© 2025 Ditss - All Rights Reserved</p>
     </main>
   </div>
 
@@ -192,7 +250,7 @@
     document.addEventListener('click', (event) => {
       if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && !sidebar.classList.contains('-translate-x-full')) {
         sidebar.classList.add('-translate-x-full');
-        header.classList.remove('header-hidden'); // Tampilkan lagi header
+        header.classList.remove('header-hidden');
       }
     });
     // Dropdown menu
@@ -214,6 +272,13 @@
         }
       });
     }
+    // Auto close sidebar on mobile when menu clicked
+    function autoCloseSidebarMobile() {
+      if (window.innerWidth < 768) {
+        sidebar.classList.add('-translate-x-full');
+        header.classList.remove('header-hidden');
+      }
+    }
     // Header auto-hide on scroll
     let prevScrollPos = window.scrollY;
     window.addEventListener('scroll', function() {
@@ -232,6 +297,19 @@
       });
     });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Typing effect for "Ditss Ganteng" in sidebar
+    const typingText = "Ditss Ganteng";
+    const typingTarget = document.getElementById("typing-ditss");
+    let typingIdx = 0;
+    function typeDitss() {
+      if (typingIdx <= typingText.length) {
+        typingTarget.textContent = typingText.slice(0, typingIdx);
+        typingIdx++;
+        setTimeout(typeDitss, 90);
+      }
+    }
+    typeDitss();
   </script>
 </body>
 </html>

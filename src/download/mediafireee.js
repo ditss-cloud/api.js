@@ -62,7 +62,7 @@ module.exports = function (app) {
           flag,
           cookie
         },
-        source: 'Fast Rest API - FastURL'
+        source: 'ditss.cloud || ditss.store'
       });
     } catch (error) {
       res.status(500).json({

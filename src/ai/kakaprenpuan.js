@@ -23,6 +23,7 @@ module.exports = function(app) {
       const result = await NeekoiAI(text);
       res.status(200).json({
         status: true,
+        type: "kaka perempuan",
         result: result
       });
     } catch (error) {

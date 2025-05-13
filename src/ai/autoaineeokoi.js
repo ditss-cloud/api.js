@@ -4,7 +4,7 @@ module.exports = function(app) {
 
   // Fungsi untuk ambil jawaban dari AI Neekoi
   async function NeekoiAI(query) {
-    const char = "_XjlY1xn-xKyZ453zDa2boJ51fMfO3oV6qyTvds9BSM";
+    const char = "xyn7WSSLqbrnqn4HiQT2exUX2hHzzEgMheVhh5HV38E";
     const url = `https://cai.neekoi.me/cai?char=${char}&message=${encodeURIComponent(query)}`;
 
     const res = await fetch(url);

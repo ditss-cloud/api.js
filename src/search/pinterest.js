@@ -14,36 +14,40 @@ async function pinterest2(query) {
         },
         context: {}
       }),
-      _: Date.now() // Membuat timestamp agar tidak tercache
+      _: Date.now()
     };
-    
-    // Membuat URL dengan query params
+
     const url = new URL(baseUrl);
-    Object.entries(queryParams).forEach(entry => url.searchParams.set(entry[0], entry[1]));
+    Object.entries(queryParams).forEach(([key, val]) => {
+      url.searchParams.set(key, val);
+    });
 
     try {
-      const response = await fetch(url.toString());
-      if (!response.ok) throw new Error('Failed to fetch data from Pinterest'); // Cek jika status error
+      const response = await fetch(url.toString(), {
+        headers: {
+          'x-app-version': '1.0',
+          'x-pinterest-appstate': 'active',
+          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        }
+      });
+
+      if (!response.ok) throw new Error('Gagal mengambil data dari Pinterest');
 
       const json = await response.json();
       const results = json?.resource_response?.data?.results ?? [];
 
-      // Pastikan kita menangani data dengan baik
-      const result = results.map(item => ({
-        pin: item.id ? 'https://www.pinterest.com/pin/' + item.id : '',
-        link: item.link || '',
-        created_at: item.created_at ? (new Date(item.created_at)).toLocaleDateString('id-ID', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        }) : '',
-        id: item.id || '',
-        images_url: item.images?.['736x']?.url || '',
-        grid_title: item.grid_title || ''
-      }));
+      if (!results.length) return resolve([]);
 
-      // Mengembalikan hasil
-      resolve(result);
+      const final = results
+        .filter(item => item.images?.['736x'])
+        .map(item => ({
+          title: item.grid_title || '(Tanpa Judul)',
+          pin_url: item.id ? 'https://www.pinterest.com/pin/' + item.id : '',
+          image_url: item.images['736x'].url,
+          created_at: item.created_at ? new Date(item.created_at).toISOString() : null
+        }));
+
+      resolve(final);
     } catch (e) {
       reject(e);
     }
@@ -53,23 +57,27 @@ async function pinterest2(query) {
 module.exports = function(app) {
   app.get('/search/pinterest', async (req, res) => {
     try {
-      const { apikey } = req.query;
-      if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
+      const { apikey, q } = req.query;
+      if (!apikey || !global.apikey.includes(apikey)) {
+        return res.status(403).json({ status: false, message: 'Apikey invalid' });
+      }
+      if (!q) {
+        return res.status(400).json({ status: false, message: 'Query is required' });
+      }
 
-      const { q } = req.query;
-      if (!q) return res.json({ status: false, error: 'Query is required' });
+      const result = await pinterest2(q);
+      if (!result.length) {
+        return res.json({ status: false, message: 'Tidak ditemukan hasil' });
+      }
 
-      const results = await pinterest2(q);
-
-      // Mengirimkan response jika berhasil
-      res.status(200).json({
+      res.json({
         status: true,
-        result: results
+        creator: 'Ditss',
+        data: result[Math.floor(Math.random() * result.length)]
       });
-    } catch (error) {
-      // Menangani error dengan memberikan pesan yang jelas
-      console.error(error);
-      res.status(500).send(`Error: ${error.message}`);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: false, message: 'Terjadi kesalahan pada server', error: err.message });
     }
   });
 };

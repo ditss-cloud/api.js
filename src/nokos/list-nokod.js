@@ -1,18 +1,13 @@
 const axios = require('axios');
 
 async function getAllNokos(country) {
-    const VIRTUSIM_API_KEY = "fsxJrCcuEv4KmQq0tRBIzigVjwSNZh";
-    const VIRTUSIM_BASE_URL = "https://virtusim.com/api/json.php";
+    const apiKey = "fsxJrCcuEv4KmQq0tRBIzigVjwSNZh";
+    const baseUrl = "https://virtusim.com/api/json.php";
+    const url = `${baseUrl}?api_key=${apiKey}&action=services&country=${encodeURIComponent(country || "")}`;
 
     try {
-        console.log(`Fetching all nokos for country: ${country}`);
-
-        const response = await axios.get(VIRTUSIM_BASE_URL, {
-            params: {
-                api_key: VIRTUSIM_API_KEY,
-                action: "services",
-                country: country || ""
-            },
+        console.log("Fetching from:", url);
+        const response = await axios.get(url, {
             headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36',
                 'Accept': 'application/json'
@@ -20,15 +15,15 @@ async function getAllNokos(country) {
             timeout: 10000
         });
 
-        const list = response.data;
+        const data = response.data;
 
-        if (!Array.isArray(list) || list.length === 0) {
+        if (!Array.isArray(data) || data.length === 0) {
             throw new Error("Data nokos kosong atau tidak ditemukan");
         }
 
-        return list;
+        return data;
     } catch (error) {
-        console.error('Detail error dari VirtuSim:', error.response?.data || error.message);
+        console.error('VirtuSim error detail:', error.response?.data || error.message);
         throw new Error('Gagal mengambil data nokos: ' + (error.response?.statusText || error.message));
     }
 }
@@ -42,7 +37,6 @@ module.exports = function (app) {
             }
 
             const result = await getAllNokos(country);
-
             res.status(200).json({
                 status: true,
                 creator: "ditss",

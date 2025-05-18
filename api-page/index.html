@@ -5,246 +5,342 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ditss Ganteng</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    body { font-family: 'Poppins', sans-serif; }
+    .sidebar-modern {
+      background: #171c28;
+      border-right: 1.5px solid #222d3a;
+      color: #e0e6ed;
+    }
+    .sidebar-modern .menu-item {
+      @apply flex items-center gap-3 py-2 px-4 rounded transition-all duration-150;
+      margin-bottom: 2px;
+    }
+    .sidebar-modern .menu-item:hover,
+    .sidebar-modern .menu-item.active {
+      background: #21293a;
+      color: #38bdf8;
+    }
+    .sidebar-modern .chevron { transition: transform 0.3s; }
+    .sidebar-modern .chevron.rotated { transform: rotate(180deg); }
+    .dropdown-content { transition: max-height 0.3s, opacity 0.2s; overflow: hidden; }
+    .dropdown-content.collapsed { max-height: 0; opacity: 0; }
+    .dropdown-content.expanded { max-height: 400px; opacity: 1; }
+    .modern-card {
+      background: #232a3b;
+      border-radius: 1rem;
+      box-shadow: 0 8px 24px 0 rgba(30,41,59,0.13);
+      border: 1.5px solid #293042;
+      transition: transform 0.18s cubic-bezier(.4,2.4,.5,.99), box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .modern-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 16px 32px 0 rgba(52,152,253,0.13);
+      border-color: #38bdf8;
+    }
+    /* Glossy effect */
+    .glossy-effect::before {
+      content: "";
+      position: absolute;
+      top: -60%;
+      left: -60%;
+      width: 120%;
+      height: 120%;
+      background: linear-gradient(120deg, rgba(255,255,255,0) 60%, rgba(255,255,255,0.32) 80%, rgba(255,255,255,0) 100%);
+      transform: skew(-15deg);
+      pointer-events: none;
+      animation: glossy-move 2.5s linear infinite;
+    }
+    @keyframes glossy-move {
+      0% { top: -60%; left: -60%; }
+      60% { top: 120%; left: 120%; }
+      100% { top: 120%; left: 120%; }
+    }
+    .modern-avatar {
+      box-shadow: 0 0 0 3px #38bdf8;
     }
     .fade-up { opacity: 0; animation: fadeUp 1s ease forwards; }
-    .fade-delay-1 { animation-delay: 0.3s; }
-    .fade-delay-2 { animation-delay: 0.6s; }
-    .fade-delay-3 { animation-delay: 0.9s; }
-
-    .neon-box {
-      background-color: rgba(0, 0, 0, 0.3);
-      border: 2px solid #00ffff;
-      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff inset;
-      backdrop-filter: blur(10px);
-      transition: 0.3s ease;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px);}
+      to { opacity: 1; transform: translateY(0);}
     }
-    .neon-box:hover {
-      box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff inset;
+    .fade-delay-1 { animation-delay: 0.25s;}
+    .fade-delay-2 { animation-delay: 0.45s;}
+    .fade-delay-3 { animation-delay: 0.65s;}
+    /* Header auto-hide support */
+    .-translate-y-full { transform: translateY(-100%);}
+    /* Hide header in mobile when sidebar open */
+    .header-hidden { display: none !important; }
+    /* Responsive header font */
+    @media (max-width: 640px) {
+      #main-header .text-2xl {
+        font-size: 1.1rem !important;
+      }
     }
-
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
+    /* Sidebar padding mobile */
+    @media (max-width: 768px) {
+      .sidebar-modern {
+        padding-left: 0.65rem;
+        padding-right: 0.65rem;
+      }
     }
-    @keyframes blink {
-      50% { border-color: transparent; }
+    /* Better contrast for small text */
+    .text-xs, .text-sm, .text-[#6b7280], .text-[#a7b1c2], .text-[#7b8596] {
+      color: #cdd5e1 !important;
     }
-    .typing-text {
-      display: inline-block;
-      white-space: nowrap;
-      overflow: hidden;
-      border-right: 2px solid #0ff;
-      animation: typing 3s steps(30, end) infinite, blink 0.75s step-end infinite;
+    /* Section custom */
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #38bdf8;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      text-align: center;
     }
-
-    @keyframes moveLeftRight {
-      0% { transform: translateX(0); }
-      50% { transform: translateX(20px); }
-      100% { transform: translateX(0); }
-    }
-    .moving-text {
-      animation: moveLeftRight 5s infinite;
-    }
-
-    .social-icon {
-      transition: 0.3s;
-      position: relative;
-    }
-    .social-icon:before {
-      content: '';
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      width: calc(100% + 10px);
-      height: calc(100% + 10px);
-      border-radius: 50%;
-      box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .social-icon:hover:before {
-      opacity: 1;
-    }
-
-    .weather-btn {
-      @apply px-2 py-1 rounded text-sm font-bold text-white;
-      position: relative;
-    }
-    .weather-btn img {
-      width: 24px;
-      height: 24px;
-    }
-    .weather-btn.active img {
-      animation: bounce 1s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: -1;
+    .section-card {
+      background: #202535;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #e0e6ed;
+      box-shadow: 0 2px 10px #21293a44;
     }
   </style>
 </head>
-<body class="bg-gray-950 text-white font-sans relative">
-  <!-- Canvas untuk efek -->
-  <canvas id="weatherCanvas"></canvas>
+<body class="bg-[#161922] text-[#e0e6ed] min-h-screen flex">
 
-  <!-- Tombol Pilih Efek -->
-  <div class="fixed top-4 right-4 space-x-2 z-50">
-    <button class="weather-btn bg-gray-700" onclick="setWeather('snow')">
-      <img src="https://img.icons8.com/ios-filled/50/00ffff/snowflake.png" alt="Salju"/>
-    </button>
-    <button class="weather-btn bg-gray-700" onclick="setWeather('rain')">
-      <img src="https://img.icons8.com/ios-filled/50/00ffff/rain.png" alt="Hujan"/>
-    </button>
-    <button class="weather-btn bg-gray-700" onclick="setWeather('lightning')">
-      <img src="https://img.icons8.com/ios-filled/50/00ffff/lightning-bolt.png" alt="Petir"/>
-    </button>
-  </div>
-
-  <!-- Konten Portofolio -->
-  <div class="max-w-6xl mx-auto py-12 px-6">
-    <h1 class="text-4xl font-bold text-center text-cyan-400 mb-2 moving-text">
-      <span class="typing-text">Hi, I'm Ditss</span>
-    </h1>
-    <p class="text-center text-gray-400 text-lg fade-up fade-delay-1">
-      Developer & Creator of Asuma Multi Device
-    </p>
-    <div class="border-t border-cyan-400 my-6 w-24 mx-auto fade-up fade-delay-2"></div>
-
-    <!-- Cards Section -->
-    <div class="grid grid-cols-adjusted gap-8 mt-10">
-      <!-- Bot WhatsApp Card -->
-      <div class="neon-box rounded-lg shadow-lg fade-up fade-delay-1">
-        <img src="https://img.icons8.com/ios-filled/100/00ffff/source-code.png" class="w-14 h-14 mb-4 mx-auto" />
-        <h2 class="text-xl font-bold text-center mb-2">Bot WhatsApp</h2>
-        <p class="text-sm text-gray-400 text-center mb-3">
-          Asuma MD dengan fitur AI, game, store, edukasi, dll.
-        </p>
-        <a href="download.html" class="block text-center bg-cyan-500 hover:bg-cyan-600 text-white py-2 rounded">
-          Download Link
-        </a>
+  <!-- Sidebar -->
+  <aside id="sidebar" class="sidebar-modern w-64 fixed inset-y-0 left-0 z-30 flex flex-col py-8 px-4 gap-4 transform -translate-x-full md:translate-x-0 md:relative transition-all duration-300">
+    <div class="flex items-center gap-3 mb-8 px-2">
+      <img src="https://raw.githubusercontent.com/ditss-dev/Baileysss/main/api-page/IMG-20250312-WA0056.png" class="w-11 h-11 rounded-xl object-cover modern-avatar" alt="Logo"/>
+      <div>
+        <div class="font-bold text-lg tracking-wide text-cyan-400">
+          <span id="typing-ditss"></span>
+        </div>
+        <div class="text-xs text-[#6b7280]">Developer</div>
       </div>
-
-      <!-- API Card -->
-      <div class="neon-box rounded-lg shadow-lg fade-up fade-delay-2">
-        <img src="https://img.icons8.com/ios-filled/100/00ffff/api.png" class="w-14 h-14 mb-4 mx-auto"/>
-        <h2 class="text-xl font-bold text-center mb-2">API's</h2>
-        <p class="text-sm text-gray-400 text-center mb-3">
-          Akses API publik Ditss: download, edukasi, AI, info nomor, dan banyak lagi.
-        </p>
-        <a href="/api-page/index2.html" class="block text-center bg-cyan-500 hover:bg-cyan-600 text-white py-2 rounded">
-          Kunjungi API
-        </a>
-      </div>
-
-      <!-- Tambahkan kartu lain di sini -->
     </div>
+    <!-- Menu paling atas -->
+    <nav class="flex flex-col gap-1 text-base font-semibold">
+      <a class="menu-item active" href="/"><i class="fas fa-home"></i> Beranda</a>
+      <a class="menu-item" href="/api-page/index2.html"><i class="fas fa-plug"></i> API's</a>
+      <a class="menu-item" href="download.html"><i class="fas fa-robot"></i> Download Bot</a>
+      <a class="menu-item" href="produk.html"><i class="fas fa-box"></i> Produk</a>
+      <a class="menu-item" href="testimonial/testi.html"><i class="fas fa-quote-left"></i> My testi</a>
+      <a class="menu-item" href="contact.html"><i class="fas fa-envelope"></i> My Contact</a>
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-produk', 'chevron-produk');">
+        <span class="flex items-center gap-2"><i class="fas fa-box"></i> Produk</span>
+        <i id="chevron-produk" class="chevron fas fa-chevron-down"></i>
+      </button>
+      <div id="dropdown-produk" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-mobile-alt"></i> Aplikasi Mobile</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-globe"></i> Website</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-robot"></i> Bot WhatsApp</a>
+      </div>
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-game', 'chevron-game');">
+        <span class="flex items-center gap-2"><i class="fas fa-gamepad"></i> Game</span>
+        <i id="chevron-game" class="chevron fas fa-chevron-down"></i>
+      </button>
+      <div id="dropdown-game" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-chess"></i> Mini Game</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-puzzle-piece"></i> Puzzle</a>
+        <a class="menu-item text-sm" href="#" onclick="autoCloseSidebarMobile();"><i class="fas fa-football-ball"></i> Sports</a>
+      </div>
+      <button class="menu-item justify-between" onclick="toggleDropdown('dropdown-socmed', 'chevron-socmed');">
+        <span class="flex items-center gap-2"><i class="fas fa-link"></i> Social</span>
+        <i id="chevron-socmed" class="chevron fas fa-chevron-down"></i>
+      </button>
+      <div id="dropdown-socmed" class="dropdown-content collapsed ml-6 flex flex-col gap-0.5 border-l border-cyan-900 pl-3">
+        <a class="menu-item text-sm" href="https://www.instagram.com/dits.v2?igsh=NmE3Mmt0MWRmc2Uz" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-instagram"></i> Instagram</a>
+        <a class="menu-item text-sm" href="https://facebook.com/" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-facebook"></i> Facebook</a>
+        <a class="menu-item text-sm" href="https://x.com/AsumaMulti?t=UjHLiAxVzd3pbHdMaUPa1g&s=09" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-twitter"></i> Twitter</a>
+        <a class="menu-item text-sm" href="https://www.tiktok.com/@paadit?_t=ZS-8w4yErGlgf9&_r=1" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-tiktok"></i> TikTok</a>
+        <a class="menu-item text-sm" href="https://linkedin.com/" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-linkedin"></i> LinkedIn</a>
+        <a class="menu-item text-sm" href="https://youtube.com/@paaditt?si=WH8rU3myBcRBXrcx" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-youtube"></i> YouTube</a>
+        <a class="menu-item text-sm" href="https://github.com/ditss-dev" target="_blank" onclick="autoCloseSidebarMobile();"><i class="fab fa-github"></i> GitHub</a>
+      </div>
+    </nav>
+  </aside>
 
-    <p class="text-center text-xs text-gray-600 mt-10">© 2025 Ditss - All Rights Reserved</p>
+  <!-- Main -->
+  <div class="flex-1 min-h-screen flex flex-col md:ml-64 transition-all duration-300">
+    <!-- Header -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-[#181f2a] border-b border-[#232a3b] shadow-sm transition-all duration-300">
+      <div class="flex items-center justify-between px-6 py-5">
+        <button id="menu-btn" aria-label="Buka menu samping" class="text-2xl md:hidden text-cyan-400 px-2 focus:outline-none">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="text-2xl font-bold tracking-wide text-cyan-400 text-center flex-1 fade-up fade-delay-1">
+          Hi, I'm Ditss
+        </div>
+        <div class="w-8"></div>
+      </div>
+    </header>
+    <!-- Content -->
+    <main class="flex-1 overflow-y-auto px-4 sm:px-6 py-24">
+      <p class="text-center text-[#a7b1c2] text-lg mb-4 fade-up fade-delay-2">Developer & Creator of Asuma Multi Device</p>
+      <div class="flex justify-center mb-10 fade-up fade-delay-2">
+        <div class="w-24 border-t-2 border-cyan-400"></div>
+      </div>
+      <!-- Tentang Section -->
+      <section class="w-full max-w-2xl mx-auto mb-10 fade-up fade-delay-2 section-card">
+        <div class="text-base text-[#a7b1c2] text-center">
+  Hai! Saya Ditss, developer kreatif yang selalu siap membantu kebutuhan digitalmu — dari bot WhatsApp, API publik, sampai web & aplikasi mobile.
+  <br><br>
+  <span class="font-semibold text-cyan-400">Butuh solusi digital? Semua ada di sini!</span>
+  <div class="flex flex-wrap justify-center gap-2 mt-3 mb-1">
+    <a href="pterodactyl.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition shadow">Panel Pterodactyl</a>
+    <a href="hosting.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition shadow">Hosting</a>
+    <a href="kuota.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition shadow">Kuota Data</a>
+    <a href="nokos.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition shadow">Nokos</a>
+    <a href="topup-game.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition shadow">Top Up Game</a>
+    <a href="sosmed.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition shadow">Kebutuhan Sosmed</a>
+    <a href="fixscript.html" class="bg-cyan-500 hover:bg-cyan-600 text-white px-3 py-1 rounded-full text-sm font-semibold transition shadow">Jasa Fix Error Script</a>
+  </div>
+  <span class="block mt-2 text-sm text-[#cdd5e1]">
+    Harga terjangkau, pelayanan ramah, dan proses cepat!<br/>
+    Yuk, konsultasi gratis dulu – klik produk yang kamu butuhkan atau chat langsung. Dijamin puas, boy!
+  </span>
+</div>
+      </section>
+      <!-- Keunggulan Section -->
+      <section class="w-full max-w-2xl mx-auto mb-12 fade-up fade-delay-3 section-card">
+        <div class="section-title">Keunggulan</div>
+        <ul class="flex flex-wrap justify-center gap-3 pt-2">
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Coding Cepat</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Design UI Modern</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">API Gratis</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Bot AI & Game</li>
+          <li class="bg-[#232a3b] px-3 py-1 rounded text-cyan-300 text-sm font-semibold shadow">Fast Response</li>
+        </ul>
+      </section>
+      <!-- Card Section -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 fade-up fade-delay-3">
+        <!-- Card 1 -->
+        <div class="modern-card glossy-effect p-7 flex flex-col items-center text-center">
+          <img src="https://img.icons8.com/ios-filled/100/00ffff/source-code.png" class="w-14 h-14 mb-4 modern-avatar" />
+          <h2 class="text-xl font-bold mb-2 text-cyan-300">Bot WhatsApp</h2>
+          <p class="text-sm text-[#a7b1c2] mb-4">Asuma MD dengan fitur AI, game, store, edukasi, dll.</p>
+          <a href="download.html" class="text-white bg-cyan-500 hover:bg-cyan-600 px-5 py-2 rounded font-semibold shadow mt-auto transition">Download Link</a>
+        </div>
+        <!-- Card 2 -->
+        <div class="modern-card glossy-effect p-7 flex flex-col items-center text-center">
+          <img src="https://img.icons8.com/ios-filled/100/00ffff/api.png" class="w-14 h-14 mb-4 modern-avatar"/>
+          <h2 class="text-xl font-bold mb-2 text-cyan-300">API's</h2>
+          <p class="text-sm text-[#a7b1c2] mb-4">Akses API publik Ditss: download, edukasi, AI, info nomor, dan banyak lagi.</p>
+          <a href="/api-page/index2.html" class="text-white bg-cyan-500 hover:bg-cyan-600 px-5 py-2 rounded font-semibold shadow mt-auto transition">Kunjungi API</a>
+        </div>
+        <!-- Card 3 -->
+        <div class="modern-card glossy-effect p-7 flex flex-col items-center text-center">
+          <img src="https://img.icons8.com/ios-filled/100/00ffff/idea.png" class="w-14 h-14 mb-4 modern-avatar"/>
+          <h2 class="text-xl font-bold mb-2 text-cyan-300">Portofolio Lainnya</h2>
+          <p class="text-sm text-[#a7b1c2] mb-4">Cek hasil karya, tools, dan project menarik dari Ditss.</p>
+          <a href="#" class="text-white bg-cyan-500 hover:bg-cyan-600 px-5 py-2 rounded font-semibold shadow mt-auto transition">Lihat Semua</a>
+        </div>
+      </div>
+      <p class="text-center text-xs text-[#7b8596] mt-12 mb-3">© 2025 Ditss - All Rights Reserved</p>
+    </main>
   </div>
 
-  <!-- Musik Otomatis -->
-  <audio autoplay loop hidden>
-    <source src="https://qu.ax/MXbkU.mp4" type="audio/mpeg">
-  </audio>
-
-  <!-- Scroll Animation -->
   <script>
+    // Sidebar mobile toggle
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menu-btn');
+    const header = document.getElementById('main-header');
+    menuBtn.addEventListener('click', (event) => {
+      sidebar.classList.toggle('-translate-x-full');
+      // Sembunyikan header saat sidebar terbuka di mobile
+      if (sidebar.classList.contains('-translate-x-full')) {
+        header.classList.remove('header-hidden');
+      } else {
+        header.classList.add('header-hidden');
+      }
+      event.stopPropagation();
+    });
+    document.addEventListener('click', (event) => {
+      if (!sidebar.contains(event.target) && !menuBtn.contains(event.target) && !sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.add('-translate-x-full');
+        header.classList.remove('header-hidden');
+      }
+    });
+    // Dropdown menu
+    function toggleDropdown(dropdownId, chevronId) {
+      const dropdown = document.getElementById(dropdownId);
+      const chevron = document.getElementById(chevronId);
+      dropdown.classList.toggle('collapsed');
+      dropdown.classList.toggle('expanded');
+      chevron.classList.toggle('rotated');
+      document.querySelectorAll('.dropdown-content').forEach(el => {
+        if (el.id !== dropdownId && el.classList.contains('expanded')) {
+          el.classList.remove('expanded');
+          el.classList.add('collapsed');
+        }
+      });
+      document.querySelectorAll('.chevron').forEach(el => {
+        if (el.id !== chevronId && el.classList.contains('rotated')) {
+          el.classList.remove('rotated');
+        }
+      });
+    }
+    // Auto close sidebar on mobile when menu clicked
+    function autoCloseSidebarMobile() {
+      if (window.innerWidth < 768) {
+        sidebar.classList.add('-translate-x-full');
+        header.classList.remove('header-hidden');
+      }
+    }
+    // Header auto-hide on scroll
+    let prevScrollPos = window.scrollY;
+    window.addEventListener('scroll', function() {
+      const currentScrollPos = window.scrollY;
+      if (currentScrollPos > prevScrollPos && currentScrollPos > 60) {
+        header.classList.add('-translate-y-full');
+      } else {
+        header.classList.remove('-translate-y-full');
+      }
+      prevScrollPos = currentScrollPos;
+    });
+    // Fade-up anim
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('animate-visible');
       });
     });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-  </script>
 
-  <!-- Weather Canvas -->
-  <script>
-    const canvas = document.getElementById("weatherCanvas");
-    const ctx = canvas.getContext("2d");
+// Typing effect loop for "Ditss Ganteng"
+const typingText = "Ditss Ganteng";
+const typingTarget = document.getElementById("typing-ditss");
+let typingIdx = 0;
+let isDeleting = false;
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+function typeDitssLoop() {
+  if (!isDeleting) {
+    typingTarget.textContent = typingText.slice(0, typingIdx);
+    typingIdx++;
+    if (typingIdx > typingText.length) {
+      isDeleting = true;
+      setTimeout(typeDitssLoop, 900); // Pause after typing
+      return;
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    let particles = [], weather = "snow";
-
-    function setWeather(type) {
-      weather = type;
-      document.querySelectorAll('.weather-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      createParticles();
+    setTimeout(typeDitssLoop, 90);
+  } else {
+    typingTarget.textContent = typingText.slice(0, typingIdx);
+    typingIdx--;
+    if (typingIdx < 0) {
+      isDeleting = false;
+      setTimeout(typeDitssLoop, 600); // Pause after deleting
+      return;
     }
-
-    function createParticles() {
-      particles = [];
-      for (let i = 0; i < 100; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 3 + 1,
-          d: Math.random() * 1 + 0.5
-        });
-      }
-    }
-
-    function drawParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = weather === "snow" ? "#fff" : "rgba(173,216,230,0.5)";
-      ctx.beginPath();
-      for (let p of particles) {
-        ctx.moveTo(p.x, p.y);
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
-      }
-      ctx.fill();
-      updateParticles();
-    }
-
-    function updateParticles() {
-      for (let p of particles) {
-        p.y += weather === "snow" ? p.d : p.d * 5;
-        if (p.y > canvas.height) {
-          p.y = 0;
-          p.x = Math.random() * canvas.width;
-        }
-      }
-    }
-
-    function drawLightning() {
-      if (weather !== "lightning") return;
-      if (Math.random() < 0.03) {
-        ctx.fillStyle = "rgba(255,255,255,0.8)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-      }
-    }
-
-    function animate() {
-      if (weather === "lightning") {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawLightning();
-      } else {
-        drawParticles();
-      }
-      requestAnimationFrame(animate);
-    }
-
-    createParticles();
-    animate();
+    setTimeout(typeDitssLoop, 60);
+  }
+}
+typeDitssLoop();
   </script>
 </body>
 </html>

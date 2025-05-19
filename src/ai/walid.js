@@ -21,7 +21,6 @@ module.exports = function(app) {
       const result = await NeekoiAI(text);
       res.status(200).json({
         status: true,
-        image: req.hostname
         result: result
       });
     } catch (error) {

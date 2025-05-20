@@ -43,6 +43,14 @@
           "name": "Openai",
           "desc": "Openai chat",
           "path": "/ai/openai?apikey=&text="
+        },        {
+          "name": "walid",
+          "desc": "walid bidaah",
+          "path": "/ai/walid?text="
+        },        {
+          "name": "Openai",
+          "desc": "Openai chat",
+          "path": "/ai/pacar-cantik?text="
         }
       ]
     },

@@ -45,11 +45,47 @@
           "path": "/ai/openai?apikey=&text="
         },        {
           "name": "walid",
-          "desc": "walid bidaah",
+          "desc": "walid bidaah chat",
           "path": "/ai/walid?text="
         },        {
-          "name": "Openai",
-          "desc": "Openai chat",
+          "name": "pacar cantik",
+          "desc": "pacar cantik chat",
+          "path": "/ai/pacar-cantik?text="
+        },{
+          "name": "elaina",
+          "desc": "elaina chat",
+          "path": "/ai/elaina?text="
+        },{
+          "name": "dokter ryan",
+          "desc": "dokter ryan chat",
+          "path": "/ai/dokter-ryan?text="
+        },{
+          "name": "pacar sange",
+          "desc": "pacar cantik chat",
+          "path": "/ai/pacar-sange?text="
+        },{
+          "name": "adik tiri",
+          "desc": "adik tiri chat",
+          "path": "/ai/adik-tiri?text="
+        },{
+          "name": "asuma toki",
+          "desc": "asuma toki chat",
+          "path": "/ai/asuma-toki?text="
+        },{
+          "name": "mikasa",
+          "desc": "mikasa chat",
+          "path": "/ai/mikasa?text="
+        },{
+          "name": "kaka perempuan",
+          "desc": "kaka perempuan chat",
+          "path": "/ai/pacar-cantik?text="
+        },{
+          "name": "osaragi",
+          "desc": "osaragi chat",
+          "path": "/ai/osarai?text="
+        },{
+          "name": "pacar cantik",
+          "desc": "pacar cantik chat",
           "path": "/ai/pacar-cantik?text="
         }
       ]

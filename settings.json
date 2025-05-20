@@ -84,9 +84,13 @@
           "desc": "osaragi chat",
           "path": "/ai/osarai?text="
         },{
-          "name": "pacar cantik",
-          "desc": "pacar cantik chat",
-          "path": "/ai/pacar-cantik?text="
+          "name": "freya jkt",
+          "desc": "Freya jkt 48 chat",
+          "path": "/ai/freya-jkt48?text="
+        },{
+          "name": "michie jkt",
+          "desc": "Michie jkt 48 chat",
+          "path": "/ai/michie-jkt48?text="
         }
       ]
     },

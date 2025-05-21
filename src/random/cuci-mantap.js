@@ -26,7 +26,7 @@ async function anim() {
 
 // Export router
 module.exports = function app(app) {
-    app.get('/random/papayang', async (req, res) => {
+    app.get('/random/cucimata', async (req, res) => {
         try {
             
             const buffer = await anim();

@@ -1,5 +1,5 @@
 {
-  "name": "DitssAPI",
+  "name": "DitssAPIs",
   "description": "Jelajahi dokumentasi API kami yang lengkap untuk mengintegrasikan fitur canggih ke dalam Bot WhatsApp Anda.",
   "header": {
     "status": "active"
@@ -12,7 +12,7 @@
   "links": [
     {
       "url": "#documentation",
-      "name": "Get Started",
+      "name": "Get",
       "icon": "rocket"
     },
     {
@@ -291,7 +291,7 @@
         },{
           "name": "Roblox Stalk",
           "desc": "Stalk Roblox account",
-          "path": "/stalk/roblox?apikey=&id="
+          "path": "/stalk/roblox?username=&apikey="
         }
       ]
     },

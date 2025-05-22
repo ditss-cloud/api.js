@@ -222,7 +222,7 @@ async function anim() {
 
 // Export router
 module.exports = function app(app) {
-    app.get('/random/gojo', async (req, res) => {
+    app.get('/random/anime/gojo', async (req, res) => {
         try {
             
             const buffer = await anim();

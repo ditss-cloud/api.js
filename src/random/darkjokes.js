@@ -1,12 +1,12 @@
-const { Darkjokes } = require('dhn-api');
 const axios = require('axios');
+const { Darkjokes } = require('dhn-api');
 
 async function getBuffer(url) {
   const res = await axios.get(url, {
     responseType: 'arraybuffer',
     headers: {
       'DNT': 1,
-      'Upgrade-Insecure-Request': 1
+      'Upgrade-Insecure-Requests': 1
     }
   });
   return res.data;
@@ -20,14 +20,13 @@ module.exports = function (app) {
         return res.json({ status: false, error: 'Apikey invalid' });
       }
 
-      let result = await Darkjokes();
-      let imageUrl = typeof result === 'string' ? result : result.url;
-
-      if (!imageUrl || !imageUrl.startsWith('http')) {
-        return res.status(400).json({ status: false, error: 'Invalid image URL from Darkjokes()' });
+      const imageUrl = await Darkjokes(); // langsung string URL
+      if (!imageUrl || typeof imageUrl !== 'string' || !imageUrl.startsWith('http')) {
+        return res.status(400).json({ status: false, error: 'Invalid image URL' });
       }
 
       const buffer = await getBuffer(imageUrl);
+
       res.writeHead(200, {
         'Content-Type': 'image/jpeg',
         'Content-Length': buffer.length

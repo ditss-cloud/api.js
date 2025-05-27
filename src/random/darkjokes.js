@@ -13,7 +13,7 @@ async function getBuffer(url) {
 }
 
 module.exports = function (app) {
-  app.get('/darkjokes', async (req, res) => {
+  app.get('/random/darkjokes', async (req, res) => {
     try {
       const { apikey } = req.query;
       if (!global.apikey.includes(apikey)) {

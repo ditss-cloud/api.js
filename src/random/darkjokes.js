@@ -1,24 +1,38 @@
 const { Darkjokes } = require('dhn-api');
 const axios = require('axios');
 
+async function getBuffer(url) {
+  const res = await axios.get(url, {
+    responseType: 'arraybuffer',
+    headers: {
+      'DNT': 1,
+      'Upgrade-Insecure-Request': 1
+    }
+  });
+  return res.data;
+}
+
 module.exports = function (app) {
-  app.get('/random/darkjokes', async (req, res) => {
+  app.get('/darkjokes', async (req, res) => {
     try {
       const { apikey } = req.query;
-      if (!global.apikey || !global.apikey.includes(apikey)) {
+      if (!global.apikey.includes(apikey)) {
         return res.json({ status: false, error: 'Apikey invalid' });
       }
 
-      const result = await Darkjokes();
+      let result = await Darkjokes();
+      let imageUrl = typeof result === 'string' ? result : result.url;
 
-      // Ambil gambar sebagai buffer
-      const response = await axios.get(result.url, { responseType: 'arraybuffer' });
+      if (!imageUrl || !imageUrl.startsWith('http')) {
+        return res.status(400).json({ status: false, error: 'Invalid image URL from Darkjokes()' });
+      }
 
+      const buffer = await getBuffer(imageUrl);
       res.writeHead(200, {
-        'Content-Type': 'image/jpeg', // atau 'image/png' jika sesuai
-        'Content-Length': response.data.length
+        'Content-Type': 'image/jpeg',
+        'Content-Length': buffer.length
       });
-      res.end(response.data);
+      res.end(buffer);
 
     } catch (error) {
       res.status(500).send(`Error: ${error.message}`);

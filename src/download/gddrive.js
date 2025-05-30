@@ -53,13 +53,11 @@ module.exports = function (app) {
       const result = await gddriveDownloader(id)
       res.status(200).json({
         status: true,
-        creator: 'ditss',
         result
       })
     } catch (err) {
       res.status(500).json({
         status: false,
-        creator: 'ditss',
         error: 'Gagal mengambil data Google Drive',
         detail: err.message
       })

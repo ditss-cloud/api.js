@@ -7,7 +7,14 @@ module.exports = function app(app) {
             if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
             if (!text) return res.json({ status: false, error: 'Text is required' });
 
-            const pedo = await getBuffer(`https://brat.caliphdev.com/api/brat?text=${text}`);
+            let pedo;
+            try {
+                pedo = await getBuffer(`https://brat.caliphdev.com/api/brat?text=${encodeURIComponent(text)}`);
+            } catch (err) {
+                console.warn('[WARN] API utama gagal, mencoba API kedua...');
+                pedo = await getBuffer(`https://anabot.my.id/api/maker/brat?text=${encodeURIComponent(text)}&apikey=freeApikey`);
+            }
+
             res.writeHead(200, {
                 'Content-Type': 'image/png',
                 'Content-Length': pedo.length,
@@ -25,7 +32,7 @@ module.exports = function app(app) {
             if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
             if (!text) return res.json({ status: false, error: 'Text is required' });
 
-            const pedo = await getBuffer(`https://skyzxu-brat.hf.space/brat-animated?text=${text}`);
+            const pedo = await getBuffer(`https://skyzxu-brat.hf.space/brat-animated?text=${encodeURIComponent(text)}`);
             res.writeHead(200, {
                 'Content-Type': 'video/mp4',
                 'Content-Length': pedo.length,

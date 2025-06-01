@@ -29,7 +29,7 @@ function convertCRC16(str) {
 }
 
 function generateTransactionId() {
-    return `SKYZOPEDIA-${crypto.randomBytes(2).toString('hex').toUpperCase()}`
+    return `TRX-${Date.now()}-${crypto.randomBytes(1).toString('hex').toUpperCase()}`;
 }
 
 function generateExpirationTime() {

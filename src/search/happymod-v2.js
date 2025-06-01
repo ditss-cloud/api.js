@@ -58,7 +58,7 @@ async function happymod(query) {
 }
 
 module.exports = function (app) {
-  app.get('/search/happymod', async (req, res) => {
+  app.get('/search/happymod-v2', async (req, res) => {
     try {
       const { apikey, q } = req.query;
       if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });

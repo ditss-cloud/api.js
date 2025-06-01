@@ -6,14 +6,15 @@ async function getDetail(url) {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
-    // Contoh selector, sesuaikan jika struktur Happymod berubah
-    const versi = $('.app-info div:contains("Version")').next().text().trim() || null;
-    const ukuran = $('.app-info div:contains("Size")').next().text().trim() || null;
-    const tanggalUpdate = $('.app-info div:contains("Updated")').next().text().trim() || null;
+    // Update selector halaman detail, coba cek elemen detail aplikasi Happymod
+    const versi = $('div.app-info > div:contains("Version")').next().text().trim() || null;
+    const ukuran = $('div.app-info > div:contains("Size")').next().text().trim() || null;
+    const tanggalUpdate = $('div.app-info > div:contains("Updated")').next().text().trim() || null;
     const deskripsi = $('#description').text().trim() || null;
 
     return { versi, ukuran, tanggalUpdate, deskripsi };
   } catch (err) {
+    console.error('Error getDetail:', err.message);
     return { versi: null, ukuran: null, tanggalUpdate: null, deskripsi: null };
   }
 }
@@ -25,16 +26,26 @@ async function happymod(query) {
 
   const results = [];
 
-  const items = $('section div > div').slice(0, 5); // Ambil max 5 hasil
+  // Contoh selector yang lebih umum dan update (cek dengan inspect element)
+  const items = $('section div.mod-card').slice(0, 5);
+
+  if(items.length === 0) {
+    console.warn('Tidak menemukan item dengan selector "section div.mod-card". Coba periksa selector CSS.');
+  }
 
   for (let i = 0; i < items.length; i++) {
     const el = items.eq(i);
 
-    const judul = el.find('h3 > a').text().trim();
-    const linkPath = el.find('h3 > a').attr('href');
-    const link = 'https://www.happymod.com' + linkPath;
-    const rating = el.find('div.clearfix > span').text().trim() || null;
-    const thumb = el.find('a > img').attr('data-original') || null;
+    const judul = el.find('h3').text().trim() || null;
+    const linkPath = el.find('a').attr('href') || null;
+    const link = linkPath ? 'https://www.happymod.com' + linkPath : null;
+    const rating = el.find('div.rating').text().trim() || null;
+    const thumb = el.find('a > img').attr('src') || null;
+
+    if(!link) {
+      console.warn(`Item ke-${i} tidak memiliki link.`);
+      continue;
+    }
 
     // Ambil detail tambahan dari halaman aplikasi
     const detail = await getDetail(link);
@@ -72,6 +83,7 @@ module.exports = function (app) {
         result: results.data
       });
     } catch (error) {
+      console.error('API error:', error);
       res.status(500).json({ status: false, error: error.message });
     }
   });

@@ -9,6 +9,8 @@ async function PlayStore(search) {
             const hasil = [];
 
             $('.VfPpkd-EScbFb-JIbuQc').each((i, el) => {
+                if (hasil.length >= 50) return; // ✅ Batasi 50 hasil saja
+
                 const linkEl = $(el).find('a').attr('href');
                 const nama = $(el).find('.DdYX5').text();
                 const developer = $(el).find('.wMUdtb').text();
@@ -36,33 +38,6 @@ async function PlayStore(search) {
     });
 }
 
-async function getPlaystoreResults(keyword, maxResults = 1000) {
-    const abjad = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
-    let hasilGabungan = [];
-
-    const pencarianUtama = await PlayStore(keyword);
-    hasilGabungan = hasilGabungan.concat(pencarianUtama);
-
-    for (const huruf of abjad) {
-        if (hasilGabungan.length >= maxResults) break;
-        const hasilTambahan = await PlayStore(`${keyword} ${huruf}`);
-        hasilGabungan = hasilGabungan.concat(hasilTambahan);
-    }
-
-    // Hilangkan duplikat berdasarkan link
-    const unik = [];
-    const linkSet = new Set();
-
-    for (const item of hasilGabungan) {
-        if (!linkSet.has(item.link)) {
-            linkSet.add(item.link);
-            unik.push(item);
-        }
-    }
-
-    return unik.slice(0, maxResults);
-}
-
 module.exports = function (app) {
     app.get('/search/playstore', async (req, res) => {
         try {
@@ -70,7 +45,7 @@ module.exports = function (app) {
             if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
             if (!q) return res.json({ status: false, error: 'Query is required' });
 
-            const result = await getPlaystoreResults(q, 1000);
+            const result = await PlayStore(q);
 
             if (result.length === 0) return res.json({ status: false, message: 'Tidak ada hasil ditemukan' });
 

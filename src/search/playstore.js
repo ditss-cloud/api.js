@@ -24,7 +24,7 @@ async function PlayStore(search) {
                         developer: developer || 'Tidak diketahui',
                         rate: ratingText || 'No rating',
                         rate_number: ratingValue || '-',
-                        icon: img || 'https://via.placeholder.com/150?text=No+Image',
+                        icon: img || 'https://files.catbox.moe/dklg5y.jpg',
                         link: `https://play.google.com${linkEl}`,
                         link_dev: developer ? `https://play.google.com/store/apps/developer?id=${encodeURIComponent(developer)}` : null
                     });

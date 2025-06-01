@@ -1,58 +1,85 @@
-const axios = require("axios")
-const cheerio = require("cheerio")
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 async function PlayStore(search) {
     return new Promise(async (resolve, reject) => {
         try {
-            const { data } = await axios.get(`https://play.google.com/store/search?q=${search}&c=apps`)
-            const hasil = []
-            const $ = cheerio.load(data)
-            
-            $('.ULeU3b > .VfPpkd-WsjYwc.VfPpkd-WsjYwc-OWXEXe-INsAgc.KC1dQ.Usd1Ac.AaN0Dd.Y8RQXd > .VfPpkd-aGsRMb > .VfPpkd-EScbFb-JIbuQc.TAQqTe > a').each((i, u) => {
-                const linkk = $(u).attr('href')
-                const nama = $(u).find('.j2FCNc > .cXFu1 > .ubGTjb > .DdYX5').text()
-                const developer = $(u).find('.j2FCNc > .cXFu1 > .ubGTjb > .wMUdtb').text()
-                const rate = $(u).find('.j2FCNc > .cXFu1 > .ubGTjb > div').attr('aria-label')
-                const rate2 = $(u).find('.j2FCNc > .cXFu1 > .ubGTjb > div > span.w2kbF').text()
-                const link = `https://play.google.com${linkk}`
+            const { data } = await axios.get(`https://play.google.com/store/search?q=${encodeURIComponent(search)}&c=apps`);
+            const $ = cheerio.load(data);
+            const hasil = [];
 
-                hasil.push({
-                    link: link,
-                    nama: nama || 'No name',
-                    developer: developer || 'No Developer',
-                    img: 'https://files.catbox.moe/dklg5y.jpg', 
-                    rate: rate || 'No Rate',
-                    rate2: rate2 || 'No Rate',
-                    link_dev: `https://play.google.com/store/apps/developer?id=${developer.split(" ").join('+')}`
-                })
-            })
-            
-            if (hasil.length === 0) return resolve({ mess: 'Tidak ada hasil yang ditemukan' })
-            
-            resolve(hasil.slice(0, Math.max(3, Math.min(5, hasil.length)))) 
+            $('.VfPpkd-EScbFb-JIbuQc').each((i, el) => {
+                const linkEl = $(el).find('a').attr('href');
+                const nama = $(el).find('.DdYX5').text();
+                const developer = $(el).find('.wMUdtb').text();
+                const ratingText = $(el).find('[role="img"]').attr('aria-label') || '';
+                const ratingValue = $(el).find('.w2kbF').text();
+                const img = $(el).find('img.T75of.sHb2Xb').attr('src') || $(el).find('img.T75of.sHb2Xb').attr('data-src');
+
+                if (linkEl && nama) {
+                    hasil.push({
+                        nama,
+                        developer: developer || 'Tidak diketahui',
+                        rate: ratingText || 'No rating',
+                        rate_number: ratingValue || '-',
+                        icon: img || 'https://via.placeholder.com/150?text=No+Image',
+                        link: `https://play.google.com${linkEl}`,
+                        link_dev: developer ? `https://play.google.com/store/apps/developer?id=${encodeURIComponent(developer)}` : null
+                    });
+                }
+            });
+
+            resolve(hasil);
         } catch (err) {
-            console.error(err)
-            reject(err)
+            reject(err);
         }
-    })
+    });
+}
+
+async function getPlaystoreResults(keyword, maxResults = 1000) {
+    const abjad = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
+    let hasilGabungan = [];
+
+    const pencarianUtama = await PlayStore(keyword);
+    hasilGabungan = hasilGabungan.concat(pencarianUtama);
+
+    for (const huruf of abjad) {
+        if (hasilGabungan.length >= maxResults) break;
+        const hasilTambahan = await PlayStore(`${keyword} ${huruf}`);
+        hasilGabungan = hasilGabungan.concat(hasilTambahan);
+    }
+
+    // Hilangkan duplikat berdasarkan link
+    const unik = [];
+    const linkSet = new Set();
+
+    for (const item of hasilGabungan) {
+        if (!linkSet.has(item.link)) {
+            linkSet.add(item.link);
+            unik.push(item);
+        }
+    }
+
+    return unik.slice(0, maxResults);
 }
 
 module.exports = function (app) {
-app.get('/search/playstore', async (req, res) => {
+    app.get('/search/playstore', async (req, res) => {
         try {
-        const { apikey } = req.query;
-            if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
-            const { q } = req.query;
-            if (!q) {
-            return res.json({ status: false, error: 'Query is required' });
-            }
-            const results = await PlayStore(q);  
-            res.status(200).json({
+            const { apikey, q } = req.query;
+            if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
+            if (!q) return res.json({ status: false, error: 'Query is required' });
+
+            const result = await getPlaystoreResults(q, 1000);
+
+            if (result.length === 0) return res.json({ status: false, message: 'Tidak ada hasil ditemukan' });
+
+            res.json({
                 status: true,
-                result: results
+                result
             });
-        } catch (error) {
-            res.status(500).send(`Error: ${error.message}`);
+        } catch (err) {
+            res.status(500).json({ status: false, error: err.message });
         }
-});
-}
+    });
+};

@@ -3,43 +3,37 @@ const cheerio = require("cheerio");
 
 async function happymod(query) {
   return new Promise((resolve, reject) => {
-    axios.get("https://www.happymod.com/search.html?q=" + query)
+    axios.get('https://www.happymod.com/search.html?q=' + encodeURIComponent(query))
       .then(({ data }) => {
         const $ = cheerio.load(data);
         const nama = [];
         const link = [];
         const rating = [];
         const thumb = [];
-        const version = [];
         const format = [];
 
-        // Judul + link
-        $('div.pdt-app-box h3 > a').each((i, el) => {
-          nama.push($(el).text().trim());
+        // Ambil judul dan link
+        $('body > div.container-row.clearfix.container-wrap > div.container-left > section > div > div > h3 > a').each(function (_, el) {
+          nama.push($(el).text());
           link.push('https://happymod.com' + $(el).attr('href'));
         });
 
-        // Rating
-        $('div.pdt-app-box div.stars > span').each((i, el) => {
-          rating.push($(el).text().trim());
+        // Ambil rating
+        $('body > div.container-row.clearfix.container-wrap > div.container-left > section > div > div > div.clearfix > span').each(function (_, el) {
+          rating.push($(el).text());
         });
 
-        // Thumbnail
-        $('div.pdt-app-box a > img').each((i, el) => {
+        // Ambil thumbnail
+        $('body > div.container-row.clearfix.container-wrap > div.container-left > section > div > a > img').each(function (_, el) {
           thumb.push($(el).attr('data-original'));
         });
 
-        // Version
-        $('div.pdt-version').each((i, el) => {
-          version.push($(el).text().replace('Latest version: ', '').trim());
-        });
-
+        // Gabungkan data
         for (let i = 0; i < link.length; i++) {
           format.push({
             judul: nama[i],
-            version: version[i] || 'Unknown',
-            thumb: thumb[i] || null,
-            rating: rating[i] || 'N/A',
+            thumb: thumb[i],
+            rating: rating[i],
             link: link[i]
           });
         }
@@ -61,12 +55,14 @@ module.exports = function (app) {
       if (!q) return res.json({ status: false, error: 'Query is required' });
 
       const results = await happymod(q);
+
       res.status(200).json({
         status: true,
-        result: results
+        creator: results.creator,
+        result: results.data
       });
     } catch (error) {
-      res.status(500).send(`Error: ${error.message}`);
+      res.status(500).json({ status: false, error: error.message });
     }
   });
 };

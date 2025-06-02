@@ -106,7 +106,7 @@ module.exports = function(app) {
   });
 
   // Route untuk remaster image (remini)
-  app.get('/imagecreator/remini', async (req, res) => {
+  app.get('/imagecreator/reminiiii', async (req, res) => {
     const { apikey, url } = req.query;
     if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
 

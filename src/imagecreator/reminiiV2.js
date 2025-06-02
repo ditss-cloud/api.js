@@ -1,39 +1,41 @@
 const axios = require('axios');
 
 module.exports = function (app) {
-  // Remini V2 menggunakan API pihak ketiga
   app.get('/imagecreator/remini', async (req, res) => {
     const { apikey, url } = req.query;
 
-    // Validasi apikey
     if (!global.apikey.includes(apikey)) {
       return res.status(403).json({ status: false, message: 'Apikey invalid' });
     }
 
-    // Validasi URL
     if (!url) {
       return res.status(400).json({ status: false, message: 'Parameter url tidak ditemukan' });
     }
 
     try {
-      // Panggil API pihak ketiga
-      const response = await axios.get(`https://anabot.my.id/api/ai/remini`, {
-        params: {
-          imageUrl: url,
-          apikey: 'freeApikey'
-        },
-        responseType: 'arraybuffer' // supaya bisa langsung stream image
-      });
+      // Gunakan URL langsung tanpa params
+      const apiUrl = `https://anabot.my.id/api/ai/remini?imageUrl=${encodeURIComponent(url)}&apikey=freeApikey`;
 
-      // Kirim gambar langsung sebagai response
-      res.set('Content-Type', 'image/jpeg');
-      res.send(response.data);
-    } catch (error) {
-      console.error('Remini v2 error:', error?.response?.data || error.message);
+      // Ambil respon dari API pihak kedua
+      const resultApi = await axios.get(apiUrl);
+      const imageUrl = resultApi?.data?.data?.result;
+
+      if (!imageUrl) {
+        return res.status(500).json({ status: false, message: 'Gagal mendapatkan gambar dari API pihak kedua' });
+      }
+
+      // Ambil gambar dari result URL
+      const imageRes = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+
+      // Kirim gambar langsung ke klien
+      res.set('Content-Type', 'image/png');
+      res.send(imageRes.data);
+    } catch (err) {
+      console.error('Remini V2 Error:', err?.response?.data || err.message);
       res.status(500).json({
         status: false,
-        message: 'Gagal memproses gambar',
-        error: error?.response?.data || error.message
+        message: 'Terjadi kesalahan saat memproses gambar',
+        error: err?.response?.data || err.message
       });
     }
   });

@@ -27,15 +27,19 @@ module.exports = function(app) {
       return res.status(400).json({ status: false, error: 'Text tidak boleh kosong' });
     }
 
+    // Potong teks jika terlalu panjang (maks 280 karakter)
+    const maxLength = 280;
+    const chunk = text.length > maxLength ? text.substring(0, maxLength) : text;
+
     const ngeloot = {
-      raw_text: text,
+      raw_text: chunk,
       url: "https://filme.imyfone.com/text-to-speech/anime-text-to-speech/",
       product_id: "200054",
       convert_data: [{
         voice_id: nahidaModel.voice_id,
         speed: "1",
         volume: "50",
-        text,
+        text: chunk,
         pos: 0
       }]
     };

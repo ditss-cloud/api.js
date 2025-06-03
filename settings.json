@@ -335,6 +335,76 @@
       ]
     },
     {
+  "name": "News API",
+  "items": [
+    {
+      "name": "FajarNews",
+      "desc": "Latest news from Fajar",
+      "path": "/news/fajar?apikey="
+    },
+    {
+      "name": "BBCNews",
+      "desc": "News from BBC",
+      "path": "/news/bbc?apikey="
+    },
+    {
+      "name": "MetroNews",
+      "desc": "Metro news updates",
+      "path": "/news/metro?apikey="
+    },
+    {
+      "name": "CNNNews",
+      "desc": "CNN news headlines",
+      "path": "/news/cnn?apikey="
+    },
+    {
+      "name": "iNews",
+      "desc": "iNews latest stories",
+      "path": "/news/inews?apikey="
+    },
+    {
+      "name": "KumparanNews",
+      "desc": "Kumparan news feed",
+      "path": "/news/kumparan?apikey="
+    },
+    {
+      "name": "TribunNews",
+      "desc": "Tribun news articles",
+      "path": "/news/tribun?apikey="
+    },
+    {
+      "name": "DailyNews",
+      "desc": "Daily news updates",
+      "path": "/news/daily?apikey="
+    },
+    {
+      "name": "DetikNews",
+      "desc": "Detik news headlines",
+      "path": "/news/detik?apikey="
+    },
+    {
+      "name": "OkezoneNews",
+      "desc": "Okezone news feed",
+      "path": "/news/okezone?apikey="
+    },
+    {
+      "name": "CNBCNews",
+      "desc": "CNBC latest news",
+      "path": "/news/cnbc?apikey="
+    },
+    {
+      "name": "KompasNews",
+      "desc": "Kompas news articles",
+      "path": "/news/kompas?apikey="
+    },
+    {
+      "name": "SindoNews",
+      "desc": "Sindo news headlines",
+      "path": "/news/sindo?apikey="
+    }
+  ]
+    },
+    {
       "name": "API",
       "items": [
         {

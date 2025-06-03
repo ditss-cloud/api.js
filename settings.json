@@ -314,6 +314,11 @@
           "path": "/imagecreator/upscale?apikey=&url="
         },
         {
+          "name": "tozombie",
+          "desc": "image to zombie",
+          "path": "/imagecreator/tozombie?apikey=DitssGanteng&url="
+        },
+        {
           "name": "Colorize",
           "desc": "Colorize image",
           "path": "/imagecreator/colorize?apikey=&url="

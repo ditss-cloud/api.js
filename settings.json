@@ -335,6 +335,71 @@
       ]
     },
     {
+  "name": "Primbon API",
+  "items": [
+    {
+      "name": "Rejeki Hoki Weton",
+      "desc": "Ramalan rejeki dan hoki berdasarkan weton",
+      "path": "/primbon/rejekihokiweton?apikey="
+    },
+    {
+      "name": "Pekerjaan Weton",
+      "desc": "Ramalan pekerjaan berdasarkan weton lahir",
+      "path": "/primbon/pekerjaanweton?apikey="
+    },
+    {
+      "name": "Zodiak",
+      "desc": "Ramalan berdasarkan zodiak",
+      "path": "/primbon/zodiak?apikey="
+    },
+    {
+      "name": "Ramalan Jodoh",
+      "desc": "Ramalan kecocokan jodoh lengkap dengan tanggal lahir",
+      "path": "/primbon/ramalanjodoh?apikey="
+    },
+    {
+      "name": "Ramalan Jodoh Bali",
+      "desc": "Ramalan jodoh versi Bali berdasarkan tanggal lahir",
+      "path": "/primbon/ramalanjodohbali?apikey="
+    },
+    {
+      "name": "Ramalan Suami Istri",
+      "desc": "Ramalan kecocokan suami istri berdasarkan tanggal lahir",
+      "path": "/primbon/suamiistri?apikey="
+    },
+    {
+      "name": "Ramalan Cinta",
+      "desc": "Ramalan cinta antara dua orang berdasarkan tanggal lahir",
+      "path": "/primbon/ramalancinta?apikey="
+    },
+    {
+      "name": "Arti Nama",
+      "desc": "Penjelasan arti nama",
+      "path": "/primbon/artinama?apikey="
+    },
+    {
+      "name": "Kecocokan Nama",
+      "desc": "Ramalan kecocokan nama berdasarkan tanggal lahir",
+      "path": "/primbon/kecocokannama?apikey="
+    },
+    {
+      "name": "Kecocokan Nama Pasangan",
+      "desc": "Ramalan kecocokan nama pasangan",
+      "path": "/primbon/kecocokannamapasangan?apikey="
+    },
+    {
+      "name": "Tanggal Jadian Pernikahan",
+      "desc": "Ramalan tanggal jadian pernikahan",
+      "path": "/primbon/tanggaljadianpernikahan?apikey="
+    },
+    {
+      "name": "Sifat Usaha Bisnis",
+      "desc": "Ramalan sifat usaha atau bisnis berdasarkan tanggal lahir",
+      "path": "/primbon/sifatusahabisnis?apikey="
+    }
+  ]
+    },
+    {
   "name": "News API",
   "items": [
     {

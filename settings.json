@@ -334,71 +334,81 @@
         }
       ]
     },
-    {
+{
   "name": "Primbon API",
   "items": [
     {
-      "name": "Rejeki Hoki Weton",
-      "desc": "Ramalan rejeki dan hoki berdasarkan weton",
-      "path": "/primbon/rejekihokiweton?apikey="
+      "name": "Nomor Hoki",
+      "desc": "Mengetahui hoki berdasarkan nomor HP",
+      "path": "/primbon/nomerhoki?apikey=&nomor="
     },
     {
-      "name": "Pekerjaan Weton",
-      "desc": "Ramalan pekerjaan berdasarkan weton lahir",
-      "path": "/primbon/pekerjaanweton?apikey="
-    },
-    {
-      "name": "Zodiak",
-      "desc": "Ramalan berdasarkan zodiak",
-      "path": "/primbon/zodiak?apikey="
+      "name": "Tafsir Mimpi",
+      "desc": "Menafsirkan arti dari mimpi tertentu",
+      "path": "/primbon/tafsirmimpi?apikey=&mimpi="
     },
     {
       "name": "Ramalan Jodoh",
-      "desc": "Ramalan kecocokan jodoh lengkap dengan tanggal lahir",
-      "path": "/primbon/ramalanjodoh?apikey="
+      "desc": "Ramalan jodoh berdasarkan nama dan tanggal lahir",
+      "path": "/primbon/ramalanjodoh?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
       "name": "Ramalan Jodoh Bali",
-      "desc": "Ramalan jodoh versi Bali berdasarkan tanggal lahir",
-      "path": "/primbon/ramalanjodohbali?apikey="
+      "desc": "Versi Bali dari ramalan jodoh berdasarkan tanggal lahir",
+      "path": "/primbon/ramalanjodohbali?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
       "name": "Ramalan Suami Istri",
-      "desc": "Ramalan kecocokan suami istri berdasarkan tanggal lahir",
-      "path": "/primbon/suamiistri?apikey="
+      "desc": "Ramalan kecocokan antara suami dan istri",
+      "path": "/primbon/suamiistri?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
       "name": "Ramalan Cinta",
-      "desc": "Ramalan cinta antara dua orang berdasarkan tanggal lahir",
-      "path": "/primbon/ramalancinta?apikey="
+      "desc": "Ramalan cinta berdasarkan tanggal lahir",
+      "path": "/primbon/ramalancinta?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
       "name": "Arti Nama",
-      "desc": "Penjelasan arti nama",
-      "path": "/primbon/artinama?apikey="
+      "desc": "Mengetahui makna atau arti dari sebuah nama",
+      "path": "/primbon/artinama?apikey=&nama="
     },
     {
       "name": "Kecocokan Nama",
-      "desc": "Ramalan kecocokan nama berdasarkan tanggal lahir",
-      "path": "/primbon/kecocokannama?apikey="
+      "desc": "Kecocokan nama seseorang dengan tanggal lahir",
+      "path": "/primbon/kecocokannama?apikey=&nama=&tgl=&bln=&thn="
     },
     {
       "name": "Kecocokan Nama Pasangan",
-      "desc": "Ramalan kecocokan nama pasangan",
-      "path": "/primbon/kecocokannamapasangan?apikey="
+      "desc": "Kecocokan dua nama pasangan",
+      "path": "/primbon/kecocokannamapasangan?apikey=&nama1=&nama2="
     },
     {
       "name": "Tanggal Jadian Pernikahan",
-      "desc": "Ramalan tanggal jadian pernikahan",
-      "path": "/primbon/tanggaljadianpernikahan?apikey="
+      "desc": "Ramalan tanggal jadian dan pernikahan",
+      "path": "/primbon/tanggaljadianpernikahan?apikey=&tgl=&bln=&thn="
     },
     {
       "name": "Sifat Usaha Bisnis",
-      "desc": "Ramalan sifat usaha atau bisnis berdasarkan tanggal lahir",
-      "path": "/primbon/sifatusahabisnis?apikey="
+      "desc": "Sifat bisnis atau usaha berdasarkan weton",
+      "path": "/primbon/sifatusahabisnis?apikey=&tgl=&bln=&thn="
+    },
+    {
+      "name": "Rejeki Hoki Weton",
+      "desc": "Ramalan rejeki dan hoki berdasar weton lahir",
+      "path": "/primbon/rejekihokiweton?apikey=&tgl=&bln=&thn="
+    },
+    {
+      "name": "Pekerjaan Weton",
+      "desc": "Rekomendasi pekerjaan berdasar weton lahir",
+      "path": "/primbon/pekerjaanweton?apikey=&tgl=&bln=&thn="
+    },
+    {
+      "name": "Zodiak",
+      "desc": "Menampilkan info ramalan zodiak",
+      "path": "/primbon/zodiak?apikey=&zodiak="
     }
   ]
-    },
+},
     {
   "name": "News API",
   "items": [

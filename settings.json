@@ -331,6 +331,10 @@
           "name": "Brat video",
           "desc": "Bratvid text generator",
           "path": "/imagecreator/bratvideo?apikey=&text="
+        },{
+          "name": "Brat video",
+          "desc": "Bratvid text generator",
+          "path": "/imagecreator/toanime?apikey=&url="
         }
       ]
     },

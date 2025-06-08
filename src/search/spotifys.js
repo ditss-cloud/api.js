@@ -19,6 +19,7 @@ async function getAccessToken() {
 }
 
 // Mencari lagu di Spotify
+/*
 async function spotifySearch(query) {
   try {
     const access_token = await getAccessToken();
@@ -38,8 +39,41 @@ async function spotifySearch(query) {
     console.error('Search Error:', err.message);
     throw new Error('Failed to search Spotify');
   }
+}*/
+function msToMinutes(ms) {
+  const minutes = Math.floor(ms / 60000);
+  const seconds = Math.floor((ms % 60000) / 1000);
+  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
+async function spotifySearch(query) {
+  try {
+    const access_token = await getAccessToken();
+    const response = await axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
+
+    return response.data.tracks.items.map(track => ({
+      name: track.name,
+      artists: track.artists.map(artist => artist.name).join(', '),
+      album_name: track.album.name,
+      release_date: track.album.release_date,
+      popularity: track.popularity,
+      preview_url: track.preview_url,
+      link: track.external_urls.spotify,
+      image: track.album.images[0]?.url || '',
+      duration_ms: track.duration_ms,
+      duration: msToMinutes(track.duration_ms),
+      track_number: track.track_number,
+      disc_number: track.disc_number
+    }));
+  } catch (err) {
+    console.error('Search Error:', err.message);
+    throw new Error('Failed to search Spotify');
+  }
+}
 // Endpoint Spotify Search API
 module.exports = function (app) {
   app.get('/search/spotify', async (req, res) => {

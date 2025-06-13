@@ -854,14 +854,12 @@ setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
             <p style="margin:0;font-weight:500;font-size:1.1em">
               <span style="color:#fff;opacity:.8;">Total Request:</span> <span style="font-weight:700;" id="total-request">${res.totalrequest}</span>
             </p>
-            <div style="font-size:.95em; margin-top:8px; color:#fff; opacity:.85; text-align:left;">
-              <div><b>Total request:</b> ${res.status}</div>
-              <div><b>Waktu:</b> ${res.waktu}</div>
-              <div><b>User Agent:</b> <span style="word-break:break-all;">${res.user_agent}</span></div>
-              <div><b>Method:</b> ${res.method}</div>
-              <div><b>Endpoint:</b> ${res.endpoint}</div>
-              <div><b>Runtime:</b> ${res.runtime}</div>
-            </div>
+           <div style="font-size:.95em; margin-top:8px; color:#fff; opacity:.85; text-align:left;">
+  <div><b>🟢 Status:</b> ${res.status}</div>
+  <div><b>⏰ Waktu:</b> ${res.waktu}</div>
+  <div><b>⚙️ Runtime:</b> ${res.runtime}</div>
+  <div><b>🌐 IP:</b> ${res.ip_address}</div>
+          </div>
           `;
         }
 
@@ -889,7 +887,7 @@ setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
   updateTotalRequest();
 
   // Lalu auto-refresh setiap 10 detik
-  setInterval(updateTotalRequest, 1000);
+  setInterval(updateTotalRequest, 10);
     // Utility function to capitalize words
     function capitalizeWords(str) {
         return str.replace(/\b\w/g, char => char.toUpperCase());

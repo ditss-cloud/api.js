@@ -208,46 +208,46 @@
     }
   ]
 },
+ {
+  "name": "🔍 Search Tools",
+  "items": [
     {
-      "name": "Search",
-      "items": [
-        {
-          "name": "Youtube Search",
-          "desc": "Search youtube video",
-          "path": "/search/youtube?apikey=&q="
-        },
-        {
-          "name": "Tiktok Search",
-          "desc": "Search tiktok video",
-          "path": "/search/tiktok?apikey=&q="
-        },
-        {
-          "name": "Npm Search",
-          "desc": "Search npm nodejs",
-          "path": "/search/npm?apikey=&q="
-        },
-        {
-          "name": "Pinterest",
-          "desc": "Search pinterest foto",
-          "path": "/search/pinterest?apikey=&q="
-        },
-        {
-          "name": "Playstore",
-          "desc": "Search playstore apk",
-          "path": "/search/playstore?apikey=&q="
-        },
-        {
-          "name": "Happymod",
-          "desc": "Search happymod apk",
-          "path": "/search/happymod?apikey=&q="
-        },
-        {
-          "name": "XNXX Search",
-          "desc": "Search xnxx video",
-          "path": "/search/xnxx?apikey=&q="
-        }
-      ]
+      "name": "🔴 YouTube Search",
+      "desc": "Cari video di YouTube 🎥",
+      "path": "/search/youtube?apikey=&q="
     },
+    {
+      "name": "🎵 TikTok Search",
+      "desc": "Cari video di TikTok 📱",
+      "path": "/search/tiktok?apikey=&q="
+    },
+    {
+      "name": "📦 NPM Package Search",
+      "desc": "Cari package Node.js di NPM 🧩",
+      "path": "/search/npm?apikey=&q="
+    },
+    {
+      "name": "📌 Pinterest Search",
+      "desc": "Cari gambar dari Pinterest 🖼️",
+      "path": "/search/pinterest?apikey=&q="
+    },
+    {
+      "name": "📱 Playstore Search",
+      "desc": "Cari aplikasi dari Playstore 🛒",
+      "path": "/search/playstore?apikey=&q="
+    },
+    {
+      "name": "🎮 Happymod Search",
+      "desc": "Cari mod apk dari Happymod ⚙️",
+      "path": "/search/happymod?apikey=&q="
+    },
+    {
+      "name": "🔞 XNXX Search",
+      "desc": "Cari video dari XNXX 🔥",
+      "path": "/search/xnxx?apikey=&q="
+    }
+  ]
+},
     {
   "name": "🗣️ TTS (Text to Speech)",
   "items": [

@@ -781,7 +781,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     createParticles();
+     // Fungsi untuk ambil dan tampilkan total request
+  function updateTotalRequest() {
+    fetch('https://api.ditss.cloud/api/status') 
+      .then(response => response.json())
+      .then(data => {
+        if (data.status && data.result) {
+          const totalRequest = data.result.totalrequest;
 
+          const element = document.getElementById("total-request");
+
+          // Efek animasi jika nilai berubah
+          const currentValue = element.innerText;
+          if (currentValue !== totalRequest) {
+            element.textContent = totalRequest;
+            element.style.transition = "background-color 0.5s";
+            element.style.backgroundColor = "#00ffe133";
+            setTimeout(() => {
+              element.style.backgroundColor = "transparent";
+            }, 500);
+          }
+        }
+      })
+      .catch(error => {
+        console.error("Gagal mengambil data:", error);
+      });
+  }
+
+  // Jalankan pertama kali
+  updateTotalRequest();
+
+  // Lalu auto-refresh setiap 10 detik
+  setInterval(updateTotalRequest, 1000);
     // Utility function to capitalize words
     function capitalizeWords(str) {
         return str.replace(/\b\w/g, char => char.toUpperCase());

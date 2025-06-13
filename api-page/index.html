@@ -713,6 +713,13 @@
     Total Request: <span id="total-request" style="color:#232323;">-</span>
   </p>
 </div>
+
+<!-- okr-->
+      <div id="total-request-box">
+  <i class="fas fa-chart-line" style="font-size:2rem;color:#fa5252;"></i>
+  <div id="request-info"></div>
+</div>
+      
     <!-- Data akan diisi lewat JS -->
   </div>
 </div>
@@ -805,6 +812,43 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     createParticles();
+
+
+
+    function showApiStatus() {
+  fetch('https://api.ditss.cloud/api/status')
+    .then(response => response.json())
+    .then(data => {
+      if (data.status && data.result) {
+        const res = data.result;
+        const infoBox = document.getElementById("request-info");
+        if (infoBox) {
+          infoBox.innerHTML = `
+            <p style="margin:0;font-weight:500;font-size:1.1em; color:#fff;">
+              <span style="opacity:.8;">Total Request:</span> <span style="font-weight:700;">${res.totalrequest}</span>
+            </p>
+            <div style="font-size:.95em; margin-top:8px; color:#fff; opacity:.85; text-align:left;">
+              <div><b>Status:</b> ${res.status}</div>
+              <div><b>Waktu:</b> ${res.waktu}</div>
+              <div><b>IP:</b> ${res.ip_address}</div>
+              <div><b>Runtime:</b> ${res.runtime}</div>
+              <div><b>Total Fitur:</b> ${res.totalfitur}</div>
+            </div>
+          `;
+        }
+      }
+    })
+    .catch(error => {
+      console.error("Gagal mengambil data:", error);
+    });
+}
+showApiStatus(); // panggil sekali
+setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
+
+
+
+
+    
      // Fungsi untuk ambil dan tampilkan total request
  function updateTotalRequest() {
   fetch('https://api.ditss.cloud/api/status') 

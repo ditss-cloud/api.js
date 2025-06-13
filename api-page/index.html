@@ -707,13 +707,10 @@
       <a href="#" target="_blank"><i class="fas fa-comments"></i></a>
     </div>
 
-    <!-- Box total-request dipindahkan ke sini, setelah tombol-tombol -->
-   <div id="total-request-box">
+ <div id="total-request-box">
   <i class="fas fa-chart-line" style="font-size:2rem;color:#fa5252;"></i>
-<p style="margin:0;font-weight:500; color:#fff;">
-  Total Request: <span id="total-request" style="color:#fff;">-</span>
-</p>
-</div>
+  <div id="request-info">
+    <!-- Data akan diisi lewat JS -->
   </div>
 </div>
 
@@ -806,31 +803,53 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     createParticles();
      // Fungsi untuk ambil dan tampilkan total request
-  function updateTotalRequest() {
-    fetch('https://api.ditss.cloud/api/status') 
-      .then(response => response.json())
-      .then(data => {
-        if (data.status && data.result) {
-          const totalRequest = data.result.totalrequest;
+ function updateTotalRequest() {
+  fetch('https://api.ditss.cloud/api/status') 
+    .then(response => response.json())
+    .then(data => {
+      if (data.status && data.result) {
+        const res = data.result;
+        const box = document.getElementById("request-info");
+        if (box) {
+          box.innerHTML = `
+            <p style="margin:0;font-weight:500;font-size:1.1em">
+              <span style="color:#fff;opacity:.8;">Total Request:</span> <span style="font-weight:700;" id="total-request">${res.totalrequest}</span>
+            </p>
+            <div style="font-size:.95em; margin-top:8px; color:#fff; opacity:.85; text-align:left;">
+              <div><b>Status:</b> ${res.status}</div>
+              <div><b>Waktu:</b> ${res.waktu}</div>
+              <div><b>IP:</b> ${res.ip_address}</div>
+              <div><b>User Agent:</b> <span style="word-break:break-all;">${res.user_agent}</span></div>
+              <div><b>Method:</b> ${res.method}</div>
+              <div><b>Endpoint:</b> ${res.endpoint}</div>
+              <div><b>Domain:</b> ${res.domain}</div>
+              <div><b>Runtime:</b> ${res.runtime}</div>
+              <div><b>Total Fitur:</b> ${res.totalfitur}</div>
+              <div><b>Total 404:</b> ${res.total404}</div>
+              <div><b>Total 500:</b> ${res.total500}</div>
+            </div>
+          `;
+        }
 
-          const element = document.getElementById("total-request");
-
-          // Efek animasi jika nilai berubah
-          const currentValue = element.innerText;
-          if (currentValue !== totalRequest) {
-            element.textContent = totalRequest;
-            element.style.transition = "background-color 0.5s";
-            element.style.backgroundColor = "#00ffe133";
+        // Efek animasi hanya untuk perubahan total request
+        const elTotal = document.getElementById("total-request");
+        if (elTotal) {
+          const currentValue = elTotal.innerText;
+          if (currentValue !== res.totalrequest) {
+            elTotal.textContent = res.totalrequest;
+            elTotal.style.transition = "background-color 0.5s";
+            elTotal.style.backgroundColor = "#ffb3b333"; // merah soft
             setTimeout(() => {
-              element.style.backgroundColor = "transparent";
+              elTotal.style.backgroundColor = "transparent";
             }, 500);
           }
         }
-      })
-      .catch(error => {
-        console.error("Gagal mengambil data:", error);
-      });
-  }
+      }
+    })
+    .catch(error => {
+      console.error("Gagal mengambil data:", error);
+    });
+}
 
   // Jalankan pertama kali
   updateTotalRequest();

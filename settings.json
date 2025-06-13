@@ -123,96 +123,91 @@
     }
   ]
 },
+ {
+  "name": "📥 Downloader",
+  "items": [
     {
-      "name": "Downloader",
-      "items": [
-        {
-          "name": "Tiktok",
-          "desc": "Downloader tiktok",
-          "path": "/download/tiktok?apikey=&url="
-        },
-        {
-          "name": "Tiktok V2",
-          "desc": "Downloader tiktok v2",
-          "path": "/download/tiktok-v2?apikey=&url="
-        },
-        {
-          "name": "Capcut",
-          "desc": "Downloader capcut",
-          "path": "/download/capcut?apikey=&url="
-        },
-        {
-          "name": "Spotify",
-          "desc": "Downloader spotify",
-          "path": "/download/spotify?apikey=&url="
-        },
-        {
-          "name": "XNXX",
-          "desc": "Downloader xnxx",
-          "path": "/download/xnxx?apikey=&url="
-        },
-        {
-          "name": "Instagram",
-          "desc": "Downloader instagram",
-          "path": "/download/instagram?apikey=&url="
-        },
-        {
-          "name": "Facebook",
-          "desc": "Downloader facebook",
-          "path": "/download/facebook?apikey=&url="
-        },
-        {
-          "name": "Videy",
-          "desc": "Downloader videy",
-          "path": "/download/videy?apikey=&url="
-        },
-        {
-          "name": "Ytmp3",
-          "desc": "Downloader Youtube mp3",
-          "path": "/download/ytmp3?apikey=&url="
-        },
-        {
-          "name": "Snackvideo",
-          "desc": "Downloader snackvideo",
-          "path": "/download/snackvideo?apikey=&url="
-        },
-        {
-          "name": "Gitclone",
-          "desc": "Downloader gitclone",
-          "path": "/download/github?apikey=&url="
-        },
-        {
-          "name": "Mediafire",
-          "desc": "Downloader mediafire",
-          "path": "/download/mediafire?apikey=&url="
-        }
-      ]
+      "name": "🎵 TikTok",
+      "desc": "Unduh video TikTok tanpa watermark",
+      "path": "/download/tiktok?apikey=&url="
     },
     {
-      "name": "Random",
-      "items": [
-        {
-          "name": "Blue Archive",
-          "desc": "Random foto blue archive",
-          "path": "/random/ba?apikey=DitssGanteng"
-        },
-        {
-          "name": "Random Waifu",
-          "desc": "Random foto waifu",
-          "path": "/random/waifu?apikey="
-        },
-        {
-          "name": "Random Nsfw",
-          "desc": "Random foto nsfw",
-          "path": "/random/nsfw?apikey="
-        },
-        {
-          "name": "Pap Ayang",
-          "desc": "Random pap ayang",
-          "path": "/random/papayang?apikey="
-        }
-      ]
+      "name": "🎵 TikTok V2",
+      "desc": "Alternatif TikTok downloader",
+      "path": "/download/tiktok-v2?apikey=&url="
     },
+    {
+      "name": "✂️ CapCut",
+      "desc": "Unduh template CapCut",
+      "path": "/download/capcut?apikey=&url="
+    },
+    {
+      "name": "🎧 Spotify",
+      "desc": "Download musik dari Spotify",
+      "path": "/download/spotify?apikey=&url="
+    },
+    {
+      "name": "🔞 XNXX",
+      "desc": "Unduh video dari XNXX (18+)",
+      "path": "/download/xnxx?apikey=&url="
+    },
+    {
+      "name": "📸 Instagram",
+      "desc": "Download postingan Instagram",
+      "path": "/download/instagram?apikey=&url="
+    },
+    {
+      "name": "📘 Facebook",
+      "desc": "Download video dari Facebook",
+      "path": "/download/facebook?apikey=&url="
+    },
+    {
+      "name": "🎬 Videy",
+      "desc": "Download video dari Videy",
+      "path": "/download/videy?apikey=&url="
+    },
+    {
+      "name": "🎼 YouTube MP3",
+      "desc": "Download lagu dari YouTube",
+      "path": "/download/ytmp3?apikey=&url="
+    },
+    {
+      "name": "🍿 SnackVideo",
+      "desc": "Download video dari SnackVideo",
+      "path": "/download/snackvideo?apikey=&url="
+    },
+    {
+      "name": "🐙 GitClone",
+      "desc": "Clone repositori GitHub",
+      "path": "/download/github?apikey=&url="
+    },
+    {
+      "name": "📦 MediaFire",
+      "desc": "Download file dari MediaFire",
+      "path": "/download/mediafire?apikey=&url="
+    }
+  ]
+},
+ {
+  "name": "🎲 Random Gambar",
+  "items": [
+    {
+      "name": "📘 Blue Archive",
+      "desc": "Acak gambar karakter dari Blue Archive",
+      "path": "/random/ba?apikey=DitssGanteng"
+    },
+    {
+      "name": "💖 Waifu",
+      "desc": "Acak gambar waifu anime favorit",
+      "path": "/random/waifu?apikey="
+    },
+    {
+      "name": "🔞 NSFW (18+)",
+      "desc": "Acak gambar NSFW (dewasa)",
+      "path": "/random/nsfw?apikey="
+    }
+  ]
+},
     {
       "name": "Search",
       "items": [
@@ -253,6 +248,71 @@
         }
       ]
     },
+    {
+  "name": "🗣️ TTS (Text to Speech)",
+  "items": [
+    {
+      "name": "🎤 Elon Musk",
+      "desc": "Suara mirip Elon Musk",
+      "path": "/tts?voice_id=67ada61f-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🎤 Hatsune Miku",
+      "desc": "Suara virtual idol Miku",
+      "path": "/tts?voice_id=67aee909-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🌱 Nahida (Exclusive)",
+      "desc": "Suara Nahida dari Genshin Impact",
+      "path": "/tts?voice_id=67ae0979-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🍊 Nami",
+      "desc": "Suara Nami dari One Piece",
+      "path": "/tts?voice_id=67ad95a0-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "👩 Ana (Female)",
+      "desc": "Suara wanita lembut",
+      "path": "/tts?voice_id=f2ec72cc-110c-11ef-811c-00163e0255ec&text="
+    },
+    {
+      "name": "🤖 Optimus Prime",
+      "desc": "Suara robot pemimpin Autobot",
+      "path": "/tts?voice_id=67ae0f40-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🔥 Goku",
+      "desc": "Suara Goku dari Dragon Ball",
+      "path": "/tts?voice_id=67aed50c-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🎤 Taylor Swift",
+      "desc": "Suara artis Taylor Swift",
+      "path": "/tts?voice_id=67ae4751-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🐭 Mickey Mouse",
+      "desc": "Suara khas Mickey Mouse",
+      "path": "/tts?voice_id=67ae7d37-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🎵 Kendrick Lamar",
+      "desc": "Suara rapper Kendrick Lamar",
+      "path": "/tts?voice_id=67add638-5d4b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "👩‍💼 Angela Adkinsh",
+      "desc": "Suara wanita dewasa",
+      "path": "/tts?voice_id=d23f2adb-5d1b-11ee-a861-00163e2ac61b&text="
+    },
+    {
+      "name": "🎤 Eminem",
+      "desc": "Suara rapper Eminem",
+      "path": "/tts?voice_id=c82964b9-d093-11ee-bfb7-e86f38d7ec1a&text="
+    }
+  ]
+},
     {
       "name": "Tools",
       "items": [

@@ -25,7 +25,8 @@ try {
 }
 global.apikey = settings.apiSettings.apikey || null;
 global.totalreq = 0;
-
+global.totalError404 = 0;
+global.totalError500 = 0;
 // === Middleware log + JSON formatter ===
 app.use((req, res, next) => {
   console.log(chalk.bgHex('#FFFF99').hex('#333').bold(` Request: ${req.method} ${req.path} `));

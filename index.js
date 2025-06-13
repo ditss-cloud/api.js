@@ -108,12 +108,23 @@ fs.readdirSync(apiFolder).forEach(sub => {
 
 // === Error handlers ===
 app.use((req, res) => {
+  global.totalError404++;
   res.status(404).sendFile(path.join(__dirname, 'api-page', '404.html'));
 });
+/*app.use((req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'api-page', '404.html'));
+});
+*/
 app.use((err, req, res, next) => {
+  global.totalError500++;
   console.error(err.stack);
   res.status(500).sendFile(path.join(__dirname, 'api-page', '500.html'));
 });
+/*
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).sendFile(path.join(__dirname, 'api-page', '500.html'));
+});*/
 
 // === Start server ===
 app.listen(PORT, () => {

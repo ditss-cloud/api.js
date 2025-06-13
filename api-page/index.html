@@ -651,15 +651,18 @@
             width: 100%;
             justify-content: center;
         }
-        #total-request-box {
-  position: fixed;
-  top: 70px; /* di bawah navbar */
-  right: 10px;
-  z-index: 2000;
+  #total-request-box {
+  /* position: fixed; */ /* Hapus ini */
+  margin-top: 16px;
   background: white;
   box-shadow: 0 2px 8px rgba(0,0,0,0.07);
   border-radius: 16px;
   padding: 20px;
+  width: 90%;             /* Responsive */
+  max-width: 400px;       /* Biar ga terlalu lebar */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
     }
     </style>
@@ -687,18 +690,15 @@
             </a>
         </div>
     </nav>
-
-    <!-- req -->
-    <div id="total-request-box">
-  <i class="fas fa-chart-line" style="font-size:2rem;color:#4361ee;"></i>
-  <p style="margin:0;font-weight:500;">Total Request: <span id="total-request">-</span></p>
-</div>
     <!-- Hero Banner -->
 <div class="hero-banner">
     <div class="hero-content">
         <div id="nameContainer" class="animate__animated animate__fadeInUp">
             <h1 id="name"></h1>
         </div>
+
+
+        
         <p id="description" class="animate__animated animate__fadeInUp animate__delay-1s"></p>
         <div id="apiLinks" class="animate__animated animate__fadeInUp animate__delay-2s">
             <a href="#content-card" target="_blank"><i class="fas fa-rocket me-2"></i></a>

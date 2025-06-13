@@ -313,248 +313,306 @@
     }
   ]
 },
-    {
-      "name": "Tools",
-      "items": [
-        {
-          "name": "Text-to-speech",
-          "desc": "Tts anime character",
-          "path": "/tools/text-to-speech?apikey=&text="
-        },
-        {
-          "name": "Screenshot Web",
-          "desc": "Screenshot web url",
-          "path": "/tools/ssweb?apikey=&url="
-        },
-        {
-          "name": "Emoji To Gif",
-          "desc": "Convert emoji to gif",
-          "path": "/tools/emojitogif?apikey=&emoji="
-        },
-        {
-          "name": "Emoji Mix",
-          "desc": "Emoji mix converter",
-          "path": "/tools/emojimix?apikey=&emoji1=&emoji2="
-        }
-      ]
-    },
-    {
-      "name": "Stalker",
-      "items": [
-        {
-          "name": "Instagram Stalk",
-          "desc": "Stalk instagram account",
-          "path": "/stalk/instagram?apikey=&user="
-        },
-        {
-          "name": "Tiktok Stalk",
-          "desc": "Stalk tiktok account",
-          "path": "/stalk/tiktok?apikey=&user="
-        },
-        {
-          "name": "Npm Stalk",
-          "desc": "Stalk npm package",
-          "path": "/stalk/npm?apikey=&name="
-        },
-        {
-          "name": "FF Stalk",
-          "desc": "Stalk free fire account",
-          "path": "/stalk/ff?apikey=&id="
-        },{
-          "name": "Roblox Stalk",
-          "desc": "Stalk Roblox account",
-          "path": "/stalk/roblox?username=&apikey="
-        }
-      ]
-    },
-    {
-      "name": "Image Creator",
-      "items": [
-        {
-          "name": "Remini",
-          "desc": "Remini image",
-          "path": "/imagecreator/remini?apikey=&url="
-        },
-        {
-          "name": "Removebg",
-          "desc": "Remove background image",
-          "path": "/imagecreator/removebg?apikey=&url="
-        },
-        {
-          "name": "Upscale",
-          "desc": "Upscale image",
-          "path": "/imagecreator/upscale?apikey=&url="
-        },
-        {
-          "name": "tozombie",
-          "desc": "image to zombie",
-          "path": "/imagecreator/tozombie?apikey=DitssGanteng&url="
-        },
-        {
-          "name": "Colorize",
-          "desc": "Colorize image",
-          "path": "/imagecreator/colorize?apikey=&url="
-        },
-        {
-          "name": "Brat",
-          "desc": "Brat text generator",
-          "path": "/imagecreator/brat?apikey=&text="
-        },{
-          "name": "Brat video",
-          "desc": "Bratvid text generator",
-          "path": "/imagecreator/bratvideo?apikey=&text="
-        },{
-          "name": "Brat video",
-          "desc": "Bratvid text generator",
-          "path": "/imagecreator/toanime?apikey=&url="
-        }
-      ]
-    },
-{
-  "name": "Primbon API",
+ {
+  "name": "🛠️ Tools",
   "items": [
     {
-      "name": "Nomor Hoki",
-      "desc": "Mengetahui hoki berdasarkan nomor HP",
+      "name": "🖼️ Screenshot Web",
+      "desc": "Ambil tangkapan layar dari URL website 🌐",
+      "path": "/tools/ssweb?apikey=&url="
+    },
+    {
+      "name": "😆 Emoji to GIF",
+      "desc": "Ubah emoji menjadi animasi GIF 🎞️",
+      "path": "/tools/emojitogif?apikey=&emoji="
+    },
+    {
+      "name": "🔀 Emoji Mix",
+      "desc": "Gabungkan dua emoji jadi satu emoji unik 🧪",
+      "path": "/tools/emojimix?apikey=&emoji1=&emoji2="
+    }
+  ]
+},
+ {
+  "name": "🕵️‍♂️ Stalker Tools",
+  "items": [
+    {
+      "name": "📸 Instagram Stalk",
+      "desc": "Lihat info profil akun Instagram",
+      "path": "/stalk/instagram?apikey=&user="
+    },
+    {
+      "name": "🎵 TikTok Stalk",
+      "desc": "Lihat info akun TikTok",
+      "path": "/stalk/tiktok?apikey=&user="
+    },
+    {
+      "name": "📦 NPM Stalk",
+      "desc": "Lihat info package dari NPM",
+      "path": "/stalk/npm?apikey=&name="
+    },
+    {
+      "name": "🔥 Free Fire Stalk",
+      "desc": "Lihat profil pemain Free Fire",
+      "path": "/stalk/ff?apikey=&id="
+    },
+    {
+      "name": "👾 Roblox Stalk",
+      "desc": "Lihat info akun Roblox",
+      "path": "/stalk/roblox?username=&apikey="
+    },
+    {
+      "name": "📢 WhatsApp Channel Stalk",
+      "desc": "Lihat info dari channel Telegram",
+      "path": "/stalk/telegram/channel?apikey=&username="
+    },
+    {
+      "name": "💬 Telegram User Stalk",
+      "desc": "Lihat profil pengguna Telegram",
+      "path": "/stalk/telegram/user?apikey=&username="
+    },
+    {
+      "name": "🐙 GitHub Stalk",
+      "desc": "Lihat profil GitHub beserta repositorinya",
+      "path": "/stalk/github?apikey=&user="
+    },
+    {
+      "name": "⚔️ ML Stalk",
+      "desc": "Lihat profil Mobile Legends (ID + Server)",
+      "path": "/stalk/ml?apikey=&id=&server="
+    },
+    {
+      "name": "🎯 PUBG Stalk",
+      "desc": "Lihat profil PUBG player",
+      "path": "/stalk/pubg?apikey=&id="
+    }
+  ]
+},
+ {
+  "name": "🎨 Image Creator",
+  "items": [
+    {
+      "name": "✨ Remini",
+      "desc": "Tingkatkan kualitas gambar secara otomatis",
+      "path": "/imagecreator/remini?apikey=&url="
+    },
+    {
+      "name": "🧼 Remove Background",
+      "desc": "Hapus latar belakang dari gambar",
+      "path": "/imagecreator/removebg?apikey=&url="
+    },
+    {
+      "name": "🔍 Upscale Image",
+      "desc": "Perbesar gambar tanpa pecah",
+      "path": "/imagecreator/upscale?apikey=&url="
+    },
+    {
+      "name": "🧟‍♂️ To Zombie",
+      "desc": "Ubah wajah menjadi zombie menyeramkan",
+      "path": "/imagecreator/tozombie?apikey=DitssGanteng&url="
+    },
+    {
+      "name": "🎨 Colorize",
+      "desc": "Warna kembali foto hitam putih",
+      "path": "/imagecreator/colorize?apikey=&url="
+    },
+    {
+      "name": "👶 Brat Generator",
+      "desc": "Gambar teks gaya 'brat aesthetic'",
+      "path": "/imagecreator/brat?apikey=&text="
+    },
+    {
+      "name": "🎬 Brat Video",
+      "desc": "Buat video dengan gaya brat dari teks",
+      "path": "/imagecreator/bratvideo?apikey=&text="
+    },
+    {
+      "name": "👧 To Anime",
+      "desc": "Ubah wajah jadi versi anime",
+      "path": "/imagecreator/toanime?apikey=&url="
+    }
+  ]
+},
+{
+  "name": "🔮 Primbon API",
+  "items": [
+    {
+      "name": "📱 Nomor Hoki",
+      "desc": "Cek keberuntungan dari nomor HP kamu!",
       "path": "/primbon/nomerhoki?apikey=&nomor="
     },
     {
-      "name": "Tafsir Mimpi",
-      "desc": "Menafsirkan arti dari mimpi tertentu",
+      "name": "💤 Tafsir Mimpi",
+      "desc": "Ketahui arti dari mimpi yang kamu alami",
       "path": "/primbon/tafsirmimpi?apikey=&mimpi="
     },
     {
-      "name": "Ramalan Jodoh",
-      "desc": "Ramalan jodoh berdasarkan nama dan tanggal lahir",
+      "name": "💞 Ramalan Jodoh",
+      "desc": "Ramalan cinta berdasarkan nama & tanggal lahir",
       "path": "/primbon/ramalanjodoh?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
-      "name": "Ramalan Jodoh Bali",
-      "desc": "Versi Bali dari ramalan jodoh berdasarkan tanggal lahir",
+      "name": "🌺 Ramalan Jodoh Bali",
+      "desc": "Ramalan jodoh khas Bali berdasarkan weton",
       "path": "/primbon/ramalanjodohbali?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
-      "name": "Ramalan Suami Istri",
-      "desc": "Ramalan kecocokan antara suami dan istri",
+      "name": "👫 Ramalan Suami Istri",
+      "desc": "Cek kecocokan pasangan suami istri",
       "path": "/primbon/suamiistri?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
-      "name": "Ramalan Cinta",
-      "desc": "Ramalan cinta berdasarkan tanggal lahir",
+      "name": "❤️ Ramalan Cinta",
+      "desc": "Prediksi kisah cinta kamu dan dia 😘",
       "path": "/primbon/ramalancinta?apikey=&nama1=&tgl1=&bln1=&thn1=&nama2=&tgl2=&bln2=&thn2="
     },
     {
-      "name": "Arti Nama",
-      "desc": "Mengetahui makna atau arti dari sebuah nama",
+      "name": "🔤 Arti Nama",
+      "desc": "Cari tahu makna dan kepribadian dari namamu",
       "path": "/primbon/artinama?apikey=&nama="
     },
     {
-      "name": "Kecocokan Nama",
-      "desc": "Kecocokan nama seseorang dengan tanggal lahir",
+      "name": "🔗 Kecocokan Nama",
+      "desc": "Lihat kecocokan nama dengan tanggal lahir",
       "path": "/primbon/kecocokannama?apikey=&nama=&tgl=&bln=&thn="
     },
     {
-      "name": "Kecocokan Nama Pasangan",
-      "desc": "Kecocokan dua nama pasangan",
+      "name": "💘 Nama Pasangan",
+      "desc": "Cek kecocokan dua nama pasangan",
       "path": "/primbon/kecocokannamapasangan?apikey=&nama1=&nama2="
     },
     {
-      "name": "Tanggal Jadian Pernikahan",
-      "desc": "Ramalan tanggal jadian dan pernikahan",
+      "name": "📆 Tanggal Jadian & Nikah",
+      "desc": "Prediksi tanggal jadian atau pernikahan terbaik",
       "path": "/primbon/tanggaljadianpernikahan?apikey=&tgl=&bln=&thn="
     },
     {
-      "name": "Sifat Usaha Bisnis",
-      "desc": "Sifat bisnis atau usaha berdasarkan weton",
+      "name": "💼 Sifat Usaha/Bisnis",
+      "desc": "Lihat karakter bisnis berdasarkan weton",
       "path": "/primbon/sifatusahabisnis?apikey=&tgl=&bln=&thn="
     },
     {
-      "name": "Rejeki Hoki Weton",
-      "desc": "Ramalan rejeki dan hoki berdasar weton lahir",
+      "name": "💰 Rejeki & Hoki Weton",
+      "desc": "Prediksi rejeki kamu berdasar weton lahir",
       "path": "/primbon/rejekihokiweton?apikey=&tgl=&bln=&thn="
     },
     {
-      "name": "Pekerjaan Weton",
-      "desc": "Rekomendasi pekerjaan berdasar weton lahir",
+      "name": "🧑‍🏭 Pekerjaan Weton",
+      "desc": "Rekomendasi pekerjaan terbaik untukmu",
       "path": "/primbon/pekerjaanweton?apikey=&tgl=&bln=&thn="
     },
     {
-      "name": "Zodiak",
-      "desc": "Menampilkan info ramalan zodiak",
+      "name": "♈ Zodiak Harian",
+      "desc": "Ramalan zodiak lengkap untukmu hari ini",
       "path": "/primbon/zodiak?apikey=&zodiak="
     }
   ]
 },
-    {
-  "name": "News API",
+ {
+  "name": "📰 News API",
   "items": [
     {
-      "name": "FajarNews",
-      "desc": "Latest news from Fajar",
+      "name": "🗞️ FajarNews",
+      "desc": "Berita terkini dari Fajar News",
       "path": "/news/fajar?apikey="
     },
     {
-      "name": "BBCNews",
-      "desc": "News from BBC",
+      "name": "🌍 BBCNews",
+      "desc": "Update berita dunia dari BBC",
       "path": "/news/bbc?apikey="
     },
     {
-      "name": "MetroNews",
-      "desc": "Metro news updates",
+      "name": "🏙️ MetroNews",
+      "desc": "Berita seputar kota dari Metro TV",
       "path": "/news/metro?apikey="
     },
     {
-      "name": "CNNNews",
-      "desc": "CNN news headlines",
+      "name": "🌐 CNNNews",
+      "desc": "Berita dunia terbaru dari CNN",
       "path": "/news/cnn?apikey="
     },
     {
-      "name": "iNews",
-      "desc": "iNews latest stories",
+      "name": "📺 iNews",
+      "desc": "Berita nasional dan daerah dari iNews",
       "path": "/news/inews?apikey="
     },
     {
-      "name": "KumparanNews",
-      "desc": "Kumparan news feed",
+      "name": "🗞️ KumparanNews",
+      "desc": "Berita viral dan populer dari Kumparan",
       "path": "/news/kumparan?apikey="
     },
     {
-      "name": "TribunNews",
-      "desc": "Tribun news articles",
+      "name": "📰 TribunNews",
+      "desc": "Artikel dan kabar dari Tribun Network",
       "path": "/news/tribun?apikey="
     },
     {
-      "name": "DailyNews",
-      "desc": "Daily news updates",
+      "name": "📆 DailyNews",
+      "desc": "Rangkuman berita harian terbaru",
       "path": "/news/daily?apikey="
     },
     {
-      "name": "DetikNews",
-      "desc": "Detik news headlines",
+      "name": "⚡ DetikNews",
+      "desc": "Berita terkini dan cepat dari Detik",
       "path": "/news/detik?apikey="
     },
     {
-      "name": "OkezoneNews",
-      "desc": "Okezone news feed",
+      "name": "🌐 OkezoneNews",
+      "desc": "Update info nasional & internasional",
       "path": "/news/okezone?apikey="
     },
     {
-      "name": "CNBCNews",
-      "desc": "CNBC latest news",
+      "name": "💹 CNBCNews",
+      "desc": "Berita bisnis dan ekonomi dari CNBC",
       "path": "/news/cnbc?apikey="
     },
     {
-      "name": "KompasNews",
-      "desc": "Kompas news articles",
+      "name": "📰 KompasNews",
+      "desc": "Kabar aktual dari Kompas",
       "path": "/news/kompas?apikey="
     },
     {
-      "name": "SindoNews",
-      "desc": "Sindo news headlines",
+      "name": "🗞️ SindoNews",
+      "desc": "Berita nasional dari SINDOnews",
       "path": "/news/sindo?apikey="
+    },
+    {
+      "name": "🕒 TempoNews",
+      "desc": "Liputan investigasi dan terkini dari Tempo",
+      "path": "/news/tempo?apikey="
+    },
+    {
+      "name": "🔥 IndozoneNews",
+      "desc": "Info viral dan berita hangat dari Indozone",
+      "path": "/news/indozone?apikey="
+    },
+    {
+      "name": "📰 AntaraNews",
+      "desc": "Berita resmi dari Kantor Berita ANTARA",
+      "path": "/news/antara?apikey="
+    },
+    {
+      "name": "🕌 RepublikaNews",
+      "desc": "Berita Islam dan umum dari Republika",
+      "path": "/news/republika?apikey="
+    },
+    {
+      "name": "📢 VivaNews",
+      "desc": "Info terupdate dari Viva",
+      "path": "/news/viva?apikey="
+    },
+    {
+      "name": "📈 KontanNews",
+      "desc": "Berita ekonomi dan saham dari Kontan",
+      "path": "/news/kontan?apikey="
+    },
+    {
+      "name": "💥 MerdekaNews",
+      "desc": "Liputan nasional & kriminal dari Merdeka",
+      "path": "/news/merdeka?apikey="
     }
   ]
-    },
+},
     {
       "name": "API",
       "items": [

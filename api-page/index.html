@@ -814,7 +814,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     createParticles();
 
 
-
+/*
     function showApiStatus() {
   fetch('https://api.ditss.cloud/api/status')
     .then(response => response.json())
@@ -844,7 +844,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 }
 showApiStatus(); // panggil sekali
 setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
-
+*/
 
 
 
@@ -863,17 +863,12 @@ setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
               <span style="color:#fff;opacity:.8;">Total Request:</span> <span style="font-weight:700;" id="total-request">${res.totalrequest}</span>
             </p>
             <div style="font-size:.95em; margin-top:8px; color:#fff; opacity:.85; text-align:left;">
-              <div><b>Status:</b> ${res.status}</div>
+              <div><b>Total request:</b> ${res.status}</div>
               <div><b>Waktu:</b> ${res.waktu}</div>
-              <div><b>IP:</b> ${res.ip_address}</div>
               <div><b>User Agent:</b> <span style="word-break:break-all;">${res.user_agent}</span></div>
               <div><b>Method:</b> ${res.method}</div>
               <div><b>Endpoint:</b> ${res.endpoint}</div>
-              <div><b>Domain:</b> ${res.domain}</div>
               <div><b>Runtime:</b> ${res.runtime}</div>
-              <div><b>Total Fitur:</b> ${res.totalfitur}</div>
-              <div><b>Total 404:</b> ${res.total404}</div>
-              <div><b>Total 500:</b> ${res.total500}</div>
             </div>
           `;
         }

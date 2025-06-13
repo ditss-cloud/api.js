@@ -106,23 +106,23 @@
     }
   ]
 },
+ {
+  "name": "💳 Orderkuota Gateway",
+  "items": [
     {
-      "name": "Orderkuota Gateway",
-      "items": [
-        {
-          "name": "Create Payment",
-          "desc": "Create qris payment",
-          "path": "/orderkuota/createpayment?apikey=&amount=&codeqr=",
-          "innerDesc": "Buy apikey ? wa.me/6281513607731"
-        },
-        {
-          "name": "Cek Status",
-          "desc": "Cek status payment",
-          "path": "/orderkuota/cekstatus?apikey=&merchant=&keyorkut=",
-          "innerDesc": "Buy apikey ? wa.me/6281513607731"
-        }
-      ]
+      "name": "🧾 Buat Pembayaran",
+      "desc": "Buat QRIS Payment otomatis",
+      "path": "/orderkuota/createpayment?apikey=&amount=&codeqr=",
+      "innerDesc": "🔑 Butuh API Key? Chat admin 👉 wa.me/6281513607731"
     },
+    {
+      "name": "📊 Cek Status Pembayaran",
+      "desc": "Lihat status transaksi QRIS",
+      "path": "/orderkuota/cekstatus?apikey=&merchant=&keyorkut=",
+      "innerDesc": "🔑 Butuh API Key? Chat admin 👉 wa.me/6281513607731"
+    }
+  ]
+},
     {
       "name": "Downloader",
       "items": [

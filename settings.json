@@ -25,7 +25,7 @@
       "name": "Contact Developer",
       "icon": "code"
     },{
-  "url": "https://api.whatsapp.com/send/?phone=447920601019&text=halo+bang+apikey+api+apa?",
+  "url": "https://api.whatsapp.com/send/?phone=447920601019&text=bang+mau+req+apikey+req:Masukan_Nama_Apikey",
   "name": "custom apikey",
   "icon": "key"
     }

@@ -19,16 +19,27 @@ module.exports = function (app) {
 
   app.get('/api/status', async (req, res) => {
     try {
+      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+      const userAgent = req.headers['user-agent'] || 'Unknown';
+      const method = req.method;
+      const endpoint = req.originalUrl;
+      const time = new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' });
+
       res.status(200).json({
         status: true,
         result: {
           status: "Aktif",
+          waktu: time,
+          ip_address: ip,
+          user_agent: userAgent,
+          method,
+          endpoint,
+          domain: req.hostname,
+          runtime: runtime(process.uptime()),
           totalrequest: global.totalreq?.toString() || '0',
           totalfitur: listRoutes().toString(),
           total404: global.totalError404?.toString() || '0',
-          total500: global.totalError500?.toString() || '0',
-          runtime: runtime(process.uptime()),
-          domain: req.hostname
+          total500: global.totalError500?.toString() || '0'
         }
       });
     } catch (error) {

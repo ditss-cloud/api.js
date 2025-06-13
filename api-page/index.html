@@ -651,6 +651,16 @@
             width: 100%;
             justify-content: center;
         }
+        #total-request-box {
+  position: fixed;
+  top: 70px; /* di bawah navbar */
+  right: 10px;
+  z-index: 2000;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border-radius: 16px;
+  padding: 20px;
+}
     }
     </style>
 </head>
@@ -677,6 +687,12 @@
             </a>
         </div>
     </nav>
+
+    <!-- req -->
+    <div id="total-request-box">
+  <i class="fas fa-chart-line" style="font-size:2rem;color:#4361ee;"></i>
+  <p style="margin:0;font-weight:500;">Total Request: <span id="total-request">-</span></p>
+</div>
     <!-- Hero Banner -->
 <div class="hero-banner">
     <div class="hero-content">
@@ -690,12 +706,6 @@
             <a href="#" target="_blank"><i class="fas fa-comments"></i></a>
         </div>
     </div>
-</div>
-
-<!-- Card Total Request -->
-<div class="card" style="max-width:300px;margin:30px auto 0;text-align:center;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,0.07);border-radius:16px;">
-  <i class="fas fa-chart-line" style="font-size:2rem;color:#4361ee;"></i>
-  <p style="margin:0;font-weight:500;">Total Request: <span id="total-request">-</span></p>
 </div>
 
 <!-- Main Content -->

@@ -1,55 +1,79 @@
 const axios = require('axios');
 
 module.exports = function app(app) {
+    // Endpoint Gambar BRAT
     app.get('/imagecreator/brat', async (req, res) => {
         try {
             const { apikey, text } = req.query;
             if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
             if (!text) return res.json({ status: false, error: 'Text is required' });
 
-            let pedo;
-            try {
-                pedo = await getBuffer(`https://brat.caliphdev.com/api/brat?text=${encodeURIComponent(text)}`);
-            } catch (err) {
-                console.warn('[WARN] API utama gagal, mencoba API kedua...');
-                pedo = await getBuffer(`https://anabot.my.id/api/maker/brat?text=${encodeURIComponent(text)}&apikey=freeApikey`);
+            const encodedText = encodeURIComponent(text);
+            const urls = [
+                `https://brat.caliphdev.com/api/brat?text=${encodedText}`,
+                `https://anabot.my.id/api/maker/brat?text=${encodedText}&apikey=freeApikey`,
+                `https://aqul-brat.hf.space/?text=${encodedText}`
+            ];
+
+            let imageBuffer = null;
+
+            for (let url of urls) {
+                try {
+                    console.log(`[INFO] Mencoba URL: ${url}`);
+                    imageBuffer = await getBuffer(url);
+                    if (imageBuffer) {
+                        console.log('[SUCCESS] Gambar berhasil diambil.');
+                        break;
+                    }
+                } catch (err) {
+                    console.warn(`[WARN] Gagal mengambil gambar dari: ${url}`);
+                }
+            }
+
+            if (!imageBuffer) {
+                return res.status(500).json({ status: false, error: 'Semua API gagal digunakan.' });
             }
 
             res.writeHead(200, {
                 'Content-Type': 'image/png',
-                'Content-Length': pedo.length,
+                'Content-Length': imageBuffer.length,
             });
-            res.end(pedo);
+            res.end(imageBuffer);
+
         } catch (error) {
-            console.error(error);
+            console.error('[ERROR] ' + error.message);
             res.status(500).send(`Error: ${error.message}`);
         }
     });
 
+    // Endpoint Video BRAT (tanpa fallback, hanya 1 API)
     app.get('/imagecreator/bratvideo', async (req, res) => {
         try {
             const { apikey, text } = req.query;
             if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' });
             if (!text) return res.json({ status: false, error: 'Text is required' });
 
-            const pedo = await getBuffer(`https://skyzxu-brat.hf.space/brat-animated?text=${encodeURIComponent(text)}`);
+            const videoBuffer = await getBuffer(`https://skyzxu-brat.hf.space/brat-animated?text=${encodeURIComponent(text)}`);
+
             res.writeHead(200, {
                 'Content-Type': 'video/mp4',
-                'Content-Length': pedo.length,
+                'Content-Length': videoBuffer.length,
             });
-            res.end(pedo);
+            res.end(videoBuffer);
+
         } catch (error) {
-            console.error(error);
+            console.error('[ERROR] ' + error.message);
             res.status(500).send(`Error: ${error.message}`);
         }
     });
 };
 
+// Fungsi getBuffer universal
 async function getBuffer(url) {
     try {
         const response = await axios.get(url, { responseType: 'arraybuffer' });
         return Buffer.from(response.data);
     } catch (error) {
-        throw new Error('Failed to fetch buffer from URL');
+        throw new Error(`Failed to fetch buffer from URL: ${url}`);
     }
 }

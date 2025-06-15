@@ -200,7 +200,7 @@
         box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
     }
 
-    /* Hero Section */
+    /* Hero Section 
     .hero-banner {
         width: 100%;
         height: 850px;
@@ -213,7 +213,20 @@
         margin-bottom: 50px;
         clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
+*/
+        .hero-banner {
+  min-height: 520px; /* atau lebih, tes sesuai kebutuhan */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 
+@media (max-width: 768px) {
+  .hero-banner {
+    min-height: 650px; /* mobile biasanya lebih tinggi karena stacking */
+  }
+}
     @keyframes grain {
         0%, 100% { transform: translate(0, 0); }
         10% { transform: translate(-5%, -10%); }

@@ -3,7 +3,7 @@ return [...emoji].map(char => char.codePointAt(0).toString(16)).join('');
 }
 
 module.exports = function(app) {
-app.get('/tools/emojitogif', async (req, res) => {
+app.get('/tools/emojitogif-v2', async (req, res) => {
 const { apikey, emoji } = req.query
 if (!global.apikey.includes(apikey)) return res.json({ status: false, error: 'Apikey invalid' })
 const unik = await encodeEmoji(emoji)

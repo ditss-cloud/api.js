@@ -684,6 +684,11 @@
   -webkit-backdrop-filter: blur(8px);   /* efek glass untuk Safari */
   border: 1px solid rgba(255,255,255,0.4);  /* biar ada garis tipis kayak tombol */
 }
+        .search-box input {
+  border-radius: 50px;
+  font-size: 1.08em;
+  padding: 12px 20px;
+        }
     }
     </style>
 </head>
@@ -725,6 +730,11 @@
       <a href="#" target="_blank"><i class="fas fa-comments"></i></a>
     </div>
 <!-- okr-->
+      <div class="search-box" style="max-width:350px;margin:24px auto 18px;">
+  <input type="text" id="apiSearchInput" class="form-control" placeholder="Cari API...">
+</div>
+
+      
       <div id="total-request-box">
   <i class="fas fa-chart-line" style="font-size:2rem;color:#fa5252;"></i>
   <div id="request-info"></div>

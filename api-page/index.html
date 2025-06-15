@@ -894,33 +894,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 showApiStatus(); // panggil sekali
 setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
 */
-document.addEventListener('DOMContentLoaded', function () {
-  document.body.addEventListener('click', function(e) {
-    if (e.target.closest('#copyApiEndpoint')) {
-      const apiEndpoint = document.getElementById('apiEndpoint');
-      const copyBtn = e.target.closest('#copyApiEndpoint');
-      if (apiEndpoint) {
-        const text = apiEndpoint.textContent;
-        if (navigator.clipboard) {
-          navigator.clipboard.writeText(text);
-        } else {
-          const textarea = document.createElement('textarea');
-          textarea.value = text;
-          document.body.appendChild(textarea);
-          textarea.select();
-          document.execCommand('copy');
-          document.body.removeChild(textarea);
-        }
-        // Umpan balik visual
-        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
-        setTimeout(() => {
-          copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
-        }, 1200);
-      }
-    }
-  });
-});
-//batas
+
     
 // Real-time search/filter
 const apiSearchInput = document.getElementById('apiSearchInput');
@@ -1223,6 +1197,33 @@ apiSearchInput?.addEventListener('input', function() {
         }
         
         // Modal setup and event handling
+        document.addEventListener('DOMContentLoaded', function () {
+  document.body.addEventListener('click', function(e) {
+    if (e.target.closest('#copyApiEndpoint')) {
+      const apiEndpoint = document.getElementById('apiEndpoint');
+      const copyBtn = e.target.closest('#copyApiEndpoint');
+      if (apiEndpoint) {
+        const text = apiEndpoint.textContent;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+        // Umpan balik visual
+        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+        }, 1200);
+      }
+    }
+  });
+});
+//b
         document.addEventListener('click', async (event) => {
             if (!event.target.closest('.get-api-btn')) return;
             

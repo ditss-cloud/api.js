@@ -8,7 +8,7 @@ module.exports = function(app) {
         try {
             const response = await axios.get('https://tenor.googleapis.com/v2/search', {
                 params: {
-                    key: 'YOUR_TENOR_API_KEY', // Ganti dengan API key Tenor kamu
+                    key: 'AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ', // Ganti dengan API key Tenor kamu
                     q: emoji,
                     limit: 1,
                     media_filter: 'minimal',

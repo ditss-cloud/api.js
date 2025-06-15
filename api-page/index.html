@@ -798,9 +798,20 @@
     </style>
 </head>
 <body>
-    <!-- Floating Particles Background -->
-    <div class="particles" id="particles"></div>
-    
+  <!-- PASANG DI SINI (paling atas setelah <body>) -->
+  <div id="sidebar-blur"></div>
+  <nav id="sidebar">
+    <button class="close-btn" onclick="closeSidebar()">&times;</button>
+    <a href="#home" class="active"><i class="fas fa-home"></i> Home</a>
+    <a href="#apis"><i class="fas fa-code"></i> APIs</a>
+    <a href="#login"><i class="fas fa-sign-in-alt"></i> Login</a>
+  </nav>
+  <button id="openSidebar" aria-label="Open sidebar" onclick="openSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+  <!-- BARU LANJUTKAN KONTEN LAIN -->
+  <div class="particles" id="particles"></div>
+  <!-- dst... -->
     <!-- Loading Screen -->
     <div id="loadingScreen">
         <div class="loading-content">

@@ -200,7 +200,7 @@
         box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
     }
 
-    /* Hero Section 
+     /*Hero Section */
     .hero-banner {
         width: 100%;
         height: 850px;
@@ -213,14 +213,14 @@
         margin-bottom: 50px;
         clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
     }
-*/
+/*
         .hero-banner {
-  min-height: 520px; /* atau lebih, tes sesuai kebutuhan */
+  min-height: 520px; /* atau lebih, tes sesuai kebutuhan 
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-}
+}*/
 
 @media (max-width: 768px) {
   .hero-banner {
@@ -747,7 +747,7 @@
   <input type="text" id="apiSearchInput" class="form-control" placeholder="Cari API...">
 </div>
 
-      
+      <!--
       <div id="total-request-box">
   <i class="fas fa-chart-line" style="font-size:2rem;color:#fa5252;"></i>
   <div id="request-info"></div>
@@ -781,15 +781,22 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <pre id="apiEndpoint" class="d-none"></pre>
-                    <div id="apiQueryInputContainer"></div>
-                    <div id="apiResponseLoading" class="d-none d-flex justify-content-center align-items-center" style="height: 200px;">
-                        <div class="spinner-border" role="status">
-                            <span class="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-                    <pre id="apiResponseContent" class="d-none mt-3"></pre>
-                </div>
+  <div id="apiEndpointContainer" style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+    <pre id="apiEndpoint" style="margin:0;flex:1"></pre>
+    <button id="copyApiEndpoint"
+            title="Copy URL"
+            style="background:transparent;border:none;cursor:pointer;padding:6px;display:flex;align-items:center;">
+      <i class="fas fa-copy"></i>
+    </button>
+  </div>
+  <div id="apiQueryInputContainer"></div>
+  <div id="apiResponseLoading" class="d-none d-flex justify-content-center align-items-center" style="height: 200px;">
+      <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+      </div>
+  </div>
+  <pre id="apiResponseContent" class="d-none mt-3"></pre>
+</div>
                 <div class="modal-footer">
                     <button id="submitQueryBtn" class="btn btn-primary"><i class="fas fa-paper-plane me-2"></i>Send Request</button>
                 </div>
@@ -878,6 +885,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 showApiStatus(); // panggil sekali
 setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
 */
+document.addEventListener('DOMContentLoaded', function () {
+  document.body.addEventListener('click', function(e) {
+    if (e.target.closest('#copyApiEndpoint')) {
+      const apiEndpoint = document.getElementById('apiEndpoint');
+      const copyBtn = e.target.closest('#copyApiEndpoint');
+      if (apiEndpoint) {
+        const text = apiEndpoint.textContent;
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+        }
+        // Umpan balik visual
+        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+        }, 1200);
+      }
+    }
+  });
+});
+//batas
+    
 // Real-time search/filter
 const apiSearchInput = document.getElementById('apiSearchInput');
 apiSearchInput?.addEventListener('input', function() {

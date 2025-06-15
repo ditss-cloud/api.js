@@ -707,6 +707,13 @@
   position: relative;
   pointer-events: auto;
 }
+        #apiQueryInputContainer .form-control {
+  font-size: 1rem;
+  padding: 12px 16px;
+  border-radius: 7px;
+  border: 1px solid #e4e7ec;
+  margin: 0;
+}
     }
     </style>
 </head>
@@ -785,6 +792,7 @@
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <!--
         <div class="modal-body">
   <div id="apiEndpointContainer"
       style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; position: relative;">
@@ -797,6 +805,30 @@
     </button>
   </div>
   <div id="apiQueryInputContainer"></div>
+  <div id="apiResponseLoading"
+       class="d-none d-flex justify-content-center align-items-center"
+       style="height: 200px;">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <pre id="apiResponseContent" class="d-none mt-3"></pre>
+</div>   -->
+                <div class="modal-body">
+  <div id="apiEndpointContainer"
+      style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; position: relative;">
+    <pre id="apiEndpoint"
+         style="margin:0;flex:1;z-index:1;position:relative;pointer-events:auto;background:#f0f2f5;padding:15px;border-radius:8px;border:1px solid #e1e4e8;word-break:break-all;color:#222;"></pre>
+    <button id="copyApiEndpoint"
+            title="Copy URL"
+            style="background:transparent;border:none;cursor:pointer;padding:6px;display:flex;align-items:center;z-index:2;position:relative;pointer-events:auto;">
+      <i class="fas fa-copy"></i>
+    </button>
+  </div>
+  <div id="apiQueryInputContainer" style="display:flex;flex-direction:column;gap:13px;margin-bottom:18px;">
+    <input type="text" class="form-control" id="inputApikey" placeholder="Enter apikey">
+    <input type="text" class="form-control" id="inputText" placeholder="Enter text">
+  </div>
   <div id="apiResponseLoading"
        class="d-none d-flex justify-content-center align-items-center"
        style="height: 200px;">

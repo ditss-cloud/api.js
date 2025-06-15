@@ -855,7 +855,33 @@ document.addEventListener('DOMContentLoaded', async () => {
 showApiStatus(); // panggil sekali
 setInterval(showApiStatus, 1000); // auto-refresh setiap 10 detik (optional)
 */
-
+// Real-time search/filter
+const apiSearchInput = document.getElementById('apiSearchInput');
+apiSearchInput?.addEventListener('input', function() {
+  const query = this.value.trim().toLowerCase();
+  // ambil semua item API
+  const apiItems = document.querySelectorAll('.api-item');
+  let resultCount = 0;
+  apiItems.forEach(item => {
+    const name = item.getAttribute('data-name')?.toLowerCase() || '';
+    const desc = item.getAttribute('data-desc')?.toLowerCase() || '';
+    if (name.includes(query) || desc.includes(query)) {
+      item.style.display = '';
+      resultCount++;
+    } else {
+      item.style.display = 'none';
+    }
+  });
+  // Sembunyikan header kategori jika semua item dalam kategori tidak ada yg tampil
+  document.querySelectorAll('.category-header').forEach(header => {
+    // header diikuti row, cek apakah row berisi .api-item yg visible
+    const row = header.nextElementSibling;
+    if (row && row.classList.contains('row')) {
+      const visibleItems = row.querySelectorAll('.api-item:not([style*="display: none"])');
+      header.style.display = visibleItems.length ? '' : 'none';
+    }
+  });
+});
 
 
     

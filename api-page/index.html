@@ -1229,6 +1229,16 @@ apiSearchInput?.addEventListener('input', function() {
         }
         
         // Modal setup and event handling
+        document.getElementById('submitQueryBtn').onclick = function() {
+  var apikey = document.getElementById('inputApikey').value.trim();
+  var text = document.getElementById('inputText').value.trim();
+  var endpoint = document.getElementById('apiEndpoint').textContent.trim();
+  // Contoh: tampilkan gabungan URL
+  var fullUrl = endpoint + (endpoint.includes('?') ? '&' : '?') + 'apikey=' + encodeURIComponent(apikey) + '&text=' + encodeURIComponent(text);
+  alert("Request URL:\n" + fullUrl); // Ganti sesuai kebutuhan request API-mu
+}
+
+        
         document.addEventListener('DOMContentLoaded', function () {
   document.body.addEventListener('click', function(e) {
     if (e.target.closest('#copyApiEndpoint')) {
